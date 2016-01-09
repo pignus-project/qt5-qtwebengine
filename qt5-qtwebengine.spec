@@ -15,7 +15,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 0.4.beta%{?dist}
+Release: 0.4.beta%{?dist}.1
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -34,6 +34,8 @@ Source3: process_ffmpeg_gyp.py
 Patch0:  qtwebengine-opensource-src-5.6.0-beta-no-format.patch
 # some tweaks to linux.pri (system libs, link libpci, run unbundling script)
 Patch1:  qtwebengine-opensource-src-5.6.0-beta-linux-pri.patch
+# don't require the time zone detection API backported from ICU 55 (thanks spot)
+Patch2:  qtwebengine-opensource-src-5.6.0-beta-system-icu54.patch
 
 BuildRequires: qt5-qtbase-devel >= %{version}
 BuildRequires: qt5-qtdeclarative-devel >= %{version}
@@ -217,8 +219,8 @@ Summary: Example files for %{name}
 %if 0%{?docs}
 %package doc
 Summary: API documentation for %{name}
-# for qhelpgenerator
-BuildRequires: qt5-qttools-devel
+BuildRequires: qt5-qhelpgenerator
+BuildRequires: qt5-qdoc
 BuildArch: noarch
 %description doc
 %{summary}.
@@ -229,6 +231,7 @@ BuildArch: noarch
 %setup -q -n %{qt_module}-opensource-src-%{version}%{?prerelease:-%{prerelease}}
 %patch0 -p1 -b .no-format
 %patch1 -p1 -b .linux-pri
+%patch2 -p1 -b .system-icu54
 
 %build
 export STRIP=strip
@@ -298,6 +301,10 @@ popd
 
 
 %changelog
+* Sat Jan 09 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.4.beta1.1
+- Use more specific BuildRequires for docs (thanks to rdieter)
+- Fix FTBFS against ICU 54 (F22/F23), thanks to spot for the Chromium fix
+
 * Fri Jan 08 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.4.beta1
 - Fix License tag
 - Use %%_qt5_examplesdir macro
