@@ -84,6 +84,7 @@ header_files="  libavutil/x86/asm.h \
                 libavcodec/arm/videodsp_arm.h \
                 libavcodec/arm/vp56_arith.h \
                 libavcodec/arm/vp8.h \
+                libavcodec/arm/vp8dsp.h \
                 libavcodec/avcodec.h \
                 libavcodec/blockdsp.h \
                 libavcodec/bytestream.h \
