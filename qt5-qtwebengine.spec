@@ -15,7 +15,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 0.4.beta%{?dist}.1
+Release: 0.5.beta%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -301,23 +301,26 @@ popd
 
 
 %changelog
-* Sat Jan 09 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.4.beta1.1
+* Sat Jan 09 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.5.beta
+- Bump Release for official Rawhide build (to distinguish it from Copr builds)
+
+* Sat Jan 09 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.4.beta.1
 - Use more specific BuildRequires for docs (thanks to rdieter)
 - Fix FTBFS against ICU 54 (F22/F23), thanks to spot for the Chromium fix
 
-* Fri Jan 08 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.4.beta1
+* Fri Jan 08 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.4.beta
 - Fix License tag
 - Use %%_qt5_examplesdir macro
 - Add Provides: bundled(*) for all the bundled libraries that I found
 
-* Wed Jan 06 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.3.beta1
+* Wed Jan 06 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.3.beta
 - linux-pri patch: Add use_system_protobuf, went missing in the 5.6 rebase
 
-* Wed Jan 06 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.2.beta1
+* Wed Jan 06 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.2.beta
 - linux-pri patch: Add missing newline at the end of the log line
 - Use export for NINJA_PATH (fixes system ninja-build use)
 
-* Wed Jan 06 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.1.beta1
+* Wed Jan 06 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.1.beta
 - Readd BR pkgconfig(jsoncpp) because linux.pri now checks for it
 - BR yasm only on x86 (i686, x86_64)
 - Add dot at the end of %%description
