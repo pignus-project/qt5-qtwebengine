@@ -303,6 +303,7 @@ popd
 %changelog
 * Sat Jan 09 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.5.beta
 - Fix FTBFS on ARM: linux-pri patch: Set use_system_yasm only on x86_64 and i386
+- Fix FTBFS on ARM: Respin tarball with: clean_ffmpeg.sh: Add missing ARM files
 
 * Sat Jan 09 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.4.beta.1
 - Use more specific BuildRequires for docs (thanks to rdieter)

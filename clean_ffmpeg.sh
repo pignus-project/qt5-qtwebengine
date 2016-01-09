@@ -36,6 +36,13 @@ header_files="  libavutil/x86/asm.h \
                 libavutil/x86/intmath.h \
                 libavutil/x86/intreadwrite.h \
                 libavutil/x86/timer.h \
+                libavutil/arm/asm.S \
+                libavutil/arm/bswap.h \
+                libavutil/arm/cpu.h \
+                libavutil/arm/float_dsp_arm.h \
+                libavutil/arm/intmath.h \
+                libavutil/arm/intreadwrite.h \
+                libavutil/arm/timer.h \
                 libavutil/atomic_gcc.h \
                 libavutil/attributes.h \
                 libavutil/audio_fifo.h \
@@ -73,6 +80,10 @@ header_files="  libavutil/x86/asm.h \
                 libavcodec/x86/inline_asm.h \
                 libavcodec/x86/mathops.h \
                 libavcodec/x86/vp56_arith.h \
+                libavcodec/arm/mathops.h \
+                libavcodec/arm/videodsp_arm.h \
+                libavcodec/arm/vp56_arith.h \
+                libavcodec/arm/vp8.h \
                 libavcodec/avcodec.h \
                 libavcodec/blockdsp.h \
                 libavcodec/bytestream.h \
@@ -225,8 +236,12 @@ do
     cp -p $f ../tmp_ffmpeg/$dir_name 2>/dev/null
 done
 
+# whole directory
 mkdir -p ../tmp_ffmpeg/chromium
 cp -pr chromium/config ../tmp_ffmpeg/chromium/
+
+# unused include
+sed -i -e '/synth_filter\.h/d' ../tmp_ffmpeg/libavcodec/arm/fft_init_arm.c
 
 cd ..
 rm -rf ffmpeg
