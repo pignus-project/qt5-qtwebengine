@@ -1,5 +1,6 @@
 #!/bin/bash
 # Copyright 2013 Tomas Popela <tpopela@redhat.com>
+# Copyright 2016 Kevin Kofler <Kevin@tigcc.ticalc.org>
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
 # "Software"), to deal in the Software without restriction, including
@@ -212,30 +213,20 @@ other_files="	Changelog \
 
 files=$generated_files$manual_files$other_files$generated_files_headers$header_files
 
-prefix="tmp_"
-
 for f in $files
 do
-	dir_name=`echo $f | sed 's%/[^/]*$%/%'`
-	if [[ $dir_name == */* ]]; then
-		tmp_dir_name=$prefix$dir_name
-		mkdir -p ../tmp_ffmpeg/$tmp_dir_name
-	else
-		tmp_dir_name=$f
-	fi
+    dir_name=`dirname $f`/
+    if [[ $dir_name == ./ ]]; then
+        dir_name=
+    else
+        mkdir -p ../tmp_ffmpeg/$dir_name
+    fi
 
-	cp $f ../tmp_ffmpeg/$tmp_dir_name 2>/dev/null
+    cp -p $f ../tmp_ffmpeg/$dir_name 2>/dev/null
 done
 
-mkdir -p ../tmp_ffmpeg/tmp_chromium/config
-cp -r chromium/config ../tmp_ffmpeg/tmp_chromium
-
-cd ../tmp_ffmpeg
-for tmp_directory in $(find . -type d -name 'tmp_*')
-do
-	new_name=`echo $tmp_directory | sed 's/tmp_//'`
-	mv $tmp_directory $new_name
-done
+mkdir -p ../tmp_ffmpeg/chromium
+cp -pr chromium/config ../tmp_ffmpeg/chromium/
 
 cd ..
 rm -rf ffmpeg
