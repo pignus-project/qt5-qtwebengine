@@ -81,6 +81,7 @@ header_files="  libavutil/x86/asm.h \
                 libavcodec/x86/mathops.h \
                 libavcodec/x86/vp56_arith.h \
                 libavcodec/arm/mathops.h \
+                libavcodec/arm/neon.S \
                 libavcodec/arm/videodsp_arm.h \
                 libavcodec/arm/vp56_arith.h \
                 libavcodec/arm/vp8.h \
