@@ -302,7 +302,7 @@ popd
 
 %changelog
 * Sat Jan 09 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.5.beta
-- Bump Release for official Rawhide build (to distinguish it from Copr builds)
+- Fix FTBFS on ARM: linux-pri patch: Set use_system_yasm only on x86_64 and i386
 
 * Sat Jan 09 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.4.beta.1
 - Use more specific BuildRequires for docs (thanks to rdieter)
