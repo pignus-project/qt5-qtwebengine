@@ -36,9 +36,12 @@ Patch0:  qtwebengine-opensource-src-5.6.0-beta-no-format.patch
 Patch1:  qtwebengine-opensource-src-5.6.0-beta-linux-pri.patch
 # don't require the time zone detection API backported from ICU 55 (thanks spot)
 Patch2:  qtwebengine-opensource-src-5.6.0-beta-system-icu54.patch
+# fix extractCFlag to also look in QMAKE_CFLAGS_RELEASE, needed to detect the
+# ARM flags with our %%qmake_qt5 macro, including for the next patch
+Patch3:  qtwebengine-opensource-src-5.6.0-beta-fix-extractcflag.patch
 # disable NEON vector instructions on ARM for now, the NEON code FTBFS due to
 # GCC bug https://bugzilla.redhat.com/show_bug.cgi?id=1282495
-Patch3:  qtwebengine-opensource-src-5.6.0-beta-no-neon.patch
+Patch4:  qtwebengine-opensource-src-5.6.0-beta-no-neon.patch
 
 BuildRequires: qt5-qtbase-devel >= %{version}
 BuildRequires: qt5-qtdeclarative-devel >= %{version}
@@ -235,7 +238,8 @@ BuildArch: noarch
 %patch0 -p1 -b .no-format
 %patch1 -p1 -b .linux-pri
 %patch2 -p1 -b .system-icu54
-%patch3 -p1 -b .no-neon
+%patch3 -p1 -b .fix-extractcflag
+%patch4 -p1 -b .no-neon
 
 %build
 export STRIP=strip
@@ -308,6 +312,7 @@ popd
 * Sat Jan 09 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.5.beta
 - Fix FTBFS on ARM: linux-pri patch: Set use_system_yasm only on x86_64 and i386
 - Fix FTBFS on ARM: Respin tarball with: clean_ffmpeg.sh: Add missing ARM files
+- Fix extractCFlag to also look in QMAKE_CFLAGS_RELEASE (needed for ARM)
 - Fix FTBFS on ARM: Disable NEON due to #1282495 (GCC bug)
 
 * Sat Jan 09 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.4.beta.1
