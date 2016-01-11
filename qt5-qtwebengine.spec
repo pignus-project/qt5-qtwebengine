@@ -24,7 +24,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 0.8.beta%{?dist}
+Release: 0.9.beta%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -325,6 +325,9 @@ popd
 
 
 %changelog
+* Mon Jan 11 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.9.beta
+- linux-pri.patch: Set icu_use_data_file_flag=0 for system ICU
+
 * Mon Jan 11 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.8.beta
 - Build against the system libvpx also on F23 (1.4.0), worked in Copr
 
