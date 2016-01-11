@@ -10,8 +10,8 @@
 %global docs 1
 %endif
 
-%if 0%{?fedora} > 23
-# need libvpx >= 1.5.0
+%if 0%{?fedora} > 22
+# need libvpx >= 1.4.0
 %global use_system_libvpx 1
 %endif
 %if 0%{?fedora} || 0%{?rhel} > 6
@@ -24,7 +24,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 0.7.beta%{?dist}
+Release: 0.8.beta%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -114,9 +114,7 @@ BuildRequires: pkgconfig(libsrtp)
 BuildRequires: perl
 BuildRequires: python
 %if 0%{?use_system_libvpx}
-# does not compile against libvpx 1.4.0 (Fedora <= 23), need at least 1.5.0:
-# https://code.google.com/p/chromium/issues/detail?id=494939
-BuildRequires: pkgconfig(vpx) >= 1.5.0
+BuildRequires: pkgconfig(vpx) >= 1.4.0
 %endif
 
 # extra (non-upstream) functions needed, see
@@ -156,7 +154,6 @@ Provides: bundled(khronos_headers)
 Provides: bundled(leveldb) = r80
 Provides: bundled(libjingle) = 9564
 %if !0%{?use_system_libvpx}
-# actually something between 1.4.0 and 1.5.0, so a system 1.4.0 is not enough
 Provides: bundled(libvpx) = 1.4.0
 %endif
 %if !0%{?use_system_libwebp}
@@ -328,6 +325,9 @@ popd
 
 
 %changelog
+* Mon Jan 11 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.8.beta
+- Build against the system libvpx also on F23 (1.4.0), worked in Copr
+
 * Mon Jan 11 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.7.beta
 - Use the system libvpx on F24+ (1.5.0)
 - Fixes to Provides: bundled(*): libwebp if bundled, x86inc only on x86
