@@ -10,12 +10,21 @@
 %global docs 1
 %endif
 
+%if 0%{?fedora} > 23
+# need libvpx >= 1.5.0
+%global use_system_libvpx 1
+%endif
+%if 0%{?fedora} || 0%{?rhel} > 6
+# need libwebp >= 0.4.3
+%global use_system_libwebp 1
+%endif
+
 %global prerelease beta
 
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 0.6.beta%{?dist}
+Release: 0.7.beta%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -69,8 +78,8 @@ BuildRequires: pkgconfig(gl)
 BuildRequires: pkgconfig(egl)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libudev)
-%if 0%{?fedora} || 0%{?rhel} > 6
-BuildRequires: pkgconfig(libwebp)
+%if 0%{?use_system_libwebp}
+BuildRequires: pkgconfig(libwebp) >= 0.4.3
 %endif
 BuildRequires: pkgconfig(harfbuzz)
 BuildRequires: pkgconfig(jsoncpp)
@@ -104,10 +113,12 @@ BuildRequires: pkgconfig(speex)
 BuildRequires: pkgconfig(libsrtp)
 BuildRequires: perl
 BuildRequires: python
+%if 0%{?use_system_libvpx}
+# does not compile against libvpx 1.4.0 (Fedora <= 23), need at least 1.5.0:
+# https://code.google.com/p/chromium/issues/detail?id=494939
+BuildRequires: pkgconfig(vpx) >= 1.5.0
+%endif
 
-# does not compile against libvpx 1.4.0 (Fedora <= 23), the libvpx 1.5.0 in F24
-# is reported to be built with incompatible options (FIXME: check this)
-#BuildRequires: pkgconfig(vpx)
 # extra (non-upstream) functions needed, see
 # src/3rdparty/chromium/third_party/sqlite/README.chromium for details
 #BuildRequires: pkgconfig(sqlite3)
@@ -144,7 +155,13 @@ Provides: bundled(khronos_headers)
 # bundled as "leveldatabase"
 Provides: bundled(leveldb) = r80
 Provides: bundled(libjingle) = 9564
+%if !0%{?use_system_libvpx}
+# actually something between 1.4.0 and 1.5.0, so a system 1.4.0 is not enough
 Provides: bundled(libvpx) = 1.4.0
+%endif
+%if !0%{?use_system_libwebp}
+Provides: bundled(libwebp) = 0.4.3
+%endif
 Provides: bundled(libXNVCtrl) = 302.17
 Provides: bundled(libyuv) = 1444
 Provides: bundled(modp_b64)
@@ -161,8 +178,10 @@ Provides: bundled(SMHasher) = 0-0.1.svn147
 Provides: bundled(sqlite) = 3.8.7.4
 Provides: bundled(usrsctp) = 0-0.1.svn9045
 Provides: bundled(webrtc) = 90
+%ifarch %{ix86} x86_64
 # header (for assembly) only
 Provides: bundled(x86inc) = 0
+%endif
 
 # Bundled in src/3rdparty/chromium/base/third_party:
 # Check src/3rdparty/chromium/third_party/base/*/README.chromium for version
@@ -309,6 +328,10 @@ popd
 
 
 %changelog
+* Mon Jan 11 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.7.beta
+- Use the system libvpx on F24+ (1.5.0)
+- Fixes to Provides: bundled(*): libwebp if bundled, x86inc only on x86
+
 * Sun Jan 10 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.6.beta
 - Fix extractCFlag to also look in QMAKE_CFLAGS_RELEASE (needed for ARM)
 - Fix FTBFS on ARM: Disable NEON due to #1282495 (GCC bug)
