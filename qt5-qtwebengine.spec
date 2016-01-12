@@ -24,7 +24,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 0.9.beta%{?dist}
+Release: 0.10.beta%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -51,6 +51,15 @@ Patch3:  qtwebengine-opensource-src-5.6.0-beta-fix-extractcflag.patch
 # disable NEON vector instructions on ARM for now, the NEON code FTBFS due to
 # GCC bug https://bugzilla.redhat.com/show_bug.cgi?id=1282495
 Patch4:  qtwebengine-opensource-src-5.6.0-beta-no-neon.patch
+# use the system NSPR prtime (based on Debian patch)
+# We already depend on NSPR, so it is useless to copy these functions here.
+# Debian uses this just fine, and I don't see relevant modifications either.
+Patch5:  qtwebengine-opensource-src-5.6.0-system-nspr-prtime.patch
+# use the system ICU UTF functions
+# We already depend on ICU, so it is useless to copy these functions here.
+# I checked the history of that directory, and other than the renames I am
+# undoing, there were no modifications at all. Must be applied after Patch5.
+Patch6:  qtwebengine-opensource-src-5.6.0-system-icu-utf.patch
 
 BuildRequires: qt5-qtbase-devel >= %{version}
 BuildRequires: qt5-qtdeclarative-devel >= %{version}
@@ -185,8 +194,6 @@ Provides: bundled(x86inc) = 0
 # numbers, except where specified otherwise.
 Provides: bundled(dmg_fp)
 Provides: bundled(dynamic_annotations) = 4384
-# only prtime.cc, a modified version of NSPR's prtime.c, is bundled
-Provides: bundled(nspr)
 Provides: bundled(superfasthash) = 0
 Provides: bundled(symbolize)
 # bundled as "valgrind", headers only
@@ -256,6 +263,8 @@ BuildArch: noarch
 %patch2 -p1 -b .system-icu54
 %patch3 -p1 -b .fix-extractcflag
 %patch4 -p1 -b .no-neon
+%patch5 -p1 -b .system-nspr-prtime
+%patch6 -p1 -b .system-icu-utf
 
 %build
 export STRIP=strip
@@ -325,6 +334,10 @@ popd
 
 
 %changelog
+* Tue Jan 12 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.10.beta
+- Unbundle prtime.cc, use the system NSPR instead (which is already required)
+- Unbundle icu_utf.cc, use the system ICU instead (which is already required)
+
 * Mon Jan 11 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.9.beta
 - linux-pri.patch: Set icu_use_data_file_flag=0 for system ICU
 
