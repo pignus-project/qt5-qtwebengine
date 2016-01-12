@@ -54,12 +54,12 @@ Patch4:  qtwebengine-opensource-src-5.6.0-beta-no-neon.patch
 # use the system NSPR prtime (based on Debian patch)
 # We already depend on NSPR, so it is useless to copy these functions here.
 # Debian uses this just fine, and I don't see relevant modifications either.
-Patch5:  qtwebengine-opensource-src-5.6.0-system-nspr-prtime.patch
+Patch5:  qtwebengine-opensource-src-5.6.0-beta-system-nspr-prtime.patch
 # use the system ICU UTF functions
 # We already depend on ICU, so it is useless to copy these functions here.
 # I checked the history of that directory, and other than the renames I am
 # undoing, there were no modifications at all. Must be applied after Patch5.
-Patch6:  qtwebengine-opensource-src-5.6.0-system-icu-utf.patch
+Patch6:  qtwebengine-opensource-src-5.6.0-beta-system-icu-utf.patch
 
 BuildRequires: qt5-qtbase-devel >= %{version}
 BuildRequires: qt5-qtdeclarative-devel >= %{version}
