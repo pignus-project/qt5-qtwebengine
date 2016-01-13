@@ -342,7 +342,7 @@ popd
 
 
 %changelog
-* Tue Jan 12 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.11.beta
+* Wed Jan 13 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.11.beta
 - Add an (optimistic) ExclusiveArch list because of V8 (tracking bug: #1298011)
 
 * Tue Jan 12 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.10.beta
