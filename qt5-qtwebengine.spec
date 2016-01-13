@@ -24,7 +24,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 0.10.beta%{?dist}
+Release: 0.11.beta%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -60,6 +60,14 @@ Patch5:  qtwebengine-opensource-src-5.6.0-beta-system-nspr-prtime.patch
 # I checked the history of that directory, and other than the renames I am
 # undoing, there were no modifications at all. Must be applied after Patch5.
 Patch6:  qtwebengine-opensource-src-5.6.0-beta-system-icu-utf.patch
+
+# the architectures theoretically supported by the version of V8 used (#1298011)
+# You may need some minor patching to build on one of the secondary
+# architectures, e.g., to add to the Qt -> Chromium -> V8 arch translations.
+# If you cannot get this package to build on your secondary architecure, please:
+# * remove your architecture from this list AND
+# * put #1298011 onto your ExcludeArch tracker.
+ExclusiveArch: %{ix86} x86_64 %{arm} aarch64 ppc ppc64 ppc64le mips mipsel mips64el
 
 BuildRequires: qt5-qtbase-devel >= %{version}
 BuildRequires: qt5-qtdeclarative-devel >= %{version}
@@ -334,6 +342,9 @@ popd
 
 
 %changelog
+* Tue Jan 12 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.11.beta
+- Add an (optimistic) ExclusiveArch list because of V8 (tracking bug: #1298011)
+
 * Tue Jan 12 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.10.beta
 - Unbundle prtime.cc, use the system NSPR instead (which is already required)
 - Unbundle icu_utf.cc, use the system ICU instead (which is already required)
