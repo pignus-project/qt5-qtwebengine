@@ -63,8 +63,8 @@ Patch6:  qtwebengine-opensource-src-5.6.0-beta-system-icu-utf.patch
 # update the bundled patched NSS SSL implementation to NSS 3.21, matching the
 # system NSS (backport of https://codereview.chromium.org/1511123006)
 Patch7:  qtwebengine-opensource-src-5.6.0-beta-nss321.patch
-# add missing nssoptions.h header needed by the above, from upstream NSS
-Patch8:  qtwebengine-opensource-src-5.6.0-beta-nssoptions-h.patch
+# add missing nssoptions.h and verref.h headers needed by the above, from NSS
+Patch8:  qtwebengine-opensource-src-5.6.0-beta-nss-headers.patch
 
 # the architectures theoretically supported by the version of V8 used (#1298011)
 # You may need some minor patching to build on one of the secondary
@@ -282,7 +282,7 @@ BuildArch: noarch
 %patch5 -p1 -b .system-nspr-prtime
 %patch6 -p1 -b .system-icu-utf
 %patch7 -p1 -b .nss321
-%patch8 -p1 -b .nssoptions-h
+%patch8 -p1 -b .nss-headers
 
 %build
 export STRIP=strip
