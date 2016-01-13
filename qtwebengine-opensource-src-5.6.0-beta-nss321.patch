@@ -1,4 +1,4 @@
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/build/secondary/third_party/nss/BUILD.gn qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/build/secondary/third_party/nss/BUILD.gn
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/build/secondary/third_party/nss/BUILD.gn qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/build/secondary/third_party/nss/BUILD.gn
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/build/secondary/third_party/nss/BUILD.gn	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/build/secondary/third_party/nss/BUILD.gn	2016-01-13 14:18:55.587954670 +0100
 @@ -695,6 +695,8 @@
@@ -18,7 +18,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/build/secon
      ]
  
      sources -= [
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/aesgcmchromium.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/aesgcmchromium.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/aesgcmchromium.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/aesgcmchromium.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/aesgcmchromium.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/aesgcmchromium.patch	2016-01-13 14:18:55.588954676 +0100
 @@ -1,7 +1,7 @@
@@ -78,7 +78,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
   	ssl3_DisableNonDTLSSuites(ss);
       }
   
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/applypatches.sh qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/applypatches.sh
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/applypatches.sh qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/applypatches.sh
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/applypatches.sh	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/applypatches.sh	2016-01-13 14:18:55.588954676 +0100
 @@ -46,9 +46,3 @@
@@ -91,7 +91,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
 -patch -p2 < $patches_dir/norenegotiatelock.patch
 -
 -patch -p2 < $patches_dir/dh1024.patch
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/cachecerts.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/cachecerts.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/cachecerts.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/cachecerts.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/cachecerts.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/cachecerts.patch	2016-01-13 14:18:55.589954682 +0100
 @@ -1,8 +1,8 @@
@@ -185,7 +185,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
  @@ -164,6 +164,7 @@ lock_cache(void)
   static void
   ssl_DestroySID(sslSessionID *sid)
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/cachelocks.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/cachelocks.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/cachelocks.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/cachelocks.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/cachelocks.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/cachelocks.patch	2016-01-13 14:18:55.589954682 +0100
 @@ -1,8 +1,8 @@
@@ -277,7 +277,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
       	return SECSuccess;	/* already done. */
       }
   
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/chacha20poly1305.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/chacha20poly1305.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/chacha20poly1305.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/chacha20poly1305.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/chacha20poly1305.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/chacha20poly1305.patch	2016-01-13 14:18:55.590954688 +0100
 @@ -1,8 +1,8 @@
@@ -521,7 +521,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
       ssl_calg_aes      = 7,
       ssl_calg_camellia = 8,
       ssl_calg_seed     = 9,
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/channelid.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/channelid.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/channelid.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/channelid.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/channelid.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/channelid.patch	2016-01-13 14:18:55.591954693 +0100
 @@ -1,25 +1,25 @@
@@ -899,7 +899,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
 - #endif /* __sslt_h_ */
 + typedef enum {
 +     ssl_dhe_group_none = 0,
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/cipherorder.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/cipherorder.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/cipherorder.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/cipherorder.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/cipherorder.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/cipherorder.patch	2016-01-13 14:18:55.591954693 +0100
 @@ -1,10 +1,10 @@
@@ -973,7 +973,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
   }
   
   SECStatus
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/clientauth.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/clientauth.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/clientauth.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/clientauth.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/clientauth.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/clientauth.patch	2016-01-13 14:18:55.609954798 +0100
 @@ -1,8 +1,8 @@
@@ -1228,8 +1228,25 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
           ss->sniSocketConfig    = NULL;
           ss->sniSocketConfigArg = NULL;
           ss->getClientAuthData  = NULL;
-Nur in qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches: dh1024.patch.
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/didhandshakeresume.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/didhandshakeresume.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/dh1024.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/dh1024.patch
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/dh1024.patch	2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/dh1024.patch	1970-01-01 01:00:00.000000000 +0100
+@@ -1,14 +0,0 @@
+-diff --git a/ssl/ssl3con.c b/ssl/ssl3con.c
+-index a67a9d1..02b0dda 100644
+---- a/ssl/ssl3con.c
+-+++ b/ssl/ssl3con.c
+-@@ -6964,7 +6964,8 @@ ssl3_HandleServerKeyExchange(sslSocket *ss, SSL3Opaque *b, PRUint32 length)
+-     	if (rv != SECSuccess) {
+- 	    goto loser;		/* malformed. */
+- 	}
+--	if (dh_p.len < 512/8) {
+-+	if (dh_p.len < 1024/8 ||
+-+	    (dh_p.len == 1024/8 && (dh_p.data[0] & 0x80) == 0)) {
+- 	    errCode = SSL_ERROR_WEAK_SERVER_EPHEMERAL_DH_KEY;
+- 	    goto alert_loser;
+- 	}
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/didhandshakeresume.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/didhandshakeresume.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/didhandshakeresume.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/didhandshakeresume.patch	2016-01-13 14:18:55.609954798 +0100
 @@ -1,8 +1,8 @@
@@ -1263,7 +1280,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
       return &ss->sec.ci.sid->peerCertStatus;
   }
   
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/getrequestedclientcerttypes.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/getrequestedclientcerttypes.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/getrequestedclientcerttypes.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/getrequestedclientcerttypes.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/getrequestedclientcerttypes.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/getrequestedclientcerttypes.patch	2016-01-13 14:18:55.609954798 +0100
 @@ -1,8 +1,8 @@
@@ -1356,8 +1373,26 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
 -         ss->dbHandle           = CERT_GetDefaultCertDB();
   
 +         ss->dheParams = NULL;
-Nur in qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches: norenegotiatelock.patch.
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/nssrwlock.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/nssrwlock.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/norenegotiatelock.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/norenegotiatelock.patch
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/norenegotiatelock.patch	2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/norenegotiatelock.patch	1970-01-01 01:00:00.000000000 +0100
+@@ -1,15 +0,0 @@
+-diff --git a/ssl/ssl3con.c b/ssl/ssl3con.c
+-index f5afab7..a67a9d1 100644
+---- a/ssl/ssl3con.c
+-+++ b/ssl/ssl3con.c
+-@@ -5547,9 +5547,7 @@ ssl3_HandleHelloRequest(sslSocket *ss)
+- 	return SECFailure;
+-     }
+-     if (ss->opt.enableRenegotiation == SSL_RENEGOTIATE_NEVER) {
+--	ssl_GetXmitBufLock(ss);
+--	rv = SSL3_SendAlert(ss, alert_warning, no_renegotiation);
+--	ssl_ReleaseXmitBufLock(ss);
+-+	(void)SSL3_SendAlert(ss, alert_warning, no_renegotiation);
+- 	PORT_SetError(SSL_ERROR_RENEGOTIATION_NOT_ALLOWED);
+- 	return SECFailure;
+-     }
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/nssrwlock.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/nssrwlock.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/nssrwlock.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/nssrwlock.patch	2016-01-13 14:18:55.610954804 +0100
 @@ -1,8 +1,8 @@
@@ -1533,8 +1568,38 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
  @@ -136,7 +136,7 @@ ssl_DestroySID(sslSessionID *sid)
           }
   
-Nur in qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches: removebuildmetadata.patch.
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/reorderextensions.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/reorderextensions.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/removebuildmetadata.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/removebuildmetadata.patch
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/removebuildmetadata.patch	2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/removebuildmetadata.patch	1970-01-01 01:00:00.000000000 +0100
+@@ -1,27 +0,0 @@
+-diff --git a/ssl/sslver.c b/ssl/sslver.c
+-index 35e0317..ea60888 100644
+---- a/ssl/sslver.c
+-+++ b/ssl/sslver.c
+-@@ -12,6 +12,13 @@
+- #define _DEBUG_STRING ""
+- #endif
+- 
+-+#if defined(DONT_EMBED_BUILD_METADATA) && !defined(OFFICIAL_BUILD)
+-+#define _DATE_AND_TIME "Sep 02 2008 08:00:00"
+-+#else
+-+#define _DATE_AND_TIME __DATE__ " " __TIME__
+-+#endif
+-+
+-+
+- /*
+-  * Version information for the 'ident' and 'what commands
+-  *
+-@@ -19,6 +26,6 @@
+-  * must not end in a '$' to prevent rcs keyword substitution.
+-  */
+- const char __nss_ssl_rcsid[] = "$Header: NSS " NSS_VERSION _DEBUG_STRING
+--        "  " __DATE__ " " __TIME__ " $";
+-+        "  " _DATE_AND_TIME " $";
+- const char __nss_ssl_sccsid[] = "@(#)NSS " NSS_VERSION _DEBUG_STRING
+--        "  " __DATE__ " " __TIME__;
+-+        "  " _DATE_AND_TIME;
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/reorderextensions.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/reorderextensions.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/reorderextensions.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/reorderextensions.patch	2016-01-13 14:18:55.610954804 +0100
 @@ -1,8 +1,8 @@
@@ -1562,7 +1627,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
       }
   
       extensionLength = 512 - recordLength;
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/restartclientauth.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/restartclientauth.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/restartclientauth.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/restartclientauth.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/restartclientauth.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/restartclientauth.patch	2016-01-13 14:18:55.610954804 +0100
 @@ -1,8 +1,8 @@
@@ -1630,7 +1695,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
       return SECSuccess;
   }
   
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/secitemarray.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/secitemarray.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/secitemarray.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/secitemarray.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/secitemarray.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/secitemarray.patch	2016-01-13 14:18:55.610954804 +0100
 @@ -1,8 +1,8 @@
@@ -1664,7 +1729,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
   
   #include "prtypes.h"
   
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/secretexporterlocks.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/secretexporterlocks.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/secretexporterlocks.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/secretexporterlocks.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/secretexporterlocks.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/secretexporterlocks.patch	2016-01-13 14:18:55.611954809 +0100
 @@ -1,8 +1,8 @@
@@ -1699,7 +1764,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
   					 valLen, out, outLen);
       }
       ssl_ReleaseSpecReadLock(ss);
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/sessioncache.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/sessioncache.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/sessioncache.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/sessioncache.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/sessioncache.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/sessioncache.patch	2016-01-13 14:18:55.611954809 +0100
 @@ -1,8 +1,8 @@
@@ -1750,7 +1815,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
       return rv;
   }
   
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/signedcertificatetimestamps.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/signedcertificatetimestamps.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/signedcertificatetimestamps.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/signedcertificatetimestamps.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/signedcertificatetimestamps.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/signedcertificatetimestamps.patch	2016-01-13 14:18:55.612954815 +0100
 @@ -1,18 +1,17 @@
@@ -2082,7 +2147,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
 - #endif /* __sslt_h_ */
 + typedef enum {
 +     ssl_dhe_group_none = 0,
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/suitebonly.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/suitebonly.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/suitebonly.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/suitebonly.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/suitebonly.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/suitebonly.patch	2016-01-13 14:18:55.612954815 +0100
 @@ -1,8 +1,8 @@
@@ -2108,7 +2173,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
       /* we can, presume we can do all curves */
       PK11_FreeSlot(slot);
       return PR_FALSE;
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/tls12chromium.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/tls12chromium.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/tls12chromium.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/tls12chromium.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/tls12chromium.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/tls12chromium.patch	2016-01-13 14:18:55.612954815 +0100
 @@ -1,8 +1,8 @@
@@ -2181,7 +2246,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
       ssl_GetSSL3HandshakeLock(ss);
   
       ss->vrange = *vrange;
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/tlsunique.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/tlsunique.patch
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/tlsunique.patch qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/tlsunique.patch
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/patches/tlsunique.patch	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/patches/tlsunique.patch	2016-01-13 14:18:55.612954815 +0100
 @@ -1,10 +1,10 @@
@@ -2267,7 +2332,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
 - 
 - /* LOCKS ??? XXX */
 + static const SSLDHEGroupType ssl_default_dhe_groups[] = {
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/README.chromium qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/README.chromium
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/README.chromium qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/README.chromium
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/README.chromium	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/README.chromium	2016-01-13 14:18:55.588954676 +0100
 @@ -1,6 +1,6 @@
@@ -2304,7 +2369,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
  Apply the patches to NSS by running the patches/applypatches.sh script.  Read
  the comments at the top of patches/applypatches.sh for instructions.
  
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/derive.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/derive.c
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/derive.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/derive.c
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/derive.c	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/derive.c	2016-01-13 14:18:55.613954821 +0100
 @@ -431,7 +431,7 @@
@@ -2316,8 +2381,424 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
      ssl3CipherSpec *      pwSpec,
      const unsigned char * cr,
      const unsigned char * sr,
-Nur in qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl: dhe-param.c.
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/dtlscon.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/dtlscon.c
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/dhe-param.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/dhe-param.c
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/dhe-param.c	1970-01-01 01:00:00.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/dhe-param.c	2016-01-13 14:18:55.613954821 +0100
+@@ -0,0 +1,413 @@
++/* This Source Code Form is subject to the terms of the Mozilla Public
++ * License, v. 2.0. If a copy of the MPL was not distributed with this
++ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
++
++static const unsigned char ff_dhe_g2[] = { 2 };
++
++static const unsigned char ff_dhe_2048_p[] = {
++    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
++    0xAD, 0xF8, 0x54, 0x58, 0xA2, 0xBB, 0x4A, 0x9A,
++    0xAF, 0xDC, 0x56, 0x20, 0x27, 0x3D, 0x3C, 0xF1,
++    0xD8, 0xB9, 0xC5, 0x83, 0xCE, 0x2D, 0x36, 0x95,
++    0xA9, 0xE1, 0x36, 0x41, 0x14, 0x64, 0x33, 0xFB,
++    0xCC, 0x93, 0x9D, 0xCE, 0x24, 0x9B, 0x3E, 0xF9,
++    0x7D, 0x2F, 0xE3, 0x63, 0x63, 0x0C, 0x75, 0xD8,
++    0xF6, 0x81, 0xB2, 0x02, 0xAE, 0xC4, 0x61, 0x7A,
++    0xD3, 0xDF, 0x1E, 0xD5, 0xD5, 0xFD, 0x65, 0x61,
++    0x24, 0x33, 0xF5, 0x1F, 0x5F, 0x06, 0x6E, 0xD0,
++    0x85, 0x63, 0x65, 0x55, 0x3D, 0xED, 0x1A, 0xF3,
++    0xB5, 0x57, 0x13, 0x5E, 0x7F, 0x57, 0xC9, 0x35,
++    0x98, 0x4F, 0x0C, 0x70, 0xE0, 0xE6, 0x8B, 0x77,
++    0xE2, 0xA6, 0x89, 0xDA, 0xF3, 0xEF, 0xE8, 0x72,
++    0x1D, 0xF1, 0x58, 0xA1, 0x36, 0xAD, 0xE7, 0x35,
++    0x30, 0xAC, 0xCA, 0x4F, 0x48, 0x3A, 0x79, 0x7A,
++    0xBC, 0x0A, 0xB1, 0x82, 0xB3, 0x24, 0xFB, 0x61,
++    0xD1, 0x08, 0xA9, 0x4B, 0xB2, 0xC8, 0xE3, 0xFB,
++    0xB9, 0x6A, 0xDA, 0xB7, 0x60, 0xD7, 0xF4, 0x68,
++    0x1D, 0x4F, 0x42, 0xA3, 0xDE, 0x39, 0x4D, 0xF4,
++    0xAE, 0x56, 0xED, 0xE7, 0x63, 0x72, 0xBB, 0x19,
++    0x0B, 0x07, 0xA7, 0xC8, 0xEE, 0x0A, 0x6D, 0x70,
++    0x9E, 0x02, 0xFC, 0xE1, 0xCD, 0xF7, 0xE2, 0xEC,
++    0xC0, 0x34, 0x04, 0xCD, 0x28, 0x34, 0x2F, 0x61,
++    0x91, 0x72, 0xFE, 0x9C, 0xE9, 0x85, 0x83, 0xFF,
++    0x8E, 0x4F, 0x12, 0x32, 0xEE, 0xF2, 0x81, 0x83,
++    0xC3, 0xFE, 0x3B, 0x1B, 0x4C, 0x6F, 0xAD, 0x73,
++    0x3B, 0xB5, 0xFC, 0xBC, 0x2E, 0xC2, 0x20, 0x05,
++    0xC5, 0x8E, 0xF1, 0x83, 0x7D, 0x16, 0x83, 0xB2,
++    0xC6, 0xF3, 0x4A, 0x26, 0xC1, 0xB2, 0xEF, 0xFA,
++    0x88, 0x6B, 0x42, 0x38, 0x61, 0x28, 0x5C, 0x97,
++    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
++};
++
++static const ssl3DHParams ff_dhe_2048 = {
++    { siBuffer, (unsigned char *)ff_dhe_2048_p, sizeof(ff_dhe_2048_p) },
++    { siBuffer, (unsigned char *)ff_dhe_g2, sizeof(ff_dhe_g2) },
++};
++
++static const unsigned char ff_dhe_3072_p[] = {
++    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
++    0xAD, 0xF8, 0x54, 0x58, 0xA2, 0xBB, 0x4A, 0x9A,
++    0xAF, 0xDC, 0x56, 0x20, 0x27, 0x3D, 0x3C, 0xF1,
++    0xD8, 0xB9, 0xC5, 0x83, 0xCE, 0x2D, 0x36, 0x95,
++    0xA9, 0xE1, 0x36, 0x41, 0x14, 0x64, 0x33, 0xFB,
++    0xCC, 0x93, 0x9D, 0xCE, 0x24, 0x9B, 0x3E, 0xF9,
++    0x7D, 0x2F, 0xE3, 0x63, 0x63, 0x0C, 0x75, 0xD8,
++    0xF6, 0x81, 0xB2, 0x02, 0xAE, 0xC4, 0x61, 0x7A,
++    0xD3, 0xDF, 0x1E, 0xD5, 0xD5, 0xFD, 0x65, 0x61,
++    0x24, 0x33, 0xF5, 0x1F, 0x5F, 0x06, 0x6E, 0xD0,
++    0x85, 0x63, 0x65, 0x55, 0x3D, 0xED, 0x1A, 0xF3,
++    0xB5, 0x57, 0x13, 0x5E, 0x7F, 0x57, 0xC9, 0x35,
++    0x98, 0x4F, 0x0C, 0x70, 0xE0, 0xE6, 0x8B, 0x77,
++    0xE2, 0xA6, 0x89, 0xDA, 0xF3, 0xEF, 0xE8, 0x72,
++    0x1D, 0xF1, 0x58, 0xA1, 0x36, 0xAD, 0xE7, 0x35,
++    0x30, 0xAC, 0xCA, 0x4F, 0x48, 0x3A, 0x79, 0x7A,
++    0xBC, 0x0A, 0xB1, 0x82, 0xB3, 0x24, 0xFB, 0x61,
++    0xD1, 0x08, 0xA9, 0x4B, 0xB2, 0xC8, 0xE3, 0xFB,
++    0xB9, 0x6A, 0xDA, 0xB7, 0x60, 0xD7, 0xF4, 0x68,
++    0x1D, 0x4F, 0x42, 0xA3, 0xDE, 0x39, 0x4D, 0xF4,
++    0xAE, 0x56, 0xED, 0xE7, 0x63, 0x72, 0xBB, 0x19,
++    0x0B, 0x07, 0xA7, 0xC8, 0xEE, 0x0A, 0x6D, 0x70,
++    0x9E, 0x02, 0xFC, 0xE1, 0xCD, 0xF7, 0xE2, 0xEC,
++    0xC0, 0x34, 0x04, 0xCD, 0x28, 0x34, 0x2F, 0x61,
++    0x91, 0x72, 0xFE, 0x9C, 0xE9, 0x85, 0x83, 0xFF,
++    0x8E, 0x4F, 0x12, 0x32, 0xEE, 0xF2, 0x81, 0x83,
++    0xC3, 0xFE, 0x3B, 0x1B, 0x4C, 0x6F, 0xAD, 0x73,
++    0x3B, 0xB5, 0xFC, 0xBC, 0x2E, 0xC2, 0x20, 0x05,
++    0xC5, 0x8E, 0xF1, 0x83, 0x7D, 0x16, 0x83, 0xB2,
++    0xC6, 0xF3, 0x4A, 0x26, 0xC1, 0xB2, 0xEF, 0xFA,
++    0x88, 0x6B, 0x42, 0x38, 0x61, 0x1F, 0xCF, 0xDC,
++    0xDE, 0x35, 0x5B, 0x3B, 0x65, 0x19, 0x03, 0x5B,
++    0xBC, 0x34, 0xF4, 0xDE, 0xF9, 0x9C, 0x02, 0x38,
++    0x61, 0xB4, 0x6F, 0xC9, 0xD6, 0xE6, 0xC9, 0x07,
++    0x7A, 0xD9, 0x1D, 0x26, 0x91, 0xF7, 0xF7, 0xEE,
++    0x59, 0x8C, 0xB0, 0xFA, 0xC1, 0x86, 0xD9, 0x1C,
++    0xAE, 0xFE, 0x13, 0x09, 0x85, 0x13, 0x92, 0x70,
++    0xB4, 0x13, 0x0C, 0x93, 0xBC, 0x43, 0x79, 0x44,
++    0xF4, 0xFD, 0x44, 0x52, 0xE2, 0xD7, 0x4D, 0xD3,
++    0x64, 0xF2, 0xE2, 0x1E, 0x71, 0xF5, 0x4B, 0xFF,
++    0x5C, 0xAE, 0x82, 0xAB, 0x9C, 0x9D, 0xF6, 0x9E,
++    0xE8, 0x6D, 0x2B, 0xC5, 0x22, 0x36, 0x3A, 0x0D,
++    0xAB, 0xC5, 0x21, 0x97, 0x9B, 0x0D, 0xEA, 0xDA,
++    0x1D, 0xBF, 0x9A, 0x42, 0xD5, 0xC4, 0x48, 0x4E,
++    0x0A, 0xBC, 0xD0, 0x6B, 0xFA, 0x53, 0xDD, 0xEF,
++    0x3C, 0x1B, 0x20, 0xEE, 0x3F, 0xD5, 0x9D, 0x7C,
++    0x25, 0xE4, 0x1D, 0x2B, 0x66, 0xC6, 0x2E, 0x37,
++    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
++};
++
++static const ssl3DHParams ff_dhe_3072 = {
++    { siBuffer, (unsigned char *)ff_dhe_3072_p, sizeof(ff_dhe_3072_p) },
++    { siBuffer, (unsigned char *)ff_dhe_g2, sizeof(ff_dhe_g2) },
++};
++
++static const unsigned char ff_dhe_4096_p[] = {
++    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
++    0xAD, 0xF8, 0x54, 0x58, 0xA2, 0xBB, 0x4A, 0x9A,
++    0xAF, 0xDC, 0x56, 0x20, 0x27, 0x3D, 0x3C, 0xF1,
++    0xD8, 0xB9, 0xC5, 0x83, 0xCE, 0x2D, 0x36, 0x95,
++    0xA9, 0xE1, 0x36, 0x41, 0x14, 0x64, 0x33, 0xFB,
++    0xCC, 0x93, 0x9D, 0xCE, 0x24, 0x9B, 0x3E, 0xF9,
++    0x7D, 0x2F, 0xE3, 0x63, 0x63, 0x0C, 0x75, 0xD8,
++    0xF6, 0x81, 0xB2, 0x02, 0xAE, 0xC4, 0x61, 0x7A,
++    0xD3, 0xDF, 0x1E, 0xD5, 0xD5, 0xFD, 0x65, 0x61,
++    0x24, 0x33, 0xF5, 0x1F, 0x5F, 0x06, 0x6E, 0xD0,
++    0x85, 0x63, 0x65, 0x55, 0x3D, 0xED, 0x1A, 0xF3,
++    0xB5, 0x57, 0x13, 0x5E, 0x7F, 0x57, 0xC9, 0x35,
++    0x98, 0x4F, 0x0C, 0x70, 0xE0, 0xE6, 0x8B, 0x77,
++    0xE2, 0xA6, 0x89, 0xDA, 0xF3, 0xEF, 0xE8, 0x72,
++    0x1D, 0xF1, 0x58, 0xA1, 0x36, 0xAD, 0xE7, 0x35,
++    0x30, 0xAC, 0xCA, 0x4F, 0x48, 0x3A, 0x79, 0x7A,
++    0xBC, 0x0A, 0xB1, 0x82, 0xB3, 0x24, 0xFB, 0x61,
++    0xD1, 0x08, 0xA9, 0x4B, 0xB2, 0xC8, 0xE3, 0xFB,
++    0xB9, 0x6A, 0xDA, 0xB7, 0x60, 0xD7, 0xF4, 0x68,
++    0x1D, 0x4F, 0x42, 0xA3, 0xDE, 0x39, 0x4D, 0xF4,
++    0xAE, 0x56, 0xED, 0xE7, 0x63, 0x72, 0xBB, 0x19,
++    0x0B, 0x07, 0xA7, 0xC8, 0xEE, 0x0A, 0x6D, 0x70,
++    0x9E, 0x02, 0xFC, 0xE1, 0xCD, 0xF7, 0xE2, 0xEC,
++    0xC0, 0x34, 0x04, 0xCD, 0x28, 0x34, 0x2F, 0x61,
++    0x91, 0x72, 0xFE, 0x9C, 0xE9, 0x85, 0x83, 0xFF,
++    0x8E, 0x4F, 0x12, 0x32, 0xEE, 0xF2, 0x81, 0x83,
++    0xC3, 0xFE, 0x3B, 0x1B, 0x4C, 0x6F, 0xAD, 0x73,
++    0x3B, 0xB5, 0xFC, 0xBC, 0x2E, 0xC2, 0x20, 0x05,
++    0xC5, 0x8E, 0xF1, 0x83, 0x7D, 0x16, 0x83, 0xB2,
++    0xC6, 0xF3, 0x4A, 0x26, 0xC1, 0xB2, 0xEF, 0xFA,
++    0x88, 0x6B, 0x42, 0x38, 0x61, 0x1F, 0xCF, 0xDC,
++    0xDE, 0x35, 0x5B, 0x3B, 0x65, 0x19, 0x03, 0x5B,
++    0xBC, 0x34, 0xF4, 0xDE, 0xF9, 0x9C, 0x02, 0x38,
++    0x61, 0xB4, 0x6F, 0xC9, 0xD6, 0xE6, 0xC9, 0x07,
++    0x7A, 0xD9, 0x1D, 0x26, 0x91, 0xF7, 0xF7, 0xEE,
++    0x59, 0x8C, 0xB0, 0xFA, 0xC1, 0x86, 0xD9, 0x1C,
++    0xAE, 0xFE, 0x13, 0x09, 0x85, 0x13, 0x92, 0x70,
++    0xB4, 0x13, 0x0C, 0x93, 0xBC, 0x43, 0x79, 0x44,
++    0xF4, 0xFD, 0x44, 0x52, 0xE2, 0xD7, 0x4D, 0xD3,
++    0x64, 0xF2, 0xE2, 0x1E, 0x71, 0xF5, 0x4B, 0xFF,
++    0x5C, 0xAE, 0x82, 0xAB, 0x9C, 0x9D, 0xF6, 0x9E,
++    0xE8, 0x6D, 0x2B, 0xC5, 0x22, 0x36, 0x3A, 0x0D,
++    0xAB, 0xC5, 0x21, 0x97, 0x9B, 0x0D, 0xEA, 0xDA,
++    0x1D, 0xBF, 0x9A, 0x42, 0xD5, 0xC4, 0x48, 0x4E,
++    0x0A, 0xBC, 0xD0, 0x6B, 0xFA, 0x53, 0xDD, 0xEF,
++    0x3C, 0x1B, 0x20, 0xEE, 0x3F, 0xD5, 0x9D, 0x7C,
++    0x25, 0xE4, 0x1D, 0x2B, 0x66, 0x9E, 0x1E, 0xF1,
++    0x6E, 0x6F, 0x52, 0xC3, 0x16, 0x4D, 0xF4, 0xFB,
++    0x79, 0x30, 0xE9, 0xE4, 0xE5, 0x88, 0x57, 0xB6,
++    0xAC, 0x7D, 0x5F, 0x42, 0xD6, 0x9F, 0x6D, 0x18,
++    0x77, 0x63, 0xCF, 0x1D, 0x55, 0x03, 0x40, 0x04,
++    0x87, 0xF5, 0x5B, 0xA5, 0x7E, 0x31, 0xCC, 0x7A,
++    0x71, 0x35, 0xC8, 0x86, 0xEF, 0xB4, 0x31, 0x8A,
++    0xED, 0x6A, 0x1E, 0x01, 0x2D, 0x9E, 0x68, 0x32,
++    0xA9, 0x07, 0x60, 0x0A, 0x91, 0x81, 0x30, 0xC4,
++    0x6D, 0xC7, 0x78, 0xF9, 0x71, 0xAD, 0x00, 0x38,
++    0x09, 0x29, 0x99, 0xA3, 0x33, 0xCB, 0x8B, 0x7A,
++    0x1A, 0x1D, 0xB9, 0x3D, 0x71, 0x40, 0x00, 0x3C,
++    0x2A, 0x4E, 0xCE, 0xA9, 0xF9, 0x8D, 0x0A, 0xCC,
++    0x0A, 0x82, 0x91, 0xCD, 0xCE, 0xC9, 0x7D, 0xCF,
++    0x8E, 0xC9, 0xB5, 0x5A, 0x7F, 0x88, 0xA4, 0x6B,
++    0x4D, 0xB5, 0xA8, 0x51, 0xF4, 0x41, 0x82, 0xE1,
++    0xC6, 0x8A, 0x00, 0x7E, 0x5E, 0x65, 0x5F, 0x6A,
++    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
++};
++
++static const ssl3DHParams ff_dhe_4096 = {
++    { siBuffer, (unsigned char *)ff_dhe_4096_p, sizeof(ff_dhe_4096_p) },
++    { siBuffer, (unsigned char *)ff_dhe_g2, sizeof(ff_dhe_g2) },
++};
++
++static const unsigned char ff_dhe_6144_p[] = {
++    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
++    0xAD, 0xF8, 0x54, 0x58, 0xA2, 0xBB, 0x4A, 0x9A,
++    0xAF, 0xDC, 0x56, 0x20, 0x27, 0x3D, 0x3C, 0xF1,
++    0xD8, 0xB9, 0xC5, 0x83, 0xCE, 0x2D, 0x36, 0x95,
++    0xA9, 0xE1, 0x36, 0x41, 0x14, 0x64, 0x33, 0xFB,
++    0xCC, 0x93, 0x9D, 0xCE, 0x24, 0x9B, 0x3E, 0xF9,
++    0x7D, 0x2F, 0xE3, 0x63, 0x63, 0x0C, 0x75, 0xD8,
++    0xF6, 0x81, 0xB2, 0x02, 0xAE, 0xC4, 0x61, 0x7A,
++    0xD3, 0xDF, 0x1E, 0xD5, 0xD5, 0xFD, 0x65, 0x61,
++    0x24, 0x33, 0xF5, 0x1F, 0x5F, 0x06, 0x6E, 0xD0,
++    0x85, 0x63, 0x65, 0x55, 0x3D, 0xED, 0x1A, 0xF3,
++    0xB5, 0x57, 0x13, 0x5E, 0x7F, 0x57, 0xC9, 0x35,
++    0x98, 0x4F, 0x0C, 0x70, 0xE0, 0xE6, 0x8B, 0x77,
++    0xE2, 0xA6, 0x89, 0xDA, 0xF3, 0xEF, 0xE8, 0x72,
++    0x1D, 0xF1, 0x58, 0xA1, 0x36, 0xAD, 0xE7, 0x35,
++    0x30, 0xAC, 0xCA, 0x4F, 0x48, 0x3A, 0x79, 0x7A,
++    0xBC, 0x0A, 0xB1, 0x82, 0xB3, 0x24, 0xFB, 0x61,
++    0xD1, 0x08, 0xA9, 0x4B, 0xB2, 0xC8, 0xE3, 0xFB,
++    0xB9, 0x6A, 0xDA, 0xB7, 0x60, 0xD7, 0xF4, 0x68,
++    0x1D, 0x4F, 0x42, 0xA3, 0xDE, 0x39, 0x4D, 0xF4,
++    0xAE, 0x56, 0xED, 0xE7, 0x63, 0x72, 0xBB, 0x19,
++    0x0B, 0x07, 0xA7, 0xC8, 0xEE, 0x0A, 0x6D, 0x70,
++    0x9E, 0x02, 0xFC, 0xE1, 0xCD, 0xF7, 0xE2, 0xEC,
++    0xC0, 0x34, 0x04, 0xCD, 0x28, 0x34, 0x2F, 0x61,
++    0x91, 0x72, 0xFE, 0x9C, 0xE9, 0x85, 0x83, 0xFF,
++    0x8E, 0x4F, 0x12, 0x32, 0xEE, 0xF2, 0x81, 0x83,
++    0xC3, 0xFE, 0x3B, 0x1B, 0x4C, 0x6F, 0xAD, 0x73,
++    0x3B, 0xB5, 0xFC, 0xBC, 0x2E, 0xC2, 0x20, 0x05,
++    0xC5, 0x8E, 0xF1, 0x83, 0x7D, 0x16, 0x83, 0xB2,
++    0xC6, 0xF3, 0x4A, 0x26, 0xC1, 0xB2, 0xEF, 0xFA,
++    0x88, 0x6B, 0x42, 0x38, 0x61, 0x1F, 0xCF, 0xDC,
++    0xDE, 0x35, 0x5B, 0x3B, 0x65, 0x19, 0x03, 0x5B,
++    0xBC, 0x34, 0xF4, 0xDE, 0xF9, 0x9C, 0x02, 0x38,
++    0x61, 0xB4, 0x6F, 0xC9, 0xD6, 0xE6, 0xC9, 0x07,
++    0x7A, 0xD9, 0x1D, 0x26, 0x91, 0xF7, 0xF7, 0xEE,
++    0x59, 0x8C, 0xB0, 0xFA, 0xC1, 0x86, 0xD9, 0x1C,
++    0xAE, 0xFE, 0x13, 0x09, 0x85, 0x13, 0x92, 0x70,
++    0xB4, 0x13, 0x0C, 0x93, 0xBC, 0x43, 0x79, 0x44,
++    0xF4, 0xFD, 0x44, 0x52, 0xE2, 0xD7, 0x4D, 0xD3,
++    0x64, 0xF2, 0xE2, 0x1E, 0x71, 0xF5, 0x4B, 0xFF,
++    0x5C, 0xAE, 0x82, 0xAB, 0x9C, 0x9D, 0xF6, 0x9E,
++    0xE8, 0x6D, 0x2B, 0xC5, 0x22, 0x36, 0x3A, 0x0D,
++    0xAB, 0xC5, 0x21, 0x97, 0x9B, 0x0D, 0xEA, 0xDA,
++    0x1D, 0xBF, 0x9A, 0x42, 0xD5, 0xC4, 0x48, 0x4E,
++    0x0A, 0xBC, 0xD0, 0x6B, 0xFA, 0x53, 0xDD, 0xEF,
++    0x3C, 0x1B, 0x20, 0xEE, 0x3F, 0xD5, 0x9D, 0x7C,
++    0x25, 0xE4, 0x1D, 0x2B, 0x66, 0x9E, 0x1E, 0xF1,
++    0x6E, 0x6F, 0x52, 0xC3, 0x16, 0x4D, 0xF4, 0xFB,
++    0x79, 0x30, 0xE9, 0xE4, 0xE5, 0x88, 0x57, 0xB6,
++    0xAC, 0x7D, 0x5F, 0x42, 0xD6, 0x9F, 0x6D, 0x18,
++    0x77, 0x63, 0xCF, 0x1D, 0x55, 0x03, 0x40, 0x04,
++    0x87, 0xF5, 0x5B, 0xA5, 0x7E, 0x31, 0xCC, 0x7A,
++    0x71, 0x35, 0xC8, 0x86, 0xEF, 0xB4, 0x31, 0x8A,
++    0xED, 0x6A, 0x1E, 0x01, 0x2D, 0x9E, 0x68, 0x32,
++    0xA9, 0x07, 0x60, 0x0A, 0x91, 0x81, 0x30, 0xC4,
++    0x6D, 0xC7, 0x78, 0xF9, 0x71, 0xAD, 0x00, 0x38,
++    0x09, 0x29, 0x99, 0xA3, 0x33, 0xCB, 0x8B, 0x7A,
++    0x1A, 0x1D, 0xB9, 0x3D, 0x71, 0x40, 0x00, 0x3C,
++    0x2A, 0x4E, 0xCE, 0xA9, 0xF9, 0x8D, 0x0A, 0xCC,
++    0x0A, 0x82, 0x91, 0xCD, 0xCE, 0xC9, 0x7D, 0xCF,
++    0x8E, 0xC9, 0xB5, 0x5A, 0x7F, 0x88, 0xA4, 0x6B,
++    0x4D, 0xB5, 0xA8, 0x51, 0xF4, 0x41, 0x82, 0xE1,
++    0xC6, 0x8A, 0x00, 0x7E, 0x5E, 0x0D, 0xD9, 0x02,
++    0x0B, 0xFD, 0x64, 0xB6, 0x45, 0x03, 0x6C, 0x7A,
++    0x4E, 0x67, 0x7D, 0x2C, 0x38, 0x53, 0x2A, 0x3A,
++    0x23, 0xBA, 0x44, 0x42, 0xCA, 0xF5, 0x3E, 0xA6,
++    0x3B, 0xB4, 0x54, 0x32, 0x9B, 0x76, 0x24, 0xC8,
++    0x91, 0x7B, 0xDD, 0x64, 0xB1, 0xC0, 0xFD, 0x4C,
++    0xB3, 0x8E, 0x8C, 0x33, 0x4C, 0x70, 0x1C, 0x3A,
++    0xCD, 0xAD, 0x06, 0x57, 0xFC, 0xCF, 0xEC, 0x71,
++    0x9B, 0x1F, 0x5C, 0x3E, 0x4E, 0x46, 0x04, 0x1F,
++    0x38, 0x81, 0x47, 0xFB, 0x4C, 0xFD, 0xB4, 0x77,
++    0xA5, 0x24, 0x71, 0xF7, 0xA9, 0xA9, 0x69, 0x10,
++    0xB8, 0x55, 0x32, 0x2E, 0xDB, 0x63, 0x40, 0xD8,
++    0xA0, 0x0E, 0xF0, 0x92, 0x35, 0x05, 0x11, 0xE3,
++    0x0A, 0xBE, 0xC1, 0xFF, 0xF9, 0xE3, 0xA2, 0x6E,
++    0x7F, 0xB2, 0x9F, 0x8C, 0x18, 0x30, 0x23, 0xC3,
++    0x58, 0x7E, 0x38, 0xDA, 0x00, 0x77, 0xD9, 0xB4,
++    0x76, 0x3E, 0x4E, 0x4B, 0x94, 0xB2, 0xBB, 0xC1,
++    0x94, 0xC6, 0x65, 0x1E, 0x77, 0xCA, 0xF9, 0x92,
++    0xEE, 0xAA, 0xC0, 0x23, 0x2A, 0x28, 0x1B, 0xF6,
++    0xB3, 0xA7, 0x39, 0xC1, 0x22, 0x61, 0x16, 0x82,
++    0x0A, 0xE8, 0xDB, 0x58, 0x47, 0xA6, 0x7C, 0xBE,
++    0xF9, 0xC9, 0x09, 0x1B, 0x46, 0x2D, 0x53, 0x8C,
++    0xD7, 0x2B, 0x03, 0x74, 0x6A, 0xE7, 0x7F, 0x5E,
++    0x62, 0x29, 0x2C, 0x31, 0x15, 0x62, 0xA8, 0x46,
++    0x50, 0x5D, 0xC8, 0x2D, 0xB8, 0x54, 0x33, 0x8A,
++    0xE4, 0x9F, 0x52, 0x35, 0xC9, 0x5B, 0x91, 0x17,
++    0x8C, 0xCF, 0x2D, 0xD5, 0xCA, 0xCE, 0xF4, 0x03,
++    0xEC, 0x9D, 0x18, 0x10, 0xC6, 0x27, 0x2B, 0x04,
++    0x5B, 0x3B, 0x71, 0xF9, 0xDC, 0x6B, 0x80, 0xD6,
++    0x3F, 0xDD, 0x4A, 0x8E, 0x9A, 0xDB, 0x1E, 0x69,
++    0x62, 0xA6, 0x95, 0x26, 0xD4, 0x31, 0x61, 0xC1,
++    0xA4, 0x1D, 0x57, 0x0D, 0x79, 0x38, 0xDA, 0xD4,
++    0xA4, 0x0E, 0x32, 0x9C, 0xD0, 0xE4, 0x0E, 0x65,
++    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
++};
++
++static const ssl3DHParams ff_dhe_6144 = {
++    { siBuffer, (unsigned char *)ff_dhe_6144_p, sizeof(ff_dhe_6144_p) },
++    { siBuffer, (unsigned char *)ff_dhe_g2, sizeof(ff_dhe_g2) },
++};
++
++static const unsigned char ff_dhe_8192_p[] = {
++    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
++    0xAD, 0xF8, 0x54, 0x58, 0xA2, 0xBB, 0x4A, 0x9A,
++    0xAF, 0xDC, 0x56, 0x20, 0x27, 0x3D, 0x3C, 0xF1,
++    0xD8, 0xB9, 0xC5, 0x83, 0xCE, 0x2D, 0x36, 0x95,
++    0xA9, 0xE1, 0x36, 0x41, 0x14, 0x64, 0x33, 0xFB,
++    0xCC, 0x93, 0x9D, 0xCE, 0x24, 0x9B, 0x3E, 0xF9,
++    0x7D, 0x2F, 0xE3, 0x63, 0x63, 0x0C, 0x75, 0xD8,
++    0xF6, 0x81, 0xB2, 0x02, 0xAE, 0xC4, 0x61, 0x7A,
++    0xD3, 0xDF, 0x1E, 0xD5, 0xD5, 0xFD, 0x65, 0x61,
++    0x24, 0x33, 0xF5, 0x1F, 0x5F, 0x06, 0x6E, 0xD0,
++    0x85, 0x63, 0x65, 0x55, 0x3D, 0xED, 0x1A, 0xF3,
++    0xB5, 0x57, 0x13, 0x5E, 0x7F, 0x57, 0xC9, 0x35,
++    0x98, 0x4F, 0x0C, 0x70, 0xE0, 0xE6, 0x8B, 0x77,
++    0xE2, 0xA6, 0x89, 0xDA, 0xF3, 0xEF, 0xE8, 0x72,
++    0x1D, 0xF1, 0x58, 0xA1, 0x36, 0xAD, 0xE7, 0x35,
++    0x30, 0xAC, 0xCA, 0x4F, 0x48, 0x3A, 0x79, 0x7A,
++    0xBC, 0x0A, 0xB1, 0x82, 0xB3, 0x24, 0xFB, 0x61,
++    0xD1, 0x08, 0xA9, 0x4B, 0xB2, 0xC8, 0xE3, 0xFB,
++    0xB9, 0x6A, 0xDA, 0xB7, 0x60, 0xD7, 0xF4, 0x68,
++    0x1D, 0x4F, 0x42, 0xA3, 0xDE, 0x39, 0x4D, 0xF4,
++    0xAE, 0x56, 0xED, 0xE7, 0x63, 0x72, 0xBB, 0x19,
++    0x0B, 0x07, 0xA7, 0xC8, 0xEE, 0x0A, 0x6D, 0x70,
++    0x9E, 0x02, 0xFC, 0xE1, 0xCD, 0xF7, 0xE2, 0xEC,
++    0xC0, 0x34, 0x04, 0xCD, 0x28, 0x34, 0x2F, 0x61,
++    0x91, 0x72, 0xFE, 0x9C, 0xE9, 0x85, 0x83, 0xFF,
++    0x8E, 0x4F, 0x12, 0x32, 0xEE, 0xF2, 0x81, 0x83,
++    0xC3, 0xFE, 0x3B, 0x1B, 0x4C, 0x6F, 0xAD, 0x73,
++    0x3B, 0xB5, 0xFC, 0xBC, 0x2E, 0xC2, 0x20, 0x05,
++    0xC5, 0x8E, 0xF1, 0x83, 0x7D, 0x16, 0x83, 0xB2,
++    0xC6, 0xF3, 0x4A, 0x26, 0xC1, 0xB2, 0xEF, 0xFA,
++    0x88, 0x6B, 0x42, 0x38, 0x61, 0x1F, 0xCF, 0xDC,
++    0xDE, 0x35, 0x5B, 0x3B, 0x65, 0x19, 0x03, 0x5B,
++    0xBC, 0x34, 0xF4, 0xDE, 0xF9, 0x9C, 0x02, 0x38,
++    0x61, 0xB4, 0x6F, 0xC9, 0xD6, 0xE6, 0xC9, 0x07,
++    0x7A, 0xD9, 0x1D, 0x26, 0x91, 0xF7, 0xF7, 0xEE,
++    0x59, 0x8C, 0xB0, 0xFA, 0xC1, 0x86, 0xD9, 0x1C,
++    0xAE, 0xFE, 0x13, 0x09, 0x85, 0x13, 0x92, 0x70,
++    0xB4, 0x13, 0x0C, 0x93, 0xBC, 0x43, 0x79, 0x44,
++    0xF4, 0xFD, 0x44, 0x52, 0xE2, 0xD7, 0x4D, 0xD3,
++    0x64, 0xF2, 0xE2, 0x1E, 0x71, 0xF5, 0x4B, 0xFF,
++    0x5C, 0xAE, 0x82, 0xAB, 0x9C, 0x9D, 0xF6, 0x9E,
++    0xE8, 0x6D, 0x2B, 0xC5, 0x22, 0x36, 0x3A, 0x0D,
++    0xAB, 0xC5, 0x21, 0x97, 0x9B, 0x0D, 0xEA, 0xDA,
++    0x1D, 0xBF, 0x9A, 0x42, 0xD5, 0xC4, 0x48, 0x4E,
++    0x0A, 0xBC, 0xD0, 0x6B, 0xFA, 0x53, 0xDD, 0xEF,
++    0x3C, 0x1B, 0x20, 0xEE, 0x3F, 0xD5, 0x9D, 0x7C,
++    0x25, 0xE4, 0x1D, 0x2B, 0x66, 0x9E, 0x1E, 0xF1,
++    0x6E, 0x6F, 0x52, 0xC3, 0x16, 0x4D, 0xF4, 0xFB,
++    0x79, 0x30, 0xE9, 0xE4, 0xE5, 0x88, 0x57, 0xB6,
++    0xAC, 0x7D, 0x5F, 0x42, 0xD6, 0x9F, 0x6D, 0x18,
++    0x77, 0x63, 0xCF, 0x1D, 0x55, 0x03, 0x40, 0x04,
++    0x87, 0xF5, 0x5B, 0xA5, 0x7E, 0x31, 0xCC, 0x7A,
++    0x71, 0x35, 0xC8, 0x86, 0xEF, 0xB4, 0x31, 0x8A,
++    0xED, 0x6A, 0x1E, 0x01, 0x2D, 0x9E, 0x68, 0x32,
++    0xA9, 0x07, 0x60, 0x0A, 0x91, 0x81, 0x30, 0xC4,
++    0x6D, 0xC7, 0x78, 0xF9, 0x71, 0xAD, 0x00, 0x38,
++    0x09, 0x29, 0x99, 0xA3, 0x33, 0xCB, 0x8B, 0x7A,
++    0x1A, 0x1D, 0xB9, 0x3D, 0x71, 0x40, 0x00, 0x3C,
++    0x2A, 0x4E, 0xCE, 0xA9, 0xF9, 0x8D, 0x0A, 0xCC,
++    0x0A, 0x82, 0x91, 0xCD, 0xCE, 0xC9, 0x7D, 0xCF,
++    0x8E, 0xC9, 0xB5, 0x5A, 0x7F, 0x88, 0xA4, 0x6B,
++    0x4D, 0xB5, 0xA8, 0x51, 0xF4, 0x41, 0x82, 0xE1,
++    0xC6, 0x8A, 0x00, 0x7E, 0x5E, 0x0D, 0xD9, 0x02,
++    0x0B, 0xFD, 0x64, 0xB6, 0x45, 0x03, 0x6C, 0x7A,
++    0x4E, 0x67, 0x7D, 0x2C, 0x38, 0x53, 0x2A, 0x3A,
++    0x23, 0xBA, 0x44, 0x42, 0xCA, 0xF5, 0x3E, 0xA6,
++    0x3B, 0xB4, 0x54, 0x32, 0x9B, 0x76, 0x24, 0xC8,
++    0x91, 0x7B, 0xDD, 0x64, 0xB1, 0xC0, 0xFD, 0x4C,
++    0xB3, 0x8E, 0x8C, 0x33, 0x4C, 0x70, 0x1C, 0x3A,
++    0xCD, 0xAD, 0x06, 0x57, 0xFC, 0xCF, 0xEC, 0x71,
++    0x9B, 0x1F, 0x5C, 0x3E, 0x4E, 0x46, 0x04, 0x1F,
++    0x38, 0x81, 0x47, 0xFB, 0x4C, 0xFD, 0xB4, 0x77,
++    0xA5, 0x24, 0x71, 0xF7, 0xA9, 0xA9, 0x69, 0x10,
++    0xB8, 0x55, 0x32, 0x2E, 0xDB, 0x63, 0x40, 0xD8,
++    0xA0, 0x0E, 0xF0, 0x92, 0x35, 0x05, 0x11, 0xE3,
++    0x0A, 0xBE, 0xC1, 0xFF, 0xF9, 0xE3, 0xA2, 0x6E,
++    0x7F, 0xB2, 0x9F, 0x8C, 0x18, 0x30, 0x23, 0xC3,
++    0x58, 0x7E, 0x38, 0xDA, 0x00, 0x77, 0xD9, 0xB4,
++    0x76, 0x3E, 0x4E, 0x4B, 0x94, 0xB2, 0xBB, 0xC1,
++    0x94, 0xC6, 0x65, 0x1E, 0x77, 0xCA, 0xF9, 0x92,
++    0xEE, 0xAA, 0xC0, 0x23, 0x2A, 0x28, 0x1B, 0xF6,
++    0xB3, 0xA7, 0x39, 0xC1, 0x22, 0x61, 0x16, 0x82,
++    0x0A, 0xE8, 0xDB, 0x58, 0x47, 0xA6, 0x7C, 0xBE,
++    0xF9, 0xC9, 0x09, 0x1B, 0x46, 0x2D, 0x53, 0x8C,
++    0xD7, 0x2B, 0x03, 0x74, 0x6A, 0xE7, 0x7F, 0x5E,
++    0x62, 0x29, 0x2C, 0x31, 0x15, 0x62, 0xA8, 0x46,
++    0x50, 0x5D, 0xC8, 0x2D, 0xB8, 0x54, 0x33, 0x8A,
++    0xE4, 0x9F, 0x52, 0x35, 0xC9, 0x5B, 0x91, 0x17,
++    0x8C, 0xCF, 0x2D, 0xD5, 0xCA, 0xCE, 0xF4, 0x03,
++    0xEC, 0x9D, 0x18, 0x10, 0xC6, 0x27, 0x2B, 0x04,
++    0x5B, 0x3B, 0x71, 0xF9, 0xDC, 0x6B, 0x80, 0xD6,
++    0x3F, 0xDD, 0x4A, 0x8E, 0x9A, 0xDB, 0x1E, 0x69,
++    0x62, 0xA6, 0x95, 0x26, 0xD4, 0x31, 0x61, 0xC1,
++    0xA4, 0x1D, 0x57, 0x0D, 0x79, 0x38, 0xDA, 0xD4,
++    0xA4, 0x0E, 0x32, 0x9C, 0xCF, 0xF4, 0x6A, 0xAA,
++    0x36, 0xAD, 0x00, 0x4C, 0xF6, 0x00, 0xC8, 0x38,
++    0x1E, 0x42, 0x5A, 0x31, 0xD9, 0x51, 0xAE, 0x64,
++    0xFD, 0xB2, 0x3F, 0xCE, 0xC9, 0x50, 0x9D, 0x43,
++    0x68, 0x7F, 0xEB, 0x69, 0xED, 0xD1, 0xCC, 0x5E,
++    0x0B, 0x8C, 0xC3, 0xBD, 0xF6, 0x4B, 0x10, 0xEF,
++    0x86, 0xB6, 0x31, 0x42, 0xA3, 0xAB, 0x88, 0x29,
++    0x55, 0x5B, 0x2F, 0x74, 0x7C, 0x93, 0x26, 0x65,
++    0xCB, 0x2C, 0x0F, 0x1C, 0xC0, 0x1B, 0xD7, 0x02,
++    0x29, 0x38, 0x88, 0x39, 0xD2, 0xAF, 0x05, 0xE4,
++    0x54, 0x50, 0x4A, 0xC7, 0x8B, 0x75, 0x82, 0x82,
++    0x28, 0x46, 0xC0, 0xBA, 0x35, 0xC3, 0x5F, 0x5C,
++    0x59, 0x16, 0x0C, 0xC0, 0x46, 0xFD, 0x82, 0x51,
++    0x54, 0x1F, 0xC6, 0x8C, 0x9C, 0x86, 0xB0, 0x22,
++    0xBB, 0x70, 0x99, 0x87, 0x6A, 0x46, 0x0E, 0x74,
++    0x51, 0xA8, 0xA9, 0x31, 0x09, 0x70, 0x3F, 0xEE,
++    0x1C, 0x21, 0x7E, 0x6C, 0x38, 0x26, 0xE5, 0x2C,
++    0x51, 0xAA, 0x69, 0x1E, 0x0E, 0x42, 0x3C, 0xFC,
++    0x99, 0xE9, 0xE3, 0x16, 0x50, 0xC1, 0x21, 0x7B,
++    0x62, 0x48, 0x16, 0xCD, 0xAD, 0x9A, 0x95, 0xF9,
++    0xD5, 0xB8, 0x01, 0x94, 0x88, 0xD9, 0xC0, 0xA0,
++    0xA1, 0xFE, 0x30, 0x75, 0xA5, 0x77, 0xE2, 0x31,
++    0x83, 0xF8, 0x1D, 0x4A, 0x3F, 0x2F, 0xA4, 0x57,
++    0x1E, 0xFC, 0x8C, 0xE0, 0xBA, 0x8A, 0x4F, 0xE8,
++    0xB6, 0x85, 0x5D, 0xFE, 0x72, 0xB0, 0xA6, 0x6E,
++    0xDE, 0xD2, 0xFB, 0xAB, 0xFB, 0xE5, 0x8A, 0x30,
++    0xFA, 0xFA, 0xBE, 0x1C, 0x5D, 0x71, 0xA8, 0x7E,
++    0x2F, 0x74, 0x1E, 0xF8, 0xC1, 0xFE, 0x86, 0xFE,
++    0xA6, 0xBB, 0xFD, 0xE5, 0x30, 0x67, 0x7F, 0x0D,
++    0x97, 0xD1, 0x1D, 0x49, 0xF7, 0xA8, 0x44, 0x3D,
++    0x08, 0x22, 0xE5, 0x06, 0xA9, 0xF4, 0x61, 0x4E,
++    0x01, 0x1E, 0x2A, 0x94, 0x83, 0x8F, 0xF8, 0x8C,
++    0xD6, 0x8C, 0x8B, 0xB7, 0xC5, 0xC6, 0x42, 0x4C,
++    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
++};
++
++static const ssl3DHParams ff_dhe_8192 = {
++    { siBuffer, (unsigned char *)ff_dhe_8192_p, sizeof(ff_dhe_8192_p) },
++    { siBuffer, (unsigned char *)ff_dhe_g2, sizeof(ff_dhe_g2) },
++};
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/dtlscon.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/dtlscon.c
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/dtlscon.c	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/dtlscon.c	2016-01-13 14:18:55.614954827 +0100
 @@ -104,9 +104,7 @@
@@ -2358,7 +2839,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
                                        content_len - fragment_offset);
                  PORT_Assert(fragment_len < DTLS_MAX_MTU - 12);
                  /* Make totally sure that we are within the buffer.
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3con.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3con.c
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3con.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3con.c
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3con.c	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3con.c	2016-01-13 14:18:55.620954862 +0100
 @@ -25,6 +25,8 @@
@@ -5475,7 +5956,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
      ss->ssl3.initialized = PR_FALSE;
  
      SECITEM_FreeItem(&ss->ssl3.nextProto, PR_FALSE);
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3ecc.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3ecc.c
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3ecc.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3ecc.c
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3ecc.c	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3ecc.c	2016-01-13 14:18:55.621954867 +0100
 @@ -214,7 +214,7 @@
@@ -5622,7 +6103,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
          SECStatus rv = ssl3_AppendHandshake(ss, ecList, ecListSize);
          if (rv != SECSuccess)
              return -1;
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3ext.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3ext.c
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3ext.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3ext.c
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3ext.c	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3ext.c	2016-01-13 14:18:55.623954879 +0100
 @@ -101,6 +101,12 @@
@@ -6390,7 +6871,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
  ssl3_ClientHandleSignedCertTimestampXtn(sslSocket *ss, PRUint16 ex_type,
                                          SECItem *data)
  {
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3gthr.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3gthr.c
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3gthr.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3gthr.c
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3gthr.c	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3gthr.c	2016-01-13 14:18:55.623954879 +0100
 @@ -71,8 +71,8 @@
@@ -6404,7 +6885,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
  	    /* ssl_DefRecv is misbehaving!  this error is fatal to SSL. */
  	    gs->state = GS_INIT;         /* so we don't crash next time */
  	    rv = SECFailure;
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3prot.h qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3prot.h
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3prot.h qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3prot.h
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3prot.h	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl3prot.h	2016-01-13 14:18:55.623954879 +0100
 @@ -218,32 +218,6 @@
@@ -6454,7 +6935,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
      union {
          PRUint8 raw[64];
          SSL3HashesIndividually s;
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslauth.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslauth.c
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslauth.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslauth.c
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslauth.c	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslauth.c	2016-01-13 14:18:55.624954885 +0100
 @@ -304,8 +304,7 @@
@@ -6467,7 +6948,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
  	}
      }
  
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslcon.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslcon.c
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslcon.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslcon.c
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslcon.c	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslcon.c	2016-01-13 14:18:55.625954891 +0100
 @@ -22,20 +22,6 @@
@@ -6594,7 +7075,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
      return NSS_VersionCheck(importedVersion);
  }
  
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslenum.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslenum.c
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslenum.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslenum.c
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslenum.c	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslenum.c	2016-01-13 14:18:55.625954891 +0100
 @@ -70,14 +70,17 @@
@@ -6615,7 +7096,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
      TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA,
      TLS_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA,
      TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA,
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslerr.h qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslerr.h
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslerr.h qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslerr.h
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslerr.h	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslerr.h	2016-01-13 14:18:55.626954897 +0100
 @@ -198,9 +198,19 @@
@@ -6641,7 +7122,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
  
  SSL_ERROR_END_OF_LIST   /* let the c compiler determine the value of this. */
  } SSLErrorCodes;
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/SSLerrs.h qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/SSLerrs.h
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/SSLerrs.h qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/SSLerrs.h
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/SSLerrs.h	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/SSLerrs.h	2016-01-13 14:18:55.613954821 +0100
 @@ -423,11 +423,29 @@
@@ -6677,7 +7158,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
 -ER3(SSL_ERROR_GET_CHANNEL_ID_FAILED, (SSL_ERROR_BASE + 134),
 +ER3(SSL_ERROR_GET_CHANNEL_ID_FAILED, (SSL_ERROR_BASE + 140),
  "The application could not get a TLS Channel ID.")
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl.h qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl.h
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl.h qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl.h
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/ssl.h	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/ssl.h	2016-01-13 14:18:55.614954827 +0100
 @@ -185,14 +185,26 @@
@@ -6825,7 +7306,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
  SSL_IMPORT SECStatus SSL_GetCipherSuiteInfo(PRUint16 cipherSuite, 
                                          SSLCipherSuiteInfo *info, PRUintn len);
  
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslimpl.h qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslimpl.h
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslimpl.h qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslimpl.h
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslimpl.h	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslimpl.h	2016-01-13 14:18:55.627954902 +0100
 @@ -1,3 +1,4 @@
@@ -7044,7 +7525,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
  
  #ifdef TRACE
  #define SSL_TRACE(msg) ssl_Trace msg
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslinfo.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslinfo.c
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslinfo.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslinfo.c
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslinfo.c	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslinfo.c	2016-01-13 14:18:55.628954908 +0100
 @@ -67,6 +67,8 @@
@@ -7145,7 +7626,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
  	}
      }
      return SECSuccess;
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslmutex.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslmutex.c
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslmutex.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslmutex.c
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslmutex.c	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslmutex.c	2016-01-13 14:18:55.628954908 +0100
 @@ -504,7 +504,7 @@
@@ -7157,7 +7638,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
  
  #include <errno.h>
  #include "unix_err.h"
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslmutex.h qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslmutex.h
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslmutex.h qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslmutex.h
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslmutex.h	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslmutex.h	2016-01-13 14:18:55.628954908 +0100
 @@ -67,7 +67,8 @@
@@ -7191,7 +7672,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
  
  #endif
  
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslproto.h qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslproto.h
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslproto.h qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslproto.h
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslproto.h	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslproto.h	2016-01-13 14:18:55.629954914 +0100
 @@ -177,6 +177,7 @@
@@ -7210,7 +7691,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
  #define TLS_DHE_RSA_WITH_AES_256_CBC_SHA256     0x006B
  
  #define TLS_RSA_WITH_CAMELLIA_256_CBC_SHA       0x0084
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslsecur.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslsecur.c
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslsecur.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslsecur.c
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslsecur.c	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslsecur.c	2016-01-13 14:18:55.629954914 +0100
 @@ -138,6 +138,9 @@
@@ -7272,7 +7753,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
      if (ss->shutdownHow & ssl_SHUTDOWN_RCV) {
  	PORT_SetError(PR_SOCKET_SHUTDOWN_ERROR);
      	return PR_FAILURE;
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslsnce.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslsnce.c
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslsnce.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslsnce.c
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslsnce.c	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslsnce.c	2016-01-13 14:18:55.631954926 +0100
 @@ -120,14 +120,14 @@
@@ -7411,7 +7892,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
  
      cache->cacheMemMap = my.cacheMemMap;
      cache->cacheMem    = my.cacheMem;
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslsock.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslsock.c
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslsock.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslsock.c
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslsock.c	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslsock.c	2016-01-13 14:18:55.632954931 +0100
 @@ -19,6 +19,7 @@
@@ -7767,7 +8248,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
          ss->dbHandle           = CERT_GetDefaultCertDB();
  
          /* Provide default implementation of hooks */
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslt.h qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslt.h
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslt.h qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslt.h
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslt.h	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslt.h	2016-01-13 14:18:55.633954937 +0100
 @@ -1,3 +1,4 @@
@@ -7870,7 +8351,7 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_p
 +} SSLDHEGroupType;
  
  #endif /* __sslt_h_ */
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslver.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslver.c
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslver.c qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslver.c
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/net/third_party/nss/ssl/sslver.c	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-nss321/src/3rdparty/chromium/net/third_party/nss/ssl/sslver.c	2016-01-13 14:18:55.633954937 +0100
 @@ -12,20 +12,7 @@
