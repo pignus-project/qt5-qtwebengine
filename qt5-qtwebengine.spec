@@ -24,7 +24,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 0.11.beta%{?dist}
+Release: 0.12.beta%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -60,6 +60,9 @@ Patch5:  qtwebengine-opensource-src-5.6.0-beta-system-nspr-prtime.patch
 # I checked the history of that directory, and other than the renames I am
 # undoing, there were no modifications at all. Must be applied after Patch5.
 Patch6:  qtwebengine-opensource-src-5.6.0-beta-system-icu-utf.patch
+# update the bundled patched NSS SSL implementation to NSS 3.21, matching the
+# system NSS (backport of https://codereview.chromium.org/1511123006)
+Patch7:  qtwebengine-opensource-src-5.6.0-beta-nss321.patch
 
 # the architectures theoretically supported by the version of V8 used (#1298011)
 # You may need some minor patching to build on one of the secondary
@@ -217,7 +220,10 @@ Provides: bundled(xdg-user-dirs) = 0.10
 Provides: bundled(mozilla_security_manager) = 1.9.2
 # Ewww... Chromium uses the system NSS, but bundles a heavily patched version of
 # its SSL implementation. This might crash and burn sooner or later!
-Provides: bundled(nss) = 3.19
+# See also Patch7, which updates it from 3.19 to 3.21, because the mix of
+# versions was indeed causing issues. (Ironically, HTTPS not working on Google's
+# own sites!)
+Provides: bundled(nss) = 3.21
 
 # Bundled in src/3rdparty/chromium/url/third_party:
 # Check src/3rdparty/chromium/third_party/url/*/README.chromium for version
@@ -273,6 +279,7 @@ BuildArch: noarch
 %patch4 -p1 -b .no-neon
 %patch5 -p1 -b .system-nspr-prtime
 %patch6 -p1 -b .system-icu-utf
+%patch7 -p1 -b .nss321
 
 %build
 export STRIP=strip
@@ -342,6 +349,9 @@ popd
 
 
 %changelog
+* Wed Jan 13 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.12.beta
+- Update forked NSS SSL code to 3.21, match system NSS (backport from Chromium)
+
 * Wed Jan 13 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.11.beta
 - Add an (optimistic) ExclusiveArch list because of V8 (tracking bug: #1298011)
 
