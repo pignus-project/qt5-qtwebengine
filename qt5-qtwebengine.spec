@@ -24,12 +24,12 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 0.12.beta%{?dist}
+Release: 0.13.beta%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
 # The other licenses are from Chromium and the code it bundles
-License: (LGPLv2 with exceptions or GPLv3 with exceptions) and BSD and LGPLv2+ and ASL 2.0 and IJG and MIT and GPLv2+ and ISC and (MPLv1.1 or GPLv2 or LGPLv2)
+License: (LGPLv2 with exceptions or GPLv3 with exceptions) and BSD and LGPLv2+ and ASL 2.0 and IJG and MIT and GPLv2+ and ISC and OpenSSL and (MPLv1.1 or GPLv2 or LGPLv2)
 URL:     http://www.qt.io
 # cleaned tarball with patent-encumbered codecs removed from the bundled FFmpeg
 # wget http://download.qt.io/development_releases/qt/5.6/5.6.0-beta/submodules/qtwebengine-opensource-src-5.6.0-beta.7z
@@ -41,7 +41,8 @@ Source2: clean_ffmpeg.sh
 Source3: process_ffmpeg_gyp.py
 # do not compile with -Wno-format, which also bypasses -Werror-format-security
 Patch0:  qtwebengine-opensource-src-5.6.0-beta-no-format.patch
-# some tweaks to linux.pri (system libs, link libpci, run unbundling script)
+# some tweaks to linux.pri (system libs, link libpci, run unbundling script,
+# do an NSS/BoringSSL "chimera build", see Provides: bundled(boringssl) comment)
 Patch1:  qtwebengine-opensource-src-5.6.0-beta-linux-pri.patch
 # don't require the time zone detection API backported from ICU 55 (thanks spot)
 Patch2:  qtwebengine-opensource-src-5.6.0-beta-system-icu54.patch
@@ -60,11 +61,9 @@ Patch5:  qtwebengine-opensource-src-5.6.0-beta-system-nspr-prtime.patch
 # I checked the history of that directory, and other than the renames I am
 # undoing, there were no modifications at all. Must be applied after Patch5.
 Patch6:  qtwebengine-opensource-src-5.6.0-beta-system-icu-utf.patch
-# update the bundled patched NSS SSL implementation to NSS 3.21, matching the
-# system NSS (backport of https://codereview.chromium.org/1511123006)
-Patch7:  qtwebengine-opensource-src-5.6.0-beta-nss321.patch
-# add missing nssoptions.h and verref.h headers needed by the above, from NSS
-Patch8:  qtwebengine-opensource-src-5.6.0-beta-nss-headers.patch
+# fix the NSS/BoringSSL "chimera build" to call EnsureNSSHttpIOInit
+# backport of https://codereview.chromium.org/1385473003
+Patch7:  qtwebengine-opensource-src-5.6.0-beta-chimera-nss-init.patch
 
 # the architectures theoretically supported by the version of V8 used (#1298011)
 # You may need some minor patching to build on one of the secondary
@@ -164,6 +163,15 @@ Provides: bundled(chromium) = 45
 # Check src/3rdparty/chromium/third_party/*/README.chromium for version numbers,
 # except where specified otherwise.
 Provides: bundled(angle) = 2422
+# Google's fork of OpenSSL
+# We cannot build against NSS instead because it no longer works with NSS 3.21:
+# HTTPS on, ironically, Google's sites (Google, YouTube, etc.) stops working
+# completely and produces only ERR_SSL_PROTOCOL_ERROR errors:
+# http://kaosx.us/phpBB3/viewtopic.php?t=1235
+# https://bugs.launchpad.net/ubuntu/+source/chromium-browser/+bug/1520568
+# So we have to do what Chromium 47 now defaults to: a "chimera build", i.e.,
+# use the BoringSSL code and the system NSS certificates.
+Provides: bundled(boringssl)
 Provides: bundled(brotli)
 # Don't get too excited. MPEG and other legally problematic stuff is stripped
 # out. See clean_qtwebengine.sh, clean_ffmpeg.sh, and process_ffmpeg_gyp.py.
@@ -220,12 +228,6 @@ Provides: bundled(xdg-user-dirs) = 0.10
 # Check src/3rdparty/chromium/third_party/net/*/README.chromium for version
 # numbers, except where specified otherwise.
 Provides: bundled(mozilla_security_manager) = 1.9.2
-# Ewww... Chromium uses the system NSS, but bundles a heavily patched version of
-# its SSL implementation. This might crash and burn sooner or later!
-# See also Patch7, which updates it from 3.19 to 3.21, because the mix of
-# versions was indeed causing issues. (Ironically, HTTPS not working on Google's
-# own sites!)
-Provides: bundled(nss) = 3.21
 
 # Bundled in src/3rdparty/chromium/url/third_party:
 # Check src/3rdparty/chromium/third_party/url/*/README.chromium for version
@@ -281,8 +283,7 @@ BuildArch: noarch
 %patch4 -p1 -b .no-neon
 %patch5 -p1 -b .system-nspr-prtime
 %patch6 -p1 -b .system-icu-utf
-%patch7 -p1 -b .nss321
-%patch8 -p1 -b .nss-headers
+%patch7 -p1 -b .chimera-nss-init
 
 %build
 export STRIP=strip
@@ -352,6 +353,12 @@ popd
 
 
 %changelog
+* Thu Jan 14 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.13.beta
+- Drop nss321 backport (and the related nss-headers patch), it did not help
+- Do an NSS/BoringSSL "chimera build" as will be the default in Chromium 47
+- Update License accordingly (add "OpenSSL")
+- Fix the "chimera build" to call EnsureNSSHttpIOInit (backport from Chromium)
+
 * Wed Jan 13 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.12.beta
 - Update forked NSS SSL code to 3.21, match system NSS (backport from Chromium)
 
