@@ -24,7 +24,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 0.13.beta%{?dist}
+Release: 0.13.beta.nosse2.1%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -64,6 +64,12 @@ Patch6:  qtwebengine-opensource-src-5.6.0-beta-system-icu-utf.patch
 # fix the NSS/BoringSSL "chimera build" to call EnsureNSSHttpIOInit
 # backport of https://codereview.chromium.org/1385473003
 Patch7:  qtwebengine-opensource-src-5.6.0-beta-chimera-nss-init.patch
+# do not require SSE2 on i686
+# cumulative revert of upstream reviews 187423002, 308003004, 511773002 (parts
+# relevant to QtWebEngine only), 516543004, 1152053004 and 1161853008, along
+# with some custom fixes and improvements
+# TODO: build V8 shared and twice (once for x87, once for SSE2)
+Patch8:  qtwebengine-opensource-src-5.6.0-beta-no-sse2.patch
 
 # the architectures theoretically supported by the version of V8 used (#1298011)
 # You may need some minor patching to build on one of the secondary
@@ -284,6 +290,7 @@ BuildArch: noarch
 %patch5 -p1 -b .system-nspr-prtime
 %patch6 -p1 -b .system-icu-utf
 %patch7 -p1 -b .chimera-nss-init
+%patch8 -p1 -b .no-sse2
 
 %build
 export STRIP=strip
@@ -353,6 +360,9 @@ popd
 
 
 %changelog
+* Sat Jan 16 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.13.beta.nosse2.1
+- Do not require SSE2 on i686
+
 * Thu Jan 14 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.13.beta
 - Drop nss321 backport (and the related nss-headers patch), it did not help
 - Do an NSS/BoringSSL "chimera build" as will be the default in Chromium 47
