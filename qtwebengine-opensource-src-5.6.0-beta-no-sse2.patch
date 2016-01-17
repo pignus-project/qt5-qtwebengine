@@ -2029,8 +2029,18 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
  
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.cpp qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.cpp
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.cpp	2015-12-10 18:17:21.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.cpp	2016-01-17 01:49:46.706000332 +0100
-@@ -39,7 +39,7 @@
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.cpp	2016-01-17 03:54:32.399198025 +0100
+@@ -30,6 +30,9 @@
+ 
+ #if ENABLE(WEB_AUDIO)
+ 
++// include this first to get it before the CPU() function-like macro
++#include "base/cpu.h"
++
+ #include "platform/audio/DirectConvolver.h"
+ 
+ #if OS(MACOSX)
+@@ -39,14 +42,20 @@
  #include "platform/audio/VectorMath.h"
  #include "wtf/CPU.h"
  
@@ -2039,7 +2049,47 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
  #include <emmintrin.h>
  #endif
  
-@@ -102,7 +102,7 @@
++#if defined(BUILD_ONLY_THE_SSE2_PARTS) && !defined(__SSE2__)
++#error SSE2 parts must be built with -msse2
++#endif
++
+ namespace blink {
+ 
+ using namespace VectorMath;
+ 
++#ifndef BUILD_ONLY_THE_SSE2_PARTS
++
+ DirectConvolver::DirectConvolver(size_t inputBlockSize)
+     : m_inputBlockSize(inputBlockSize)
+ #if USE(WEBAUDIO_IPP)
+@@ -54,10 +63,26 @@
+ #endif // USE(WEBAUDIO_IPP)
+     , m_buffer(inputBlockSize * 2)
+ {
++#if CPU(X86)
++    base::CPU cpu;
++    m_haveSSE2 = cpu.has_sse2();
++#endif
+ }
+ 
++#endif
++
++#ifdef BUILD_ONLY_THE_SSE2_PARTS
++void DirectConvolver::m_processSSE2(AudioFloatArray* convolutionKernel, const float* sourceP, float* destP, size_t framesToProcess)
++#else
+ void DirectConvolver::process(AudioFloatArray* convolutionKernel, const float* sourceP, float* destP, size_t framesToProcess)
++#endif
+ {
++#if CPU(X86) && !defined(__SSE2__)
++    if (m_haveSSE2) {
++        m_processSSE2(convolutionKernel, sourceP, destP, framesToProcess);
++        return;
++    }
++#endif
+     ASSERT(framesToProcess == m_inputBlockSize);
+     if (framesToProcess != m_inputBlockSize)
+         return;
+@@ -102,7 +127,7 @@
  #endif // CPU(X86)
  #else
      size_t i = 0;
@@ -2048,7 +2098,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
      // Convolution using SSE2. Currently only do this if both |kernelSize| and |framesToProcess|
      // are multiples of 4. If not, use the straightforward loop below.
  
-@@ -412,7 +412,7 @@
+@@ -412,7 +437,7 @@
          }
          destP[i++] = sum;
      }
@@ -2057,6 +2107,447 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
      }
  #endif
  #endif // OS(MACOSX)
+@@ -422,6 +447,8 @@
+ #endif
+ }
+ 
++#ifndef BUILD_ONLY_THE_SSE2_PARTS
++
+ void DirectConvolver::reset()
+ {
+     m_buffer.zero();
+@@ -430,6 +457,8 @@
+ #endif // USE(WEBAUDIO_IPP)
+ }
+ 
++#endif
++
+ } // namespace blink
+ 
+ #endif // ENABLE(WEB_AUDIO)
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.h qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.h
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.h	2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.h	2016-01-17 03:53:25.671839139 +0100
+@@ -31,6 +31,7 @@
+ 
+ #include "platform/PlatformExport.h"
+ #include "platform/audio/AudioArray.h"
++#include "wtf/CPU.h"
+ 
+ #if USE(WEBAUDIO_IPP)
+ #include <ipps.h>
+@@ -53,6 +54,11 @@
+     AudioFloatArray m_overlayBuffer;
+ #endif // USE(WEBAUDIO_IPP)
+     AudioFloatArray m_buffer;
++
++#if CPU(x86)
++    bool m_haveSSE2;
++    void m_processSSE2(AudioFloatArray* convolutionKernel, const float* sourceP, float* destP, size_t framesToProcess);
++#endif
+ };
+ 
+ } // namespace blink
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolverSSE2.cpp qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolverSSE2.cpp
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolverSSE2.cpp	1970-01-01 01:00:00.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolverSSE2.cpp	2016-01-17 03:28:17.605768226 +0100
+@@ -0,0 +1,2 @@
++#define BUILD_ONLY_THE_SSE2_PARTS
++#include "DirectConvolver.cpp"
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/SincResampler.cpp qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/SincResampler.cpp
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/SincResampler.cpp	2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/SincResampler.cpp	2016-01-17 04:19:56.670378699 +0100
+@@ -30,16 +30,23 @@
+ 
+ #if ENABLE(WEB_AUDIO)
+ 
++// include this first to get it before the CPU() function-like macro
++#include "base/cpu.h"
++
+ #include "platform/audio/SincResampler.h"
+ 
+ #include "platform/audio/AudioBus.h"
+ #include "wtf/CPU.h"
+ #include "wtf/MathExtras.h"
+ 
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+ #include <emmintrin.h>
+ #endif
+ 
++#if defined(BUILD_ONLY_THE_SSE2_PARTS) && !defined(__SSE2__)
++#error SSE2 parts must be built with -msse2
++#endif
++
+ // Input buffer layout, dividing the total buffer into regions (r0 - r5):
+ //
+ // |----------------|----------------------------------------------------------------|----------------|
+@@ -69,6 +76,8 @@
+ 
+ namespace blink {
+ 
++#ifndef BUILD_ONLY_THE_SSE2_PARTS
++
+ SincResampler::SincResampler(double scaleFactor, unsigned kernelSize, unsigned numberOfKernelOffsets)
+     : m_scaleFactor(scaleFactor)
+     , m_kernelSize(kernelSize)
+@@ -82,6 +91,10 @@
+     , m_sourceProvider(nullptr)
+     , m_isBufferPrimed(false)
+ {
++#if CPU(X86)
++    base::CPU cpu;
++    m_haveSSE2 = cpu.has_sse2();
++#endif
+     initializeKernel();
+ }
+ 
+@@ -198,8 +211,20 @@
+     }
+ }
+ 
++#endif
++
++#ifdef BUILD_ONLY_THE_SSE2_PARTS
++void SincResampler::m_processSSE2(AudioSourceProvider* sourceProvider, float* destination, size_t framesToProcess)
++#else
+ void SincResampler::process(AudioSourceProvider* sourceProvider, float* destination, size_t framesToProcess)
++#endif
+ {
++#if CPU(X86) && !defined(__SSE2__)
++    if (m_haveSSE2) {
++        m_processSSE2(sourceProvider, destination, framesToProcess);
++        return;
++    }
++#endif
+     bool isGood = sourceProvider && m_blockSize > m_kernelSize && m_inputBuffer.size() >= m_blockSize + m_kernelSize && !(m_kernelSize % 2);
+     ASSERT(isGood);
+     if (!isGood)
+@@ -261,7 +286,7 @@
+             {
+                 float input;
+ 
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+                 // If the sourceP address is not 16-byte aligned, the first several frames (at most three) should be processed seperately.
+                 while ((reinterpret_cast<uintptr_t>(inputP) & 0x0F) && n) {
+                     CONVOLVE_ONE_SAMPLE
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/SincResampler.h qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/SincResampler.h
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/SincResampler.h	2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/SincResampler.h	2016-01-17 04:14:30.364630520 +0100
+@@ -32,6 +32,7 @@
+ #include "platform/PlatformExport.h"
+ #include "platform/audio/AudioArray.h"
+ #include "platform/audio/AudioSourceProvider.h"
++#include "wtf/CPU.h"
+ 
+ namespace blink {
+ 
+@@ -80,6 +81,11 @@
+ 
+     // The buffer is primed once at the very beginning of processing.
+     bool m_isBufferPrimed;
++
++#if CPU(x86)
++    bool m_haveSSE2;
++    void m_processSSE2(AudioSourceProvider*, float* destination, size_t framesToProcess);
++#endif
+ };
+ 
+ } // namespace blink
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/SincResamplerSSE2.cpp qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/SincResamplerSSE2.cpp
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/SincResamplerSSE2.cpp	1970-01-01 01:00:00.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/SincResamplerSSE2.cpp	2016-01-17 04:10:47.846438382 +0100
+@@ -0,0 +1,2 @@
++#define BUILD_ONLY_THE_SSE2_PARTS
++#include "SincResampler.cpp"
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.cpp qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.cpp
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.cpp	2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.cpp	2016-01-17 03:57:55.479290270 +0100
+@@ -26,6 +26,9 @@
+ 
+ #if ENABLE(WEB_AUDIO)
+ 
++// include this first to get it before the CPU() function-like macro
++#include "base/cpu.h"
++
+ #include "platform/audio/VectorMath.h"
+ #include "wtf/Assertions.h"
+ #include "wtf/CPU.h"
+@@ -35,10 +38,14 @@
+ #include <Accelerate/Accelerate.h>
+ #endif
+ 
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+ #include <emmintrin.h>
+ #endif
+ 
++#if defined(BUILD_ONLY_THE_SSE2_PARTS) && !defined(__SSE2__)
++#error SSE2 parts must be built with -msse2
++#endif
++
+ #if HAVE(ARM_NEON_INTRINSICS)
+ #include <arm_neon.h>
+ #endif
+@@ -121,11 +128,25 @@
+ }
+ #else
+ 
++#ifdef BUILD_ONLY_THE_SSE2_PARTS
++namespace SSE2 {
++#endif
++
++#if CPU(X86) && !defined(__SSE2__)
++static base::CPU cpu;
++#endif
++
+ void vsma(const float* sourceP, int sourceStride, const float* scale, float* destP, int destStride, size_t framesToProcess)
+ {
++#if CPU(X86) && !defined(__SSE2__)
++    if (cpu.has_sse2()) {
++        blink::VectorMath::SSE2::vsma(sourceP, sourceStride, scale, destP, destStride, framesToProcess);
++        return;
++    }
++#endif
+     int n = framesToProcess;
+ 
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+     if ((sourceStride == 1) && (destStride == 1)) {
+         float k = *scale;
+ 
+@@ -196,9 +217,15 @@
+ 
+ void vsmul(const float* sourceP, int sourceStride, const float* scale, float* destP, int destStride, size_t framesToProcess)
+ {
++#if CPU(X86) && !defined(__SSE2__)
++    if (cpu.has_sse2()) {
++        blink::VectorMath::SSE2::vsmul(sourceP, sourceStride, scale, destP, destStride, framesToProcess);
++        return;
++    }
++#endif
+     int n = framesToProcess;
+ 
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+     if ((sourceStride == 1) && (destStride == 1)) {
+         float k = *scale;
+ 
+@@ -269,16 +296,22 @@
+         sourceP += sourceStride;
+         destP += destStride;
+     }
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+     }
+ #endif
+ }
+ 
+ void vadd(const float* source1P, int sourceStride1, const float* source2P, int sourceStride2, float* destP, int destStride, size_t framesToProcess)
+ {
++#if CPU(X86) && !defined(__SSE2__)
++    if (cpu.has_sse2()) {
++        blink::VectorMath::SSE2::vadd(source1P, sourceStride1, source2P, sourceStride2, destP, destStride, framesToProcess);
++        return;
++    }
++#endif
+     int n = framesToProcess;
+ 
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+     if ((sourceStride1 ==1) && (sourceStride2 == 1) && (destStride == 1)) {
+         // If the sourceP address is not 16-byte aligned, the first several frames (at most three) should be processed separately.
+         while ((reinterpret_cast<size_t>(source1P) & 0x0F) && n) {
+@@ -381,17 +414,23 @@
+         source2P += sourceStride2;
+         destP += destStride;
+     }
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+     }
+ #endif
+ }
+ 
+ void vmul(const float* source1P, int sourceStride1, const float* source2P, int sourceStride2, float* destP, int destStride, size_t framesToProcess)
+ {
++#if CPU(X86) && !defined(__SSE2__)
++    if (cpu.has_sse2()) {
++        blink::VectorMath::SSE2::vmul(source1P, sourceStride1, source2P, sourceStride2, destP, destStride, framesToProcess);
++        return;
++    }
++#endif
+ 
+     int n = framesToProcess;
+ 
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+     if ((sourceStride1 == 1) && (sourceStride2 == 1) && (destStride == 1)) {
+         // If the source1P address is not 16-byte aligned, the first several frames (at most three) should be processed separately.
+         while ((reinterpret_cast<uintptr_t>(source1P) & 0x0F) && n) {
+@@ -463,8 +502,14 @@
+ 
+ void zvmul(const float* real1P, const float* imag1P, const float* real2P, const float* imag2P, float* realDestP, float* imagDestP, size_t framesToProcess)
+ {
++#if CPU(X86) && !defined(__SSE2__)
++    if (cpu.has_sse2()) {
++        blink::VectorMath::SSE2::zvmul(real1P, imag1P, real2P, imag2P, realDestP, imagDestP, framesToProcess);
++        return;
++    }
++#endif
+     unsigned i = 0;
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+     // Only use the SSE optimization in the very common case that all addresses are 16-byte aligned.
+     // Otherwise, fall through to the scalar code below.
+     if (!(reinterpret_cast<uintptr_t>(real1P) & 0x0F)
+@@ -519,10 +564,16 @@
+ 
+ void vsvesq(const float* sourceP, int sourceStride, float* sumP, size_t framesToProcess)
+ {
++#if CPU(X86) && !defined(__SSE2__)
++    if (cpu.has_sse2()) {
++        blink::VectorMath::SSE2::vsvesq(sourceP, sourceStride, sumP, framesToProcess);
++        return;
++    }
++#endif
+     int n = framesToProcess;
+     float sum = 0;
+ 
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+     if (sourceStride == 1) {
+         // If the sourceP address is not 16-byte aligned, the first several frames (at most three) should be processed separately.
+         while ((reinterpret_cast<uintptr_t>(sourceP) & 0x0F) && n) {
+@@ -584,10 +635,16 @@
+ 
+ void vmaxmgv(const float* sourceP, int sourceStride, float* maxP, size_t framesToProcess)
+ {
++#if CPU(X86) && !defined(__SSE2__)
++    if (cpu.has_sse2()) {
++        blink::VectorMath::SSE2::vmaxmgv(sourceP, sourceStride, maxP, framesToProcess);
++        return;
++    }
++#endif
+     int n = framesToProcess;
+     float max = 0;
+ 
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+     if (sourceStride == 1) {
+         // If the sourceP address is not 16-byte aligned, the first several frames (at most three) should be processed separately.
+         while ((reinterpret_cast<uintptr_t>(sourceP) & 0x0F) && n) {
+@@ -651,6 +708,8 @@
+     *maxP = max;
+ }
+ 
++#ifndef BUILD_ONLY_THE_SSE2_PARTS
++
+ void vclip(const float* sourceP, int sourceStride, const float* lowThresholdP, const float* highThresholdP, float* destP, int destStride, size_t framesToProcess)
+ {
+     int n = framesToProcess;
+@@ -681,6 +740,12 @@
+     }
+ }
+ 
++#endif
++
++#ifdef BUILD_ONLY_THE_SSE2_PARTS
++} // namespace SSE2
++#endif
++
+ #endif // OS(MACOSX)
+ 
+ } // namespace VectorMath
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.h qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.h
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.h	2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.h	2016-01-17 03:55:46.329595652 +0100
+@@ -26,6 +26,7 @@
+ #define VectorMath_h
+ 
+ #include "platform/PlatformExport.h"
++#include "wtf/CPU.h"
+ 
+ // Defines the interface for several vector math functions whose implementation will ideally be optimized.
+ 
+@@ -53,6 +54,28 @@
+ // Copies elements while clipping values to the threshold inputs.
+ PLATFORM_EXPORT void vclip(const float* sourceP, int sourceStride, const float* lowThresholdP, const float* highThresholdP, float* destP, int destStride, size_t framesToProcess);
+ 
++#if CPU(x86)
++namespace SSE2 {
++// Vector scalar multiply and then add.
++PLATFORM_EXPORT void vsma(const float* sourceP, int sourceStride, const float* scale, float* destP, int destStride, size_t framesToProcess);
++
++PLATFORM_EXPORT void vsmul(const float* sourceP, int sourceStride, const float* scale, float* destP, int destStride, size_t framesToProcess);
++PLATFORM_EXPORT void vadd(const float* source1P, int sourceStride1, const float* source2P, int sourceStride2, float* destP, int destStride, size_t framesToProcess);
++
++// Finds the maximum magnitude of a float vector.
++PLATFORM_EXPORT void vmaxmgv(const float* sourceP, int sourceStride, float* maxP, size_t framesToProcess);
++
++// Sums the squares of a float vector's elements.
++PLATFORM_EXPORT void vsvesq(const float* sourceP, int sourceStride, float* sumP, size_t framesToProcess);
++
++// For an element-by-element multiply of two float vectors.
++PLATFORM_EXPORT void vmul(const float* source1P, int sourceStride1, const float* source2P, int sourceStride2, float* destP, int destStride, size_t framesToProcess);
++
++// Multiplies two complex vectors.
++PLATFORM_EXPORT void zvmul(const float* real1P, const float* imag1P, const float* real2P, const float* imag2P, float* realDestP, float* imagDestP, size_t framesToProcess);
++}
++#endif
++
+ } // namespace VectorMath
+ } // namespace blink
+ 
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMathSSE2.cpp qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMathSSE2.cpp
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMathSSE2.cpp	1970-01-01 01:00:00.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMathSSE2.cpp	2016-01-17 03:28:28.044824318 +0100
+@@ -0,0 +1,2 @@
++#define BUILD_ONLY_THE_SSE2_PARTS
++#include "VectorMath.cpp"
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/blink_platform.gyp qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/blink_platform.gyp
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/blink_platform.gyp	2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/blink_platform.gyp	2016-01-17 04:11:33.579683397 +0100
+@@ -419,6 +419,11 @@
+           '<(DEPTH)/third_party/openmax_dl/dl/dl.gyp:openmax_dl',
+         ],
+       }],
++      ['target_arch == "ia32"', {
++        'dependencies': [
++          'blink_sse2',
++        ],
++      }],
+       ['target_arch=="arm"', {
+         'dependencies': [
+           'blink_arm_neon',
+@@ -434,6 +439,27 @@
+       }],
+     ],
+   },
++  {
++    'target_name': 'blink_sse2',
++    'conditions': [
++      ['target_arch=="ia32", {
++        'type': 'static_library',
++        'dependencies': [
++          '<(DEPTH)/third_party/khronos/khronos.gyp:khronos_headers',
++          'blink_common',
++        ],
++        'hard_dependency': 1,
++        'sources': [
++          'audio/DirectConvolverSSE2.cpp',
++          'audio/SincResamplerSSE2.cpp',
++          'audio/VectorMathSSE2.cpp',
++        ],
++        'cflags': ['-msse2'],
++      },{  # target_arch != "ia32"
++        'type': 'none',
++      }],
++    ],
++  },
+   # The *NEON.cpp files fail to compile when -mthumb is passed. Force
+   # them to build in ARM mode.
+   # See https://bugs.webkit.org/show_bug.cgi?id=62916.
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/graphics/cpu/x86/WebGLImageConversionSSE.h qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/graphics/cpu/x86/WebGLImageConversionSSE.h
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/graphics/cpu/x86/WebGLImageConversionSSE.h	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/graphics/cpu/x86/WebGLImageConversionSSE.h	2016-01-16 23:31:06.896257072 +0100
@@ -2121,109 +2612,3 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
    return rtc::scoped_ptr<RealFourier>(new RealFourierOpenmax(fft_order));
  #else
    return rtc::scoped_ptr<RealFourier>(new RealFourierOoura(fft_order));
-diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/standalone.gypi qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/build/standalone.gypi
---- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/standalone.gypi	2015-12-10 18:17:21.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/build/standalone.gypi	2016-01-16 23:07:30.286548206 +0100
-@@ -94,6 +94,9 @@
-       'use_goma%': 0,
-       'gomadir%': '',
-       'conditions': [
-+        ['target_arch=="ia32"', {
-+          'v8_target_arch%': 'x87',
-+        }],
-         # Set default gomadir.
-         ['OS=="win"', {
-           'gomadir': 'c:\\goma\\goma-win',
-diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/toolchain.gypi qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/build/toolchain.gypi
---- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/toolchain.gypi	2015-12-10 18:17:21.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/build/toolchain.gypi	2016-01-16 23:07:30.294548249 +0100
-@@ -93,6 +93,9 @@
-     'binutils_dir%': '',
- 
-     'conditions': [
-+      ['target_arch=="ia32"', {
-+        'v8_target_arch%': 'x87',
-+      }],
-       ['OS=="linux" and host_arch=="x64"', {
-         'binutils_dir%': 'third_party/binutils/Linux_x64/Release/bin',
-       }],
-diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/BUILD.gn qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/BUILD.gn
---- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/BUILD.gn	2015-12-10 18:17:21.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/BUILD.gn	2016-01-16 23:07:30.323548407 +0100
-@@ -1135,41 +1135,41 @@
- 
-   if (v8_target_arch == "x86") {
-     sources += [
--      "src/ia32/assembler-ia32-inl.h",
--      "src/ia32/assembler-ia32.cc",
--      "src/ia32/assembler-ia32.h",
--      "src/ia32/builtins-ia32.cc",
--      "src/ia32/code-stubs-ia32.cc",
--      "src/ia32/code-stubs-ia32.h",
--      "src/ia32/codegen-ia32.cc",
--      "src/ia32/codegen-ia32.h",
--      "src/ia32/cpu-ia32.cc",
--      "src/ia32/debug-ia32.cc",
--      "src/ia32/deoptimizer-ia32.cc",
--      "src/ia32/disasm-ia32.cc",
--      "src/ia32/frames-ia32.cc",
--      "src/ia32/frames-ia32.h",
--      "src/ia32/full-codegen-ia32.cc",
--      "src/ia32/interface-descriptors-ia32.cc",
--      "src/ia32/lithium-codegen-ia32.cc",
--      "src/ia32/lithium-codegen-ia32.h",
--      "src/ia32/lithium-gap-resolver-ia32.cc",
--      "src/ia32/lithium-gap-resolver-ia32.h",
--      "src/ia32/lithium-ia32.cc",
--      "src/ia32/lithium-ia32.h",
--      "src/ia32/macro-assembler-ia32.cc",
--      "src/ia32/macro-assembler-ia32.h",
--      "src/ia32/regexp-macro-assembler-ia32.cc",
--      "src/ia32/regexp-macro-assembler-ia32.h",
--      "src/compiler/ia32/code-generator-ia32.cc",
--      "src/compiler/ia32/instruction-codes-ia32.h",
--      "src/compiler/ia32/instruction-selector-ia32.cc",
--      "src/compiler/ia32/linkage-ia32.cc",
--      "src/ic/ia32/access-compiler-ia32.cc",
--      "src/ic/ia32/handler-compiler-ia32.cc",
--      "src/ic/ia32/ic-ia32.cc",
--      "src/ic/ia32/ic-compiler-ia32.cc",
--      "src/ic/ia32/stub-cache-ia32.cc",
-+      "src/x87/assembler-x87-inl.h",
-+      "src/x87/assembler-x87.cc",
-+      "src/x87/assembler-x87.h",
-+      "src/x87/builtins-x87.cc",
-+      "src/x87/code-stubs-x87.cc",
-+      "src/x87/code-stubs-x87.h",
-+      "src/x87/codegen-x87.cc",
-+      "src/x87/codegen-x87.h",
-+      "src/x87/cpu-x87.cc",
-+      "src/x87/debug-x87.cc",
-+      "src/x87/deoptimizer-x87.cc",
-+      "src/x87/disasm-x87.cc",
-+      "src/x87/frames-x87.cc",
-+      "src/x87/frames-x87.h",
-+      "src/x87/full-codegen-x87.cc",
-+      "src/x87/interface-descriptors-x87.cc",
-+      "src/x87/lithium-codegen-x87.cc",
-+      "src/x87/lithium-codegen-x87.h",
-+      "src/x87/lithium-gap-resolver-x87.cc",
-+      "src/x87/lithium-gap-resolver-x87.h",
-+      "src/x87/lithium-x87.cc",
-+      "src/x87/lithium-x87.h",
-+      "src/x87/macro-assembler-x87.cc",
-+      "src/x87/macro-assembler-x87.h",
-+      "src/x87/regexp-macro-assembler-x87.cc",
-+      "src/x87/regexp-macro-assembler-x87.h",
-+      "src/compiler/x87/code-generator-x87.cc",
-+      "src/compiler/x87/instruction-codes-x87.h",
-+      "src/compiler/x87/instruction-selector-x87.cc",
-+      "src/compiler/x87/linkage-x87.cc",
-+      "src/ic/x87/access-compiler-x87.cc",
-+      "src/ic/x87/handler-compiler-x87.cc",
-+      "src/ic/x87/ic-x87.cc",
-+      "src/ic/x87/ic-compiler-x87.cc",
-+      "src/ic/x87/stub-cache-x87.cc",
-     ]
-   } else if (v8_target_arch == "x64") {
-     sources += [
