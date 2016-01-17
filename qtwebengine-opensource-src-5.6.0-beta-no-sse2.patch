@@ -2141,7 +2141,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
  #endif // USE(WEBAUDIO_IPP)
      AudioFloatArray m_buffer;
 +
-+#if CPU(x86)
++#if CPU(X86)
 +    bool m_haveSSE2;
 +    void m_processSSE2(AudioFloatArray* convolutionKernel, const float* sourceP, float* destP, size_t framesToProcess);
 +#endif
@@ -2248,7 +2248,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
      // The buffer is primed once at the very beginning of processing.
      bool m_isBufferPrimed;
 +
-+#if CPU(x86)
++#if CPU(X86)
 +    bool m_haveSSE2;
 +    void m_processSSE2(AudioSourceProvider*, float* destination, size_t framesToProcess);
 +#endif
@@ -2474,7 +2474,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
  // Copies elements while clipping values to the threshold inputs.
  PLATFORM_EXPORT void vclip(const float* sourceP, int sourceStride, const float* lowThresholdP, const float* highThresholdP, float* destP, int destStride, size_t framesToProcess);
  
-+#if CPU(x86)
++#if CPU(X86)
 +namespace SSE2 {
 +// Vector scalar multiply and then add.
 +PLATFORM_EXPORT void vsma(const float* sourceP, int sourceStride, const float* scale, float* destP, int destStride, size_t framesToProcess);
