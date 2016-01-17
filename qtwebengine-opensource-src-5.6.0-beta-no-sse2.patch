@@ -2124,7 +2124,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
  #endif // ENABLE(WEB_AUDIO)
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.h qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.h
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.h	2015-12-10 18:17:21.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.h	2016-01-17 03:53:25.671839139 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.h	2016-01-17 05:08:41.616999374 +0100
 @@ -31,6 +31,7 @@
  
  #include "platform/PlatformExport.h"
@@ -2231,7 +2231,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
                      CONVOLVE_ONE_SAMPLE
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/SincResampler.h qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/SincResampler.h
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/SincResampler.h	2015-12-10 18:17:21.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/SincResampler.h	2016-01-17 04:14:30.364630520 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/SincResampler.h	2016-01-17 05:08:50.305045709 +0100
 @@ -32,6 +32,7 @@
  #include "platform/PlatformExport.h"
  #include "platform/audio/AudioArray.h"
@@ -2260,7 +2260,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
 +#include "SincResampler.cpp"
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.cpp qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.cpp
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.cpp	2015-12-10 18:17:21.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.cpp	2016-01-17 03:57:55.479290270 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.cpp	2016-01-17 04:26:03.720343726 +0100
 @@ -26,6 +26,9 @@
  
  #if ENABLE(WEB_AUDIO)
@@ -2458,7 +2458,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
  } // namespace VectorMath
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.h qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.h
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.h	2015-12-10 18:17:21.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.h	2016-01-17 03:55:46.329595652 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/VectorMath.h	2016-01-17 05:08:57.296082993 +0100
 @@ -26,6 +26,7 @@
  #define VectorMath_h
  
@@ -2504,7 +2504,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
 +#include "VectorMath.cpp"
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/blink_platform.gyp qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/blink_platform.gyp
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/blink_platform.gyp	2015-12-10 18:17:21.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/blink_platform.gyp	2016-01-17 04:11:33.579683397 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/blink_platform.gyp	2016-01-17 18:07:04.508443123 +0100
 @@ -419,6 +419,11 @@
            '<(DEPTH)/third_party/openmax_dl/dl/dl.gyp:openmax_dl',
          ],
@@ -2517,7 +2517,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
        ['target_arch=="arm"', {
          'dependencies': [
            'blink_arm_neon',
-@@ -434,6 +439,27 @@
+@@ -434,6 +439,26 @@
        }],
      ],
    },
@@ -2530,7 +2530,6 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
 +          '<(DEPTH)/third_party/khronos/khronos.gyp:khronos_headers',
 +          'blink_common',
 +        ],
-+        'hard_dependency': 1,
 +        'sources': [
 +          'audio/DirectConvolverSSE2.cpp',
 +          'audio/SincResamplerSSE2.cpp',
@@ -2610,8 +2609,8 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
  #else
    return rtc::scoped_ptr<RealFourier>(new RealFourierOoura(fft_order));
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/standalone.gypi qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/build/standalone.gypi
---- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/standalone.gypi        2015-12-10 18:17:21.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/build/standalone.gypi        2016-01-16 23:07:30.286548206 +0100
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/standalone.gypi	2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/build/standalone.gypi	2016-01-16 23:07:30.286548206 +0100
 @@ -94,6 +94,9 @@
        'use_goma%': 0,
        'gomadir%': '',
@@ -2623,8 +2622,8 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/s
          ['OS=="win"', {
            'gomadir': 'c:\\goma\\goma-win',
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/toolchain.gypi qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/build/toolchain.gypi
---- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/toolchain.gypi 2015-12-10 18:17:21.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/build/toolchain.gypi 2016-01-16 23:07:30.294548249 +0100
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/toolchain.gypi	2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/build/toolchain.gypi	2016-01-16 23:07:30.294548249 +0100
 @@ -93,6 +93,9 @@
      'binutils_dir%': '',
  
@@ -2636,8 +2635,8 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/t
          'binutils_dir%': 'third_party/binutils/Linux_x64/Release/bin',
        }],
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/BUILD.gn qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/BUILD.gn
---- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/BUILD.gn     2015-12-10 18:17:21.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/BUILD.gn     2016-01-16 23:07:30.323548407 +0100
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/BUILD.gn	2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/BUILD.gn	2016-01-16 23:07:30.323548407 +0100
 @@ -1135,41 +1135,41 @@
  
    if (v8_target_arch == "x86") {
@@ -2715,3 +2714,15 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/BUILD.g
      ]
    } else if (v8_target_arch == "x64") {
      sources += [
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/core/core_module.pro qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/core/core_module.pro
+--- qtwebengine-opensource-src-5.6.0-beta/src/core/core_module.pro	2015-12-14 16:27:24.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/core/core_module.pro	2016-01-17 19:19:39.093102893 +0100
+@@ -25,6 +25,8 @@
+     QMAKE_LFLAGS += /OPT:REF
+     QMAKE_LFLAGS += @$${api_library_path}$${QMAKE_DIR_SEP}$${api_library_name}.lib.objects
+ } else {
++    # Use ld.bfd instead of gold, which produces undefined references
++    CONFIG -= use_gold_linker
+     LIBS_PRIVATE += -Wl,-whole-archive -l$$api_library_name -Wl,-no-whole-archive
+ }
+ 
