@@ -2527,7 +2527,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
 +  {
 +    'target_name': 'blink_sse2',
 +    'conditions': [
-+      ['target_arch=="ia32", {
++      ['target_arch=="ia32"', {
 +        'type': 'static_library',
 +        'dependencies': [
 +          '<(DEPTH)/third_party/khronos/khronos.gyp:khronos_headers',
@@ -2612,3 +2612,109 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
    return rtc::scoped_ptr<RealFourier>(new RealFourierOpenmax(fft_order));
  #else
    return rtc::scoped_ptr<RealFourier>(new RealFourierOoura(fft_order));
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/standalone.gypi qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/build/standalone.gypi
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/standalone.gypi        2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/build/standalone.gypi        2016-01-16 23:07:30.286548206 +0100
+@@ -94,6 +94,9 @@
+       'use_goma%': 0,
+       'gomadir%': '',
+       'conditions': [
++        ['target_arch=="ia32"', {
++          'v8_target_arch%': 'x87',
++        }],
+         # Set default gomadir.
+         ['OS=="win"', {
+           'gomadir': 'c:\\goma\\goma-win',
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/toolchain.gypi qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/build/toolchain.gypi
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/toolchain.gypi 2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/build/toolchain.gypi 2016-01-16 23:07:30.294548249 +0100
+@@ -93,6 +93,9 @@
+     'binutils_dir%': '',
+ 
+     'conditions': [
++      ['target_arch=="ia32"', {
++        'v8_target_arch%': 'x87',
++      }],
+       ['OS=="linux" and host_arch=="x64"', {
+         'binutils_dir%': 'third_party/binutils/Linux_x64/Release/bin',
+       }],
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/BUILD.gn qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/BUILD.gn
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/BUILD.gn     2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/BUILD.gn     2016-01-16 23:07:30.323548407 +0100
+@@ -1135,41 +1135,41 @@
+ 
+   if (v8_target_arch == "x86") {
+     sources += [
+-      "src/ia32/assembler-ia32-inl.h",
+-      "src/ia32/assembler-ia32.cc",
+-      "src/ia32/assembler-ia32.h",
+-      "src/ia32/builtins-ia32.cc",
+-      "src/ia32/code-stubs-ia32.cc",
+-      "src/ia32/code-stubs-ia32.h",
+-      "src/ia32/codegen-ia32.cc",
+-      "src/ia32/codegen-ia32.h",
+-      "src/ia32/cpu-ia32.cc",
+-      "src/ia32/debug-ia32.cc",
+-      "src/ia32/deoptimizer-ia32.cc",
+-      "src/ia32/disasm-ia32.cc",
+-      "src/ia32/frames-ia32.cc",
+-      "src/ia32/frames-ia32.h",
+-      "src/ia32/full-codegen-ia32.cc",
+-      "src/ia32/interface-descriptors-ia32.cc",
+-      "src/ia32/lithium-codegen-ia32.cc",
+-      "src/ia32/lithium-codegen-ia32.h",
+-      "src/ia32/lithium-gap-resolver-ia32.cc",
+-      "src/ia32/lithium-gap-resolver-ia32.h",
+-      "src/ia32/lithium-ia32.cc",
+-      "src/ia32/lithium-ia32.h",
+-      "src/ia32/macro-assembler-ia32.cc",
+-      "src/ia32/macro-assembler-ia32.h",
+-      "src/ia32/regexp-macro-assembler-ia32.cc",
+-      "src/ia32/regexp-macro-assembler-ia32.h",
+-      "src/compiler/ia32/code-generator-ia32.cc",
+-      "src/compiler/ia32/instruction-codes-ia32.h",
+-      "src/compiler/ia32/instruction-selector-ia32.cc",
+-      "src/compiler/ia32/linkage-ia32.cc",
+-      "src/ic/ia32/access-compiler-ia32.cc",
+-      "src/ic/ia32/handler-compiler-ia32.cc",
+-      "src/ic/ia32/ic-ia32.cc",
+-      "src/ic/ia32/ic-compiler-ia32.cc",
+-      "src/ic/ia32/stub-cache-ia32.cc",
++      "src/x87/assembler-x87-inl.h",
++      "src/x87/assembler-x87.cc",
++      "src/x87/assembler-x87.h",
++      "src/x87/builtins-x87.cc",
++      "src/x87/code-stubs-x87.cc",
++      "src/x87/code-stubs-x87.h",
++      "src/x87/codegen-x87.cc",
++      "src/x87/codegen-x87.h",
++      "src/x87/cpu-x87.cc",
++      "src/x87/debug-x87.cc",
++      "src/x87/deoptimizer-x87.cc",
++      "src/x87/disasm-x87.cc",
++      "src/x87/frames-x87.cc",
++      "src/x87/frames-x87.h",
++      "src/x87/full-codegen-x87.cc",
++      "src/x87/interface-descriptors-x87.cc",
++      "src/x87/lithium-codegen-x87.cc",
++      "src/x87/lithium-codegen-x87.h",
++      "src/x87/lithium-gap-resolver-x87.cc",
++      "src/x87/lithium-gap-resolver-x87.h",
++      "src/x87/lithium-x87.cc",
++      "src/x87/lithium-x87.h",
++      "src/x87/macro-assembler-x87.cc",
++      "src/x87/macro-assembler-x87.h",
++      "src/x87/regexp-macro-assembler-x87.cc",
++      "src/x87/regexp-macro-assembler-x87.h",
++      "src/compiler/x87/code-generator-x87.cc",
++      "src/compiler/x87/instruction-codes-x87.h",
++      "src/compiler/x87/instruction-selector-x87.cc",
++      "src/compiler/x87/linkage-x87.cc",
++      "src/ic/x87/access-compiler-x87.cc",
++      "src/ic/x87/handler-compiler-x87.cc",
++      "src/ic/x87/ic-x87.cc",
++      "src/ic/x87/ic-compiler-x87.cc",
++      "src/ic/x87/stub-cache-x87.cc",
+     ]
+   } else if (v8_target_arch == "x64") {
+     sources += [
