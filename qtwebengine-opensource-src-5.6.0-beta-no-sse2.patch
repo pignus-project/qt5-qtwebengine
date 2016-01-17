@@ -1,21 +1,18 @@
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/breakpad/src/build/common.gypi qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/breakpad/src/build/common.gypi
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/breakpad/src/build/common.gypi	2015-12-10 18:17:21.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/breakpad/src/build/common.gypi	2016-01-16 23:07:29.831545727 +0100
-@@ -82,6 +82,13 @@
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/breakpad/src/build/common.gypi	2016-01-17 05:53:27.035467092 +0100
+@@ -80,8 +80,8 @@
+       # The system root for cross-compiles. Default: none.
+       'sysroot%': '',
  
-       # On Linux, we build with sse2 for Chromium builds.
-       'disable_sse2%': 0,
-+
-+      'conditions': [
-+        ['target_arch=="ia32"', {
-+          # Do not assume SSE2 by default (Fedora patch).
-+          'disable_sse2%': 1,
-+        }],
-+      ],
+-      # On Linux, we build with sse2 for Chromium builds.
+-      'disable_sse2%': 0,
++      # Do not assume SSE2 by default (Fedora patch).
++      'disable_sse2%': 1
      },
  
      'target_arch%': '<(target_arch)',
-@@ -725,17 +732,13 @@
+@@ -725,17 +725,13 @@
              'conditions': [
                ['disable_sse2==0', {
                  'cflags': [
