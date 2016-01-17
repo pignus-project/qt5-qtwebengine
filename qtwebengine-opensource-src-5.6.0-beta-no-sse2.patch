@@ -2504,7 +2504,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
 +#include "VectorMath.cpp"
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/blink_platform.gyp qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/blink_platform.gyp
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/blink_platform.gyp	2015-12-10 18:17:21.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/blink_platform.gyp	2016-01-17 18:07:04.508443123 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/blink_platform.gyp	2016-01-17 22:38:21.451976078 +0100
 @@ -419,6 +419,11 @@
            '<(DEPTH)/third_party/openmax_dl/dl/dl.gyp:openmax_dl',
          ],
@@ -2517,7 +2517,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
        ['target_arch=="arm"', {
          'dependencies': [
            'blink_arm_neon',
-@@ -434,6 +439,26 @@
+@@ -434,6 +439,37 @@
        }],
      ],
    },
@@ -2528,14 +2528,25 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
 +        'type': 'static_library',
 +        'dependencies': [
 +          '<(DEPTH)/third_party/khronos/khronos.gyp:khronos_headers',
++          '../config.gyp:config',
++          '../wtf/wtf.gyp:wtf',
 +          'blink_common',
++          'blink_heap_asm_stubs',
++          'blink_prerequisites',
++        ],
++        'defines': [
++          'BLINK_PLATFORM_IMPLEMENTATION=1',
++          'INSIDE_BLINK',
 +        ],
 +        'sources': [
 +          'audio/DirectConvolverSSE2.cpp',
 +          'audio/SincResamplerSSE2.cpp',
 +          'audio/VectorMathSSE2.cpp',
 +        ],
-+        'cflags': ['-msse2'],
++        'cflags': [
++          '-msse2',
++          '-mfpmath=sse',
++        ],
 +      },{  # target_arch != "ia32"
 +        'type': 'none',
 +      }],
@@ -2714,15 +2725,3 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/BUILD.g
      ]
    } else if (v8_target_arch == "x64") {
      sources += [
-diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/core/core_module.pro qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/core/core_module.pro
---- qtwebengine-opensource-src-5.6.0-beta/src/core/core_module.pro	2015-12-14 16:27:24.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/core/core_module.pro	2016-01-17 19:19:39.093102893 +0100
-@@ -25,6 +25,8 @@
-     QMAKE_LFLAGS += /OPT:REF
-     QMAKE_LFLAGS += @$${api_library_path}$${QMAKE_DIR_SEP}$${api_library_name}.lib.objects
- } else {
-+    # Use ld.bfd instead of gold, which produces undefined references
-+    CONFIG -= use_gold_linker
-     LIBS_PRIVATE += -Wl,-whole-archive -l$$api_library_name -Wl,-no-whole-archive
- }
- 
