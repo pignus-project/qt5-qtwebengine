@@ -35,8 +35,8 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/breakpad/s
                '-m32',
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/build/common.gypi qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/build/common.gypi
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/build/common.gypi	2015-12-10 18:17:21.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/build/common.gypi	2016-01-17 00:35:41.821192830 +0100
-@@ -3901,16 +3901,12 @@
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/build/common.gypi	2016-01-17 01:52:14.440801716 +0100
+@@ -3901,15 +3901,7 @@
                  # value used during computation does not change depending on
                  # how the compiler optimized the code, since the value is
                  # always kept in its specified precision.
@@ -50,13 +50,8 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/build/comm
 -                  '-mfpmath=sse',
 -                  '-mmmx',  # Allows mmintrin.h for MMX intrinsics.
                    '-m32',
-+                  # Refer to http://crbug.com/348761 for rationale and
-+                  # http://crbug.com/313032 for an example where the x87
-+                  # floating-point precision issue has "bit" us in the past.
-+                  '-ffloat-store',
                  ],
                  'ldflags': [
-                   '-m32',
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/cc/BUILD.gn qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/cc/BUILD.gn
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/cc/BUILD.gn	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/cc/BUILD.gn	2016-01-16 23:07:29.918546201 +0100
@@ -2032,6 +2027,36 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
    ],
  }
  
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.cpp qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.cpp
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.cpp	2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.cpp	2016-01-17 01:49:46.706000332 +0100
+@@ -39,7 +39,7 @@
+ #include "platform/audio/VectorMath.h"
+ #include "wtf/CPU.h"
+ 
+-#if (CPU(X86) || CPU(X86_64)) && !(OS(MACOSX) || USE(WEBAUDIO_IPP))
++#if ((CPU(X86) && defined(__SSE2__)) || CPU(X86_64)) && !(OS(MACOSX) || USE(WEBAUDIO_IPP))
+ #include <emmintrin.h>
+ #endif
+ 
+@@ -102,7 +102,7 @@
+ #endif // CPU(X86)
+ #else
+     size_t i = 0;
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+     // Convolution using SSE2. Currently only do this if both |kernelSize| and |framesToProcess|
+     // are multiples of 4. If not, use the straightforward loop below.
+ 
+@@ -412,7 +412,7 @@
+         }
+         destP[i++] = sum;
+     }
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+     }
+ #endif
+ #endif // OS(MACOSX)
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/graphics/cpu/x86/WebGLImageConversionSSE.h qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/graphics/cpu/x86/WebGLImageConversionSSE.h
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_party/WebKit/Source/platform/graphics/cpu/x86/WebGLImageConversionSSE.h	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/graphics/cpu/x86/WebGLImageConversionSSE.h	2016-01-16 23:31:06.896257072 +0100

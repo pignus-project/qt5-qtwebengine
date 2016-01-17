@@ -360,7 +360,7 @@ popd
 
 
 %changelog
-* Sat Jan 16 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.13.beta.nosse2.1
+* Sun Jan 17 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.13.beta.nosse2.1
 - Do not require SSE2 on i686
 
 * Thu Jan 14 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.13.beta
