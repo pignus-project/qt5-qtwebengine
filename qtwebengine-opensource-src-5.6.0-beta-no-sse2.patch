@@ -2619,6 +2619,27 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
    return rtc::scoped_ptr<RealFourier>(new RealFourierOpenmax(fft_order));
  #else
    return rtc::scoped_ptr<RealFourier>(new RealFourierOoura(fft_order));
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/tools/gyp/pylib/gyp/generator/ninja.py qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/tools/gyp/pylib/gyp/generator/ninja.py
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/tools/gyp/pylib/gyp/generator/ninja.py	2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/tools/gyp/pylib/gyp/generator/ninja.py	2016-01-18 03:00:21.703867569 +0100
+@@ -1282,6 +1282,8 @@
+       # Make sure that we have relative paths to our out/(Release|Debug), where we generate our .pri file, and then prepend $$PWD to them.
+       prefixed_objects = ['$$PWD/' + o for o in toAbsPaths(objects)]
+       prefixed_archives = ['$$PWD/' + o for o in toAbsPaths(libs)]
++      if len(solibs):
++        prefixed_solibs = ['$$PWD/' + so for so in toAbsPaths(solibs)]
+ 
+       pri_file.write("QMAKE_LFLAGS += %s\n" % qmakeLiteral(' '.join(prefixed_lflags)))
+       pri_file.write("OBJECTS += %s\n" % qmakeLiteral(' '.join(prefixed_objects)))
+@@ -1290,6 +1292,8 @@
+         pri_file.write("LIBS_PRIVATE += -Wl,--whole-archive %s -Wl,--no-whole-archive\n" % qmakeLiteral(' '.join(prefixed_archives)))
+       else:
+         pri_file.write("LIBS_PRIVATE += %s\n" % qmakeLiteral(' '.join(prefixed_archives)))
++      if len(solibs):
++        pri_file.write("LIBS_PRIVATE += %s\n" % qmakeLiteral(' '.join(prefixed_solibs)))
+       # External libs have to come after objects/archives, the linker resolve them in order.
+       pri_file.write("LIBS_PRIVATE += %s\n" % qmakeLiteral(' '.join(prefixed_library_dirs + prefixed_libraries)))
+       # Make sure that if ninja modifies one of the inputs, qmake/make will link again.
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/standalone.gypi qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/build/standalone.gypi
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/build/standalone.gypi	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/build/standalone.gypi	2016-01-16 23:07:30.286548206 +0100
