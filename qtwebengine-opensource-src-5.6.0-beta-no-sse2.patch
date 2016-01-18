@@ -2725,3 +2725,68 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/BUILD.g
      ]
    } else if (v8_target_arch == "x64") {
      sources += [
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/gyp/v8.gyp qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/tools/gyp/v8.gyp
+--- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/gyp/v8.gyp	2015-12-10 18:17:21.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/tools/gyp/v8.gyp	2016-01-18 01:03:14.070441874 +0100
+@@ -34,6 +34,14 @@
+     'v8_extra_library_files%': [],
+     'mksnapshot_exec': '<(PRODUCT_DIR)/<(EXECUTABLE_PREFIX)mksnapshot<(EXECUTABLE_SUFFIX)',
+     'remove_v8base_debug_symbols%': 0,
++    'conditions': [
++      # build V8 shared on ia32 so we can swap x87 vs. SSE2 builds
++      ['target_arch == "ia32"', {
++        'v8_component%': 'shared_library',
++      }, {
++        'v8_component%': '<(component)',
++      }],
++    ],
+   },
+   'includes': ['../../build/toolchain.gypi', '../../build/features.gypi'],
+   'targets': [
+@@ -47,8 +55,8 @@
+         }, {
+           'toolsets': ['target'],
+         }],
+-        ['component=="shared_library"', {
+-          'type': '<(component)',
++        ['v8_component=="shared_library"', {
++          'type': '<(v8_component)',
+           'sources': [
+             # Note: on non-Windows we still build this file so that gyp
+             # has some sources to link into the component.
+@@ -159,7 +167,7 @@
+             'js2c',
+           ],
+         }],
+-        ['component=="shared_library"', {
++        ['v8_component=="shared_library"', {
+           'defines': [
+             'V8_SHARED',
+             'BUILDING_V8_SHARED',
+@@ -237,7 +245,7 @@
+           'toolsets': ['target'],
+           'dependencies': ['js2c'],
+         }],
+-        ['component=="shared_library"', {
++        ['v8_component=="shared_library"', {
+           'defines': [
+             'BUILDING_V8_SHARED',
+             'V8_SHARED',
+@@ -265,7 +273,7 @@
+                 'natives_blob',
+               ],
+             }],
+-            ['component=="shared_library"', {
++            ['v8_component=="shared_library"', {
+               'defines': [
+                 'V8_SHARED',
+                 'BUILDING_V8_SHARED',
+@@ -1340,7 +1348,7 @@
+           # See http://crbug.com/485155.
+           'msvs_shard': 4,
+         }],
+-        ['component=="shared_library"', {
++        ['v8_component=="shared_library"', {
+           'defines': [
+             'BUILDING_V8_SHARED',
+             'V8_SHARED',
