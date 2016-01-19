@@ -21,10 +21,16 @@
 
 %global prerelease beta
 
+# exclude plugins (all architectures) and libv8.so (i686, it's static everywhere
+# else)
+%global __provides_exclude ^lib.*plugin\\.so.*|libv8\\.so$
+# exclude libv8.so (i686, it's static everywhere else)
+%global __requires_exclude ^libv8\\.so$
+
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 0.14.beta.nosse2.3%{?dist}
+Release: 0.14.beta.nosse2.4%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -364,10 +370,11 @@ popd
 
 
 %changelog
-* Tue Jan 19 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.14.beta.nosse2.3
+* Tue Jan 19 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.14.beta.nosse2.4
 - Build V8 as a shared library on i686 to allow for swappable backends
 - Build both the x87 version and the SSE2 version of V8 on i686
 - Add the private library directory to the file list on i686
+- Add Provides/Requires filtering for libv8.so (i686) and for plugins
 
 * Sun Jan 17 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.14.beta
 - Do not require SSE2 on i686
