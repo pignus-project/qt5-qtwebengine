@@ -2748,7 +2748,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/BUILD.g
      sources += [
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/gyp/make-v8-sse2-gyp.sh qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/tools/gyp/make-v8-sse2-gyp.sh
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/gyp/make-v8-sse2-gyp.sh	1970-01-01 01:00:00.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/tools/gyp/make-v8-sse2-gyp.sh	2016-01-19 04:52:31.878947186 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/tools/gyp/make-v8-sse2-gyp.sh	2016-01-19 05:50:30.722730427 +0100
 @@ -0,0 +1,56 @@
 +#!/bin/sh
 +# This script renames the v8 targets to _sse2 names so that they do not conflict
@@ -2804,7 +2804,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +    -e "s#/snapshot\.cc#/snapshot_sse2.cc#g" \
 +    -e "s/libraries\.cc/libraries_sse2.cc/g" \
 +    -e "s/\.bin/_sse2.bin/g" \
-+    -e "s#^\( *\)\('target_name': 'v8_sse2',\)#\1\2\n\1'product_name': 'v8',\n\1'product_dir': '<(PRODUCT_DIR)/sse2',#g" \
++    -e "s#^\( *\)\('target_name': 'v8_sse2',\)#\1\2\n\1'product_name': 'v8',\n\1'product_dir': '<(PRODUCT_DIR)/lib/sse2',#g" \
 +    v8.gyp >>v8_sse2.gyp
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/gyp/v8.gyp qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/tools/gyp/v8.gyp
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/gyp/v8.gyp	2015-12-10 18:17:21.000000000 +0100
@@ -2873,7 +2873,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
              'V8_SHARED',
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/gyp/v8_sse2.gyp qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/tools/gyp/v8_sse2.gyp
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/gyp/v8_sse2.gyp	1970-01-01 01:00:00.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/tools/gyp/v8_sse2.gyp	2016-01-19 04:52:40.811995458 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/tools/gyp/v8_sse2.gyp	2016-01-19 05:51:07.209927516 +0100
 @@ -0,0 +1,1952 @@
 +# Generated from v8.gyp by make-v8-sse2-gyp.sh
 +# Copyright 2012 the V8 project authors. All rights reserved.
@@ -2927,7 +2927,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +    {
 +      'target_name': 'v8_sse2',
 +      'product_name': 'v8',
-+      'product_dir': '<(PRODUCT_DIR)/sse2',
++      'product_dir': '<(PRODUCT_DIR)/lib/sse2',
 +      'dependencies_traverse': 1,
 +      'dependencies': ['v8_maybe_snapshot_sse2'],
 +      'conditions': [
