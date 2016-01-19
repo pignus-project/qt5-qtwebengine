@@ -2787,11 +2787,11 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +for SUBTARGET in $SUBTARGETS ; do
 +  SEDS=$SEDS\ -e\ "s/'$SUBTARGET'/'${SUBTARGET}_sse2'/g"
 +done
-+sed -e "s/^\(  'variables': {\)/\1\n    'v8_target_arch': 'ia32'/g" \
++sed -e "s/^\(  'variables': {\)/\1\n    'v8_target_arch': 'ia32',/g" \
 +    $SEDS \
 +    -e "s/\('mksnapshot_exec': '.*mksnapshot\)/\1_sse2/g" \
 +    -e "s#/snapshot\.cc#/snapshot_sse2.cc#g" \
-+    -e "s#^\( *\)\('target_name': 'v8_sse2'\)#\1\2\n\1'product_name': 'v8'\n\1'product_dir': '<(PRODUCT_DIR)/sse2'#g" \
++    -e "s#^\( *\)\('target_name': 'v8_sse2',\)#\1\2\n\1'product_name': 'v8',\n\1'product_dir': '<(PRODUCT_DIR)/sse2',#g" \
 +    v8.gyp >>v8_sse2.gyp
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/gyp/v8.gyp qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/tools/gyp/v8.gyp
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/gyp/v8.gyp	2015-12-10 18:17:21.000000000 +0100
@@ -2892,7 +2892,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +
 +{
 +  'variables': {
-+    'v8_target_arch': 'ia32'
++    'v8_target_arch': 'ia32',
 +    'icu_use_data_file_flag%': 0,
 +    'v8_code': 1,
 +    'v8_random_seed%': 314159265,
@@ -2912,8 +2912,8 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +  'includes': ['../../build/toolchain.gypi', '../../build/features.gypi'],
 +  'targets': [
 +    {
-+      'target_name': 'v8_sse2'
-+      'product_name': 'v8'
++      'target_name': 'v8_sse2',
++      'product_name': 'v8',
 +      'product_dir': '<(PRODUCT_DIR)/sse2',
 +      'dependencies_traverse': 1,
 +      'dependencies': ['v8_maybe_snapshot_sse2'],
