@@ -2785,7 +2785,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +SUBTARGETS=`grep "'target_name': 'v8" v8.gyp | sed -e "s/^.*'target_name': '//g" -e "s/',$//g"`" mksnapshot"
 +SEDS=
 +for SUBTARGET in $SUBTARGETS ; do
-+  SEDS=$SEDS\ -e\ "s/'$SUBTARGET'/'${SUBTARGET}_sse2'/g"
++  SEDS=$SEDS\ -e\ "s/'$SUBTARGET\(['#]\)/'${SUBTARGET}_sse2\1/g"
 +done
 +sed -e "s/^\(  'variables': {\)/\1\n    'v8_target_arch': 'ia32',/g" \
 +    $SEDS \
@@ -3025,7 +3025,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +        ['want_separate_host_toolset==1', {
 +          'toolsets': ['host', 'target'],
 +          'dependencies': [
-+            'mksnapshot#host',
++            'mksnapshot_sse2#host',
 +            'js2c#host',
 +          ],
 +        }, {
@@ -3130,7 +3130,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +            ['want_separate_host_toolset==1', {
 +              'toolsets': ['host', 'target'],
 +              'dependencies': [
-+                'mksnapshot#host',
++                'mksnapshot_sse2#host',
 +                'js2c#host',
 +                'natives_blob',
 +            ]}, {
