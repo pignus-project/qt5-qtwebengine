@@ -2748,8 +2748,8 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/BUILD.g
      sources += [
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/gyp/make-v8-sse2-gyp.sh qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/tools/gyp/make-v8-sse2-gyp.sh
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/gyp/make-v8-sse2-gyp.sh	1970-01-01 01:00:00.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/tools/gyp/make-v8-sse2-gyp.sh	2016-01-19 03:13:08.617522460 +0100
-@@ -0,0 +1,43 @@
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/tools/gyp/make-v8-sse2-gyp.sh	2016-01-19 04:52:31.878947186 +0100
+@@ -0,0 +1,56 @@
 +#!/bin/sh
 +# This script renames the v8 targets to _sse2 names so that they do not conflict
 +# with the non-SSE2 versions.
@@ -2781,16 +2781,29 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 +# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 +
++# add comment noting that the file is generated
 +echo "# Generated from v8.gyp by make-v8-sse2-gyp.sh" >v8_sse2.gyp
-+SUBTARGETS=`grep "'target_name': 'v8" v8.gyp | sed -e "s/^.*'target_name': '//g" -e "s/',$//g"`" mksnapshot"
++# rename all target names
++SUBTARGETS=`grep "'target_name': '" v8.gyp | sed -e "s/^.*'target_name': '//g" -e "s/',$//g"`
 +SEDS=
 +for SUBTARGET in $SUBTARGETS ; do
 +  SEDS=$SEDS\ -e\ "s/'$SUBTARGET\(['#]\)/'${SUBTARGET}_sse2\1/g"
 +done
++# in addition:
++# * set v8_target_arch to "ia32" (instead of "x87")
++# * rename all actions
++# * fix mksnapshot_exec to match the renamed target
++# * rename the generated snapshot.cc (but not mksnapshot.cc) to snapshot_sse2.cc
++# * rename the generated *libraries.cc to *libraries_sse2.cc
++# * rename the generated *.bin to *_sse2.bin
++# * set product_name and product_dir for the v8_sse2 target
 +sed -e "s/^\(  'variables': {\)/\1\n    'v8_target_arch': 'ia32',/g" \
++    -e "s/\('action_name': '\)/\1v8_sse2_/g" \
 +    $SEDS \
 +    -e "s/\('mksnapshot_exec': '.*mksnapshot\)/\1_sse2/g" \
 +    -e "s#/snapshot\.cc#/snapshot_sse2.cc#g" \
++    -e "s/libraries\.cc/libraries_sse2.cc/g" \
++    -e "s/\.bin/_sse2.bin/g" \
 +    -e "s#^\( *\)\('target_name': 'v8_sse2',\)#\1\2\n\1'product_name': 'v8',\n\1'product_dir': '<(PRODUCT_DIR)/sse2',#g" \
 +    v8.gyp >>v8_sse2.gyp
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/gyp/v8.gyp qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/tools/gyp/v8.gyp
@@ -2860,7 +2873,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
              'V8_SHARED',
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/gyp/v8_sse2.gyp qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/tools/gyp/v8_sse2.gyp
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/gyp/v8_sse2.gyp	1970-01-01 01:00:00.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/tools/gyp/v8_sse2.gyp	2016-01-19 03:13:12.572544083 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/v8/tools/gyp/v8_sse2.gyp	2016-01-19 04:52:40.811995458 +0100
 @@ -0,0 +1,1952 @@
 +# Generated from v8.gyp by make-v8-sse2-gyp.sh
 +# Copyright 2012 the V8 project authors. All rights reserved.
@@ -2995,18 +3008,18 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +        }],
 +        ['v8_use_snapshot=="true" and v8_use_external_startup_data==1 and want_separate_host_toolset==0', {
 +          'dependencies': ['v8_base_sse2', 'v8_external_snapshot_sse2'],
-+          'inputs': [ '<(PRODUCT_DIR)/snapshot_blob.bin', ],
++          'inputs': [ '<(PRODUCT_DIR)/snapshot_blob_sse2.bin', ],
 +        }],
 +        ['v8_use_snapshot=="true" and v8_use_external_startup_data==1 and want_separate_host_toolset==1', {
 +          'dependencies': ['v8_base_sse2', 'v8_external_snapshot_sse2'],
 +          'target_conditions': [
 +            ['_toolset=="host"', {
 +              'inputs': [
-+                '<(PRODUCT_DIR)/snapshot_blob_host.bin',
++                '<(PRODUCT_DIR)/snapshot_blob_host_sse2.bin',
 +              ],
 +            }, {
 +              'inputs': [
-+                '<(PRODUCT_DIR)/snapshot_blob.bin',
++                '<(PRODUCT_DIR)/snapshot_blob_sse2.bin',
 +              ],
 +            }],
 +          ],
@@ -3026,13 +3039,13 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +          'toolsets': ['host', 'target'],
 +          'dependencies': [
 +            'mksnapshot_sse2#host',
-+            'js2c#host',
++            'js2c_sse2#host',
 +          ],
 +        }, {
 +          'toolsets': ['target'],
 +          'dependencies': [
 +            'mksnapshot_sse2',
-+            'js2c',
++            'js2c_sse2',
 +          ],
 +        }],
 +        ['v8_component=="shared_library"', {
@@ -3055,14 +3068,14 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +        '../..',
 +      ],
 +      'sources': [
-+        '<(SHARED_INTERMEDIATE_DIR)/libraries.cc',
-+        '<(SHARED_INTERMEDIATE_DIR)/experimental-libraries.cc',
-+        '<(SHARED_INTERMEDIATE_DIR)/extras-libraries.cc',
++        '<(SHARED_INTERMEDIATE_DIR)/libraries_sse2.cc',
++        '<(SHARED_INTERMEDIATE_DIR)/experimental-libraries_sse2.cc',
++        '<(SHARED_INTERMEDIATE_DIR)/extras-libraries_sse2.cc',
 +        '<(INTERMEDIATE_DIR)/snapshot_sse2.cc',
 +      ],
 +      'actions': [
 +        {
-+          'action_name': 'run_mksnapshot',
++          'action_name': 'v8_sse2_run_mksnapshot',
 +          'inputs': [
 +            '<(mksnapshot_exec)',
 +            '<(embed_script)',
@@ -3100,18 +3113,18 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +        '../..',
 +      ],
 +      'sources': [
-+        '<(SHARED_INTERMEDIATE_DIR)/libraries.cc',
-+        '<(SHARED_INTERMEDIATE_DIR)/experimental-libraries.cc',
-+        '<(SHARED_INTERMEDIATE_DIR)/extras-libraries.cc',
++        '<(SHARED_INTERMEDIATE_DIR)/libraries_sse2.cc',
++        '<(SHARED_INTERMEDIATE_DIR)/experimental-libraries_sse2.cc',
++        '<(SHARED_INTERMEDIATE_DIR)/extras-libraries_sse2.cc',
 +        '../../src/snapshot/snapshot-empty.cc',
 +      ],
 +      'conditions': [
 +        ['want_separate_host_toolset==1', {
 +          'toolsets': ['host', 'target'],
-+          'dependencies': ['js2c#host'],
++          'dependencies': ['js2c_sse2#host'],
 +        }, {
 +          'toolsets': ['target'],
-+          'dependencies': ['js2c'],
++          'dependencies': ['js2c_sse2'],
 +        }],
 +        ['v8_component=="shared_library"', {
 +          'defines': [
@@ -3131,14 +3144,14 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +              'toolsets': ['host', 'target'],
 +              'dependencies': [
 +                'mksnapshot_sse2#host',
-+                'js2c#host',
-+                'natives_blob',
++                'js2c_sse2#host',
++                'natives_blob_sse2',
 +            ]}, {
 +              'toolsets': ['target'],
 +              'dependencies': [
 +                'mksnapshot_sse2',
-+                'js2c',
-+                'natives_blob',
++                'js2c_sse2',
++                'natives_blob_sse2',
 +              ],
 +            }],
 +            ['v8_component=="shared_library"', {
@@ -3166,7 +3179,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +          ],
 +          'actions': [
 +            {
-+              'action_name': 'run_mksnapshot (external)',
++              'action_name': 'v8_sse2_run_mksnapshot (external)',
 +              'inputs': [
 +                '<(mksnapshot_exec)',
 +              ],
@@ -3187,25 +3200,25 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +                    ['_toolset=="host"', {
 +                      'outputs': [
 +                        '<(INTERMEDIATE_DIR)/snapshot_sse2.cc',
-+                        '<(PRODUCT_DIR)/snapshot_blob_host.bin',
++                        '<(PRODUCT_DIR)/snapshot_blob_host_sse2.bin',
 +                      ],
 +                      'action': [
 +                        '<(mksnapshot_exec)',
 +                        '<@(mksnapshot_flags)',
 +                        '<@(INTERMEDIATE_DIR)/snapshot_sse2.cc',
-+                        '--startup_blob', '<(PRODUCT_DIR)/snapshot_blob_host.bin',
++                        '--startup_blob', '<(PRODUCT_DIR)/snapshot_blob_host_sse2.bin',
 +                        '<(embed_script)',
 +                      ],
 +                    }, {
 +                      'outputs': [
 +                        '<(INTERMEDIATE_DIR)/snapshot_sse2.cc',
-+                        '<(PRODUCT_DIR)/snapshot_blob.bin',
++                        '<(PRODUCT_DIR)/snapshot_blob_sse2.bin',
 +                      ],
 +                      'action': [
 +                        '<(mksnapshot_exec)',
 +                        '<@(mksnapshot_flags)',
 +                        '<@(INTERMEDIATE_DIR)/snapshot_sse2.cc',
-+                        '--startup_blob', '<(PRODUCT_DIR)/snapshot_blob.bin',
++                        '--startup_blob', '<(PRODUCT_DIR)/snapshot_blob_sse2.bin',
 +                        '<(embed_script)',
 +                      ],
 +                    }],
@@ -3213,13 +3226,13 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +                }, {
 +                  'outputs': [
 +                    '<(INTERMEDIATE_DIR)/snapshot_sse2.cc',
-+                    '<(PRODUCT_DIR)/snapshot_blob.bin',
++                    '<(PRODUCT_DIR)/snapshot_blob_sse2.bin',
 +                  ],
 +                  'action': [
 +                    '<(mksnapshot_exec)',
 +                    '<@(mksnapshot_flags)',
 +                    '<@(INTERMEDIATE_DIR)/snapshot_sse2.cc',
-+                    '--startup_blob', '<(PRODUCT_DIR)/snapshot_blob.bin',
++                    '--startup_blob', '<(PRODUCT_DIR)/snapshot_blob_sse2.bin',
 +                    '<(embed_script)',
 +                  ],
 +                }],
@@ -4549,50 +4562,50 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +      ],
 +    },
 +    {
-+      'target_name': 'natives_blob',
++      'target_name': 'natives_blob_sse2',
 +      'type': 'none',
 +      'conditions': [
 +        [ 'v8_use_external_startup_data==1', {
 +          'conditions': [
 +            ['want_separate_host_toolset==1', {
-+              'dependencies': ['js2c#host'],
++              'dependencies': ['js2c_sse2#host'],
 +            }, {
-+              'dependencies': ['js2c'],
++              'dependencies': ['js2c_sse2'],
 +            }],
 +          ],
 +          'actions': [{
-+            'action_name': 'concatenate_natives_blob',
++            'action_name': 'v8_sse2_concatenate_natives_blob',
 +            'inputs': [
 +              '../../tools/concatenate-files.py',
-+              '<(SHARED_INTERMEDIATE_DIR)/libraries.bin',
-+              '<(SHARED_INTERMEDIATE_DIR)/libraries-experimental.bin',
-+              '<(SHARED_INTERMEDIATE_DIR)/libraries-extras.bin',
++              '<(SHARED_INTERMEDIATE_DIR)/libraries_sse2.bin',
++              '<(SHARED_INTERMEDIATE_DIR)/libraries-experimental_sse2.bin',
++              '<(SHARED_INTERMEDIATE_DIR)/libraries-extras_sse2.bin',
 +            ],
 +            'conditions': [
 +              ['want_separate_host_toolset==1', {
 +                'target_conditions': [
 +                  ['_toolset=="host"', {
 +                    'outputs': [
-+                      '<(PRODUCT_DIR)/natives_blob_host.bin',
++                      '<(PRODUCT_DIR)/natives_blob_host_sse2.bin',
 +                    ],
 +                    'action': [
-+                      'python', '<@(_inputs)', '<(PRODUCT_DIR)/natives_blob_host.bin'
++                      'python', '<@(_inputs)', '<(PRODUCT_DIR)/natives_blob_host_sse2.bin'
 +                    ],
 +                  }, {
 +                    'outputs': [
-+                      '<(PRODUCT_DIR)/natives_blob.bin',
++                      '<(PRODUCT_DIR)/natives_blob_sse2.bin',
 +                    ],
 +                    'action': [
-+                      'python', '<@(_inputs)', '<(PRODUCT_DIR)/natives_blob.bin'
++                      'python', '<@(_inputs)', '<(PRODUCT_DIR)/natives_blob_sse2.bin'
 +                    ],
 +                  }],
 +                ],
 +              }, {
 +                'outputs': [
-+                  '<(PRODUCT_DIR)/natives_blob.bin',
++                  '<(PRODUCT_DIR)/natives_blob_sse2.bin',
 +                ],
 +                'action': [
-+                  'python', '<@(_inputs)', '<(PRODUCT_DIR)/natives_blob.bin'
++                  'python', '<@(_inputs)', '<(PRODUCT_DIR)/natives_blob_sse2.bin'
 +                ],
 +              }],
 +            ],
@@ -4606,7 +4619,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +      ]
 +    },
 +    {
-+      'target_name': 'js2c',
++      'target_name': 'js2c_sse2',
 +      'type': 'none',
 +      'conditions': [
 +        ['want_separate_host_toolset==1', {
@@ -4676,25 +4689,25 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +          '../../src/harmony-object.js',
 +          '../../src/harmony-sharedarraybuffer.js',
 +        ],
-+        'libraries_bin_file': '<(SHARED_INTERMEDIATE_DIR)/libraries.bin',
-+        'libraries_experimental_bin_file': '<(SHARED_INTERMEDIATE_DIR)/libraries-experimental.bin',
-+        'libraries_extras_bin_file': '<(SHARED_INTERMEDIATE_DIR)/libraries-extras.bin',
++        'libraries_bin_file': '<(SHARED_INTERMEDIATE_DIR)/libraries_sse2.bin',
++        'libraries_experimental_bin_file': '<(SHARED_INTERMEDIATE_DIR)/libraries-experimental_sse2.bin',
++        'libraries_extras_bin_file': '<(SHARED_INTERMEDIATE_DIR)/libraries-extras_sse2.bin',
 +      },
 +      'actions': [
 +        {
-+          'action_name': 'js2c',
++          'action_name': 'v8_sse2_js2c',
 +          'inputs': [
 +            '../../tools/js2c.py',
 +            '<@(library_files)',
 +            '<@(i18n_library_files)'
 +          ],
 +          'outputs': [
-+            '<(SHARED_INTERMEDIATE_DIR)/libraries.cc',
++            '<(SHARED_INTERMEDIATE_DIR)/libraries_sse2.cc',
 +          ],
 +          'action': [
 +            'python',
 +            '../../tools/js2c.py',
-+            '<(SHARED_INTERMEDIATE_DIR)/libraries.cc',
++            '<(SHARED_INTERMEDIATE_DIR)/libraries_sse2.cc',
 +            'CORE',
 +            '<@(library_files)',
 +            '<@(i18n_library_files)'
@@ -4709,18 +4722,18 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +          ],
 +        },
 +        {
-+          'action_name': 'js2c_experimental',
++          'action_name': 'v8_sse2_js2c_experimental',
 +          'inputs': [
 +            '../../tools/js2c.py',
 +            '<@(experimental_library_files)',
 +          ],
 +          'outputs': [
-+            '<(SHARED_INTERMEDIATE_DIR)/experimental-libraries.cc',
++            '<(SHARED_INTERMEDIATE_DIR)/experimental-libraries_sse2.cc',
 +          ],
 +          'action': [
 +            'python',
 +            '../../tools/js2c.py',
-+            '<(SHARED_INTERMEDIATE_DIR)/experimental-libraries.cc',
++            '<(SHARED_INTERMEDIATE_DIR)/experimental-libraries_sse2.cc',
 +            'EXPERIMENTAL',
 +            '<@(experimental_library_files)'
 +          ],
@@ -4734,18 +4747,18 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +          ],
 +        },
 +        {
-+          'action_name': 'js2c_extras',
++          'action_name': 'v8_sse2_js2c_extras',
 +          'inputs': [
 +            '../../tools/js2c.py',
 +            '<@(v8_extra_library_files)',
 +          ],
 +          'outputs': [
-+            '<(SHARED_INTERMEDIATE_DIR)/extras-libraries.cc',
++            '<(SHARED_INTERMEDIATE_DIR)/extras-libraries_sse2.cc',
 +          ],
 +          'action': [
 +            'python',
 +            '../../tools/js2c.py',
-+            '<(SHARED_INTERMEDIATE_DIR)/extras-libraries.cc',
++            '<(SHARED_INTERMEDIATE_DIR)/extras-libraries_sse2.cc',
 +            'EXTRAS',
 +            '<@(v8_extra_library_files)',
 +          ],
@@ -4761,7 +4774,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +      ],
 +    },
 +    {
-+      'target_name': 'postmortem-metadata',
++      'target_name': 'postmortem-metadata_sse2',
 +      'type': 'none',
 +      'variables': {
 +        'heapobject_files': [
@@ -4771,7 +4784,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +      },
 +      'actions': [
 +          {
-+            'action_name': 'gen-postmortem-metadata',
++            'action_name': 'v8_sse2_gen-postmortem-metadata',
 +            'inputs': [
 +              '../../tools/gen-postmortem-metadata.py',
 +              '<@(heapobject_files)',
