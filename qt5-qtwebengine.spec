@@ -336,6 +336,10 @@ popd
 %{_qt5_libdir}/libQt5*.so.*
 %{_qt5_libdir}/qt5/qml/*
 %{_qt5_libdir}/qt5/libexec/QtWebEngineProcess
+%ifarch %{ix86}
+# shared V8 library and its SSE2 version
+%{_qt5_libdir}/qtwebengine/
+%endif
 %{_qt5_translationdir}/*
 
 %{_qt5_datadir}/qtwebengine_resources.pak
@@ -363,6 +367,7 @@ popd
 * Tue Jan 19 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.14.beta.nosse2.3
 - Build V8 as a shared library on i686 to allow for swappable backends
 - Build both the x87 version and the SSE2 version of V8 on i686
+- Add the private library directory to the file list on i686
 
 * Sun Jan 17 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.14.beta
 - Do not require SSE2 on i686
