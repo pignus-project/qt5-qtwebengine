@@ -4827,6 +4827,53 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/v8/tools/g
 +    },
 +  ],
 +}
+diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/core/core_module.pro qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/core/core_module.pro
+--- qtwebengine-opensource-src-5.6.0-beta/src/core/core_module.pro	2015-12-14 16:27:24.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/core/core_module.pro	2016-01-19 14:49:57.592655159 +0100
+@@ -9,6 +9,29 @@
+     error("Could not find the linking information that gyp should have generated.")
+ }
+ 
++# find the shared libraries in the link line
++# remove those in lib/sse2 that are only replacements for the normal ones
++# collect all shared libraries so they can be installed
++for(private_lib, LIBS_PRIVATE) {
++    contains(private_lib, .*\.so) {
++        contains(private_lib, .*/lib/sse2/.*) {
++            LIBS_PRIVATE -= $$private_lib
++            shlibs_sse2 += $$private_lib
++        } else {
++            shlibs += $$private_lib
++        }
++    }
++}
++
++# set the shared libraries to be installed
++# add an rpath to their installation location
++shlib_install_path = $$[QT_INSTALL_LIBS]/qtwebengine
++!isEmpty(shlibs) {
++    shlibs.files += $$shlibs
++    shlibs_sse2.files += $$shlibs_sse2
++    LIBS_PRIVATE += -Wl,--rpath,$$shlib_install_path
++}
++
+ load(qt_module)
+ 
+ api_library_name = qtwebenginecoreapi$$qtPlatformTargetSuffix()
+@@ -73,7 +96,12 @@
+         resources.path = $$[QT_INSTALL_DATA]
+         icu.CONFIG += no_check_exist
+         icu.path = $$[QT_INSTALL_DATA]
+-        INSTALLS += icu locales resources
++        # install the shared libraries
++        shlibs.CONFIG += no_check_exist
++        shlibs.path = $$shlib_install_path
++        shlibs_sse2.CONFIG += no_check_exist
++        shlibs_sse2.path = $$shlib_install_path/sse2
++        INSTALLS += icu locales resources shlibs shlibs_sse2
+     }
+ 
+     !contains(QT_CONFIG, qt_framework): contains(QT_CONFIG, private_tests) {
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/core/qtwebengine.gypi qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/core/qtwebengine.gypi
 --- qtwebengine-opensource-src-5.6.0-beta/src/core/qtwebengine.gypi	2015-12-14 16:27:24.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/core/qtwebengine.gypi	2016-01-19 02:13:13.757769179 +0100
