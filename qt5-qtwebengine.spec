@@ -74,7 +74,7 @@ Patch7:  qtwebengine-opensource-src-5.6.0-beta-chimera-nss-init.patch
 # cumulative revert of upstream reviews 187423002, 308003004, 511773002 (parts
 # relevant to QtWebEngine only), 516543004, 1152053004 and 1161853008, along
 # with some custom fixes and improvements
-# TODO: build V8 shared and twice (once for x87, once for SSE2)
+# also build V8 shared and twice on i686 (once for x87, once for SSE2)
 Patch8:  qtwebengine-opensource-src-5.6.0-beta-no-sse2.patch
 
 # the architectures theoretically supported by the version of V8 used (#1298011)
