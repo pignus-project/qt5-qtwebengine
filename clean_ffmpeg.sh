@@ -36,6 +36,8 @@ header_files="  libavutil/x86/asm.h \
                 libavutil/x86/intmath.h \
                 libavutil/x86/intreadwrite.h \
                 libavutil/x86/timer.h \
+                libavutil/aarch64/asm.S \
+                libavutil/aarch64/bswap.h \
                 libavutil/arm/asm.S \
                 libavutil/arm/bswap.h \
                 libavutil/arm/cpu.h \
