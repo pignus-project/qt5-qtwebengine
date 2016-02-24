@@ -30,7 +30,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 0.17.beta%{?dist}
+Release: 0.18.beta%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -370,6 +370,9 @@ popd
 
 
 %changelog
+* Tue Feb 23 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.18.beta
+- no-sse2 patch: Fix FFT (RealFourier) in webrtc on non-SSE2 x86
+
 * Tue Feb 23 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.17.beta
 - Fix FTBFS on aarch64: Respin tarball with fixed clean_ffmpeg.sh (#1310753).
 

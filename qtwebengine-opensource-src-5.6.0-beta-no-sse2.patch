@@ -2608,15 +2608,19 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
  
  namespace webrtc {
  
-@@ -23,6 +24,10 @@
+@@ -23,6 +24,14 @@
  
  rtc::scoped_ptr<RealFourier> RealFourier::Create(int fft_order) {
  #if defined(RTC_USE_OPENMAX_DL)
 +#if defined(WEBRTC_ARCH_X86_FAMILY) && !defined(__SSE2__)
 +  // x86 CPU detection required.
 +  if (WebRtc_GetCPUInfo(kSSE2))
-+#endif
++    return rtc::scoped_ptr<RealFourier>(new RealFourierOpenmax(fft_order));
++  else
++    return rtc::scoped_ptr<RealFourier>(new RealFourierOoura(fft_order));
++#else
    return rtc::scoped_ptr<RealFourier>(new RealFourierOpenmax(fft_order));
++#endif
  #else
    return rtc::scoped_ptr<RealFourier>(new RealFourierOoura(fft_order));
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/tools/gyp/pylib/gyp/generator/ninja.py qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/tools/gyp/pylib/gyp/generator/ninja.py
