@@ -19,7 +19,7 @@
 %global use_system_libwebp 1
 %endif
 
-%global prerelease beta
+%global prerelease rc
 
 # exclude plugins (all architectures) and libv8.so (i686, it's static everywhere
 # else)
@@ -30,7 +30,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 0.18.beta%{?dist}
+Release: 0.19.rc%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -38,9 +38,9 @@ Release: 0.18.beta%{?dist}
 License: (LGPLv2 with exceptions or GPLv3 with exceptions) and BSD and LGPLv2+ and ASL 2.0 and IJG and MIT and GPLv2+ and ISC and OpenSSL and (MPLv1.1 or GPLv2 or LGPLv2)
 URL:     http://www.qt.io
 # cleaned tarball with patent-encumbered codecs removed from the bundled FFmpeg
-# wget http://download.qt.io/development_releases/qt/5.6/5.6.0-beta/submodules/qtwebengine-opensource-src-5.6.0-beta.7z
-# ./clean_qtwebengine.sh 5.6.0-beta
-Source0: qtwebengine-opensource-src-5.6.0-beta-clean.tar.xz
+# wget http://download.qt.io/development_releases/qt/5.6/5.6.0-rc/submodules/qtwebengine-opensource-src-5.6.0-rc.tar.xz
+# ./clean_qtwebengine.sh 5.6.0-rc
+Source0: qtwebengine-opensource-src-5.6.0-rc-clean.tar.xz
 # cleanup scripts used above
 Source1: clean_qtwebengine.sh
 Source2: clean_ffmpeg.sh
@@ -370,7 +370,10 @@ popd
 
 
 %changelog
-* Tue Feb 23 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.18.beta
+* Wed Feb 24 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.19.rc
+- Update to 5.6.0 RC
+
+* Wed Feb 24 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.18.beta
 - no-sse2 patch: Fix FFT (RealFourier) in webrtc on non-SSE2 x86
 
 * Tue Feb 23 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.17.beta
