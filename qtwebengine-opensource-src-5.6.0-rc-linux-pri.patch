@@ -1,7 +1,7 @@
-diff -ur qtwebengine-opensource-src-5.6.0-beta/src/core/config/linux.pri qtwebengine-opensource-src-5.6.0-beta-linux-pri/src/core/config/linux.pri
---- qtwebengine-opensource-src-5.6.0-beta/src/core/config/linux.pri	2015-12-14 16:27:24.000000000 +0100
-+++ qtwebengine-opensource-src-5.6.0-beta-linux-pri/src/core/config/linux.pri	2016-01-14 17:31:05.765975551 +0100
-@@ -18,7 +18,13 @@
+diff -ur qtwebengine-opensource-src-5.6.0-rc/src/core/config/linux.pri qtwebengine-opensource-src-5.6.0-rc-linux-pri/src/core/config/linux.pri
+--- qtwebengine-opensource-src-5.6.0-rc/src/core/config/linux.pri	2016-02-15 16:18:46.000000000 +0100
++++ qtwebengine-opensource-src-5.6.0-rc-linux-pri/src/core/config/linux.pri	2016-02-24 23:24:01.533878478 +0100
+@@ -20,7 +20,13 @@
      use_kerberos=0 \
      use_pango=0
  
@@ -17,8 +17,8 @@ diff -ur qtwebengine-opensource-src-5.6.0-beta/src/core/config/linux.pri qtweben
          use_openssl=1 \
          use_openssl_certs=1
 @@ -40,6 +46,28 @@
+ use?(system_opus):     GYP_CONFIG += use_system_opus=1
  use?(system_snappy):   GYP_CONFIG += use_system_snappy=1
- use?(system_speex):    GYP_CONFIG += use_system_speex=1
  use?(system_vpx):      GYP_CONFIG += use_system_libvpx=1
 -use?(system_icu):      GYP_CONFIG += use_system_icu=1
 +use?(system_icu):      GYP_CONFIG += use_system_icu=1 icu_use_data_file_flag=0

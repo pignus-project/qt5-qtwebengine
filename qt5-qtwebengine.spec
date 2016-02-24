@@ -49,7 +49,7 @@ Source3: process_ffmpeg_gyp.py
 Patch0:  qtwebengine-opensource-src-5.6.0-beta-no-format.patch
 # some tweaks to linux.pri (system libs, link libpci, run unbundling script,
 # do an NSS/BoringSSL "chimera build", see Provides: bundled(boringssl) comment)
-Patch1:  qtwebengine-opensource-src-5.6.0-beta-linux-pri.patch
+Patch1:  qtwebengine-opensource-src-5.6.0-rc-linux-pri.patch
 # don't require the time zone detection API backported from ICU 55 (thanks spot)
 Patch2:  qtwebengine-opensource-src-5.6.0-beta-system-icu54.patch
 # fix extractCFlag to also look in QMAKE_CFLAGS_RELEASE, needed to detect the
@@ -121,7 +121,6 @@ BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(opus)
 BuildRequires: pkgconfig(libevent)
 BuildRequires: pkgconfig(zlib)
-BuildRequires: pkgconfig(flac)
 BuildRequires: pkgconfig(minizip)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(libxslt)
@@ -142,7 +141,6 @@ BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(libpci)
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(nss)
-BuildRequires: pkgconfig(speex)
 BuildRequires: pkgconfig(libsrtp)
 BuildRequires: perl
 BuildRequires: python
@@ -372,6 +370,8 @@ popd
 %changelog
 * Wed Feb 24 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.19.rc
 - Update to 5.6.0 RC
+- Rebase linux-pri patch
+- Remove BuildRequires pkgconfig(flac), pkgconfig(speex), no longer needed
 
 * Wed Feb 24 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.18.beta
 - no-sse2 patch: Fix FFT (RealFourier) in webrtc on non-SSE2 x86
