@@ -2608,7 +2608,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
  
  namespace webrtc {
  
-@@ -23,6 +24,14 @@
+@@ -23,7 +24,15 @@
  
  rtc::scoped_ptr<RealFourier> RealFourier::Create(int fft_order) {
  #if defined(RTC_USE_OPENMAX_DL)
@@ -2623,6 +2623,7 @@ diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/third_part
 +#endif
  #else
    return rtc::scoped_ptr<RealFourier>(new RealFourierOoura(fft_order));
+ #endif
 diff -Nur qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/tools/gyp/pylib/gyp/generator/ninja.py qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/tools/gyp/pylib/gyp/generator/ninja.py
 --- qtwebengine-opensource-src-5.6.0-beta/src/3rdparty/chromium/tools/gyp/pylib/gyp/generator/ninja.py	2015-12-10 18:17:21.000000000 +0100
 +++ qtwebengine-opensource-src-5.6.0-beta-no-sse2/src/3rdparty/chromium/tools/gyp/pylib/gyp/generator/ninja.py	2016-01-18 03:00:21.703867569 +0100
