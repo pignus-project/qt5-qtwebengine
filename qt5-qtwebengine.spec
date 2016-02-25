@@ -75,7 +75,7 @@ Patch7:  qtwebengine-opensource-src-5.6.0-beta-chimera-nss-init.patch
 # relevant to QtWebEngine only), 516543004, 1152053004 and 1161853008, along
 # with some custom fixes and improvements
 # also build V8 shared and twice on i686 (once for x87, once for SSE2)
-Patch8:  qtwebengine-opensource-src-5.6.0-beta-no-sse2.patch
+Patch8:  qtwebengine-opensource-src-5.6.0-rc-no-sse2.patch
 
 # the architectures theoretically supported by the version of V8 used (#1298011)
 # You may need some minor patching to build on one of the secondary
@@ -344,11 +344,61 @@ popd
 # shared V8 library and its SSE2 version
 %{_qt5_libdir}/qtwebengine/
 %endif
-%{_qt5_translationdir}/*
-
-%{_qt5_datadir}/qtwebengine_resources.pak
-%{_qt5_datadir}/qtwebengine_resources_100p.pak
-%{_qt5_datadir}/qtwebengine_resources_200p.pak
+%{_qt5_datadir}/resources/
+%dir %{_qt5_translationdir}/qtwebengine_locales
+%lang(am) %{_qt5_translationdir}/qtwebengine_locales/am.pak
+%lang(ar) %{_qt5_translationdir}/qtwebengine_locales/ar.pak
+%lang(bg) %{_qt5_translationdir}/qtwebengine_locales/bg.pak
+%lang(bn) %{_qt5_translationdir}/qtwebengine_locales/bn.pak
+%lang(ca) %{_qt5_translationdir}/qtwebengine_locales/ca.pak
+%lang(cs) %{_qt5_translationdir}/qtwebengine_locales/cs.pak
+%lang(da) %{_qt5_translationdir}/qtwebengine_locales/da.pak
+%lang(de) %{_qt5_translationdir}/qtwebengine_locales/de.pak
+%lang(el) %{_qt5_translationdir}/qtwebengine_locales/el.pak
+%lang(en) %{_qt5_translationdir}/qtwebengine_locales/en-GB.pak
+%lang(en) %{_qt5_translationdir}/qtwebengine_locales/en-US.pak
+%lang(es) %{_qt5_translationdir}/qtwebengine_locales/es-419.pak
+%lang(es) %{_qt5_translationdir}/qtwebengine_locales/es.pak
+%lang(et) %{_qt5_translationdir}/qtwebengine_locales/et.pak
+%lang(fa) %{_qt5_translationdir}/qtwebengine_locales/fa.pak
+%lang(fi) %{_qt5_translationdir}/qtwebengine_locales/fi.pak
+%lang(fil) %{_qt5_translationdir}/qtwebengine_locales/fil.pak
+%lang(fr) %{_qt5_translationdir}/qtwebengine_locales/fr.pak
+%lang(gu) %{_qt5_translationdir}/qtwebengine_locales/gu.pak
+%lang(he) %{_qt5_translationdir}/qtwebengine_locales/he.pak
+%lang(hi) %{_qt5_translationdir}/qtwebengine_locales/hi.pak
+%lang(hr) %{_qt5_translationdir}/qtwebengine_locales/hr.pak
+%lang(hu) %{_qt5_translationdir}/qtwebengine_locales/hu.pak
+%lang(id) %{_qt5_translationdir}/qtwebengine_locales/id.pak
+%lang(it) %{_qt5_translationdir}/qtwebengine_locales/it.pak
+%lang(ja) %{_qt5_translationdir}/qtwebengine_locales/ja.pak
+%lang(kn) %{_qt5_translationdir}/qtwebengine_locales/kn.pak
+%lang(ko) %{_qt5_translationdir}/qtwebengine_locales/ko.pak
+%lang(lt) %{_qt5_translationdir}/qtwebengine_locales/lt.pak
+%lang(lv) %{_qt5_translationdir}/qtwebengine_locales/lv.pak
+%lang(ml) %{_qt5_translationdir}/qtwebengine_locales/ml.pak
+%lang(mr) %{_qt5_translationdir}/qtwebengine_locales/mr.pak
+%lang(ms) %{_qt5_translationdir}/qtwebengine_locales/ms.pak
+%lang(nb) %{_qt5_translationdir}/qtwebengine_locales/nb.pak
+%lang(nl) %{_qt5_translationdir}/qtwebengine_locales/nl.pak
+%lang(pl) %{_qt5_translationdir}/qtwebengine_locales/pl.pak
+%lang(pt_BR) %{_qt5_translationdir}/qtwebengine_locales/pt-BR.pak
+%lang(pt_PT) %{_qt5_translationdir}/qtwebengine_locales/pt-PT.pak
+%lang(ro) %{_qt5_translationdir}/qtwebengine_locales/ro.pak
+%lang(ru) %{_qt5_translationdir}/qtwebengine_locales/ru.pak
+%lang(sk) %{_qt5_translationdir}/qtwebengine_locales/sk.pak
+%lang(sl) %{_qt5_translationdir}/qtwebengine_locales/sl.pak
+%lang(sr) %{_qt5_translationdir}/qtwebengine_locales/sr.pak
+%lang(sv) %{_qt5_translationdir}/qtwebengine_locales/sv.pak
+%lang(sw) %{_qt5_translationdir}/qtwebengine_locales/sw.pak
+%lang(ta) %{_qt5_translationdir}/qtwebengine_locales/ta.pak
+%lang(te) %{_qt5_translationdir}/qtwebengine_locales/te.pak
+%lang(th) %{_qt5_translationdir}/qtwebengine_locales/th.pak
+%lang(tr) %{_qt5_translationdir}/qtwebengine_locales/tr.pak
+%lang(uk) %{_qt5_translationdir}/qtwebengine_locales/uk.pak
+%lang(vi) %{_qt5_translationdir}/qtwebengine_locales/vi.pak
+%lang(zh_CN) %{_qt5_translationdir}/qtwebengine_locales/zh-CN.pak
+%lang(zh_TW) %{_qt5_translationdir}/qtwebengine_locales/zh-TW.pak
 
 %files devel
 %{_qt5_headerdir}/Qt*/
@@ -368,10 +418,12 @@ popd
 
 
 %changelog
-* Wed Feb 24 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.19.rc
+* Thu Feb 25 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.19.rc
 - Update to 5.6.0 RC
-- Rebase linux-pri patch
+- Rebase linux-pri and no-sse2 patches
 - Remove BuildRequires pkgconfig(flac), pkgconfig(speex), no longer needed
+- Update file list for 5.6.0 RC (resources now in resources/ subdirectory)
+- Tag translations with correct %%lang tags
 
 * Wed Feb 24 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.18.beta
 - no-sse2 patch: Fix FFT (RealFourier) in webrtc on non-SSE2 x86
