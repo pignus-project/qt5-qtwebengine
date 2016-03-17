@@ -19,7 +19,7 @@
 %global use_system_libwebp 1
 %endif
 
-%global prerelease rc
+#global prerelease rc
 
 # exclude plugins (all architectures) and libv8.so (i686, it's static everywhere
 # else)
@@ -30,7 +30,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 0.19.rc%{?dist}
+Release: 1%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -38,9 +38,9 @@ Release: 0.19.rc%{?dist}
 License: (LGPLv2 with exceptions or GPLv3 with exceptions) and BSD and LGPLv2+ and ASL 2.0 and IJG and MIT and GPLv2+ and ISC and OpenSSL and (MPLv1.1 or GPLv2 or LGPLv2)
 URL:     http://www.qt.io
 # cleaned tarball with patent-encumbered codecs removed from the bundled FFmpeg
-# wget http://download.qt.io/development_releases/qt/5.6/5.6.0-rc/submodules/qtwebengine-opensource-src-5.6.0-rc.tar.xz
-# ./clean_qtwebengine.sh 5.6.0-rc
-Source0: qtwebengine-opensource-src-5.6.0-rc-clean.tar.xz
+# wget http://download.qt.io/official_releases/qt/5.6/5.6.0/submodules/qtwebengine-opensource-src-5.6.0.tar.xz
+# ./clean_qtwebengine.sh 5.6.0
+Source0: qtwebengine-opensource-src-5.6.0-clean.tar.xz
 # cleanup scripts used above
 Source1: clean_qtwebengine.sh
 Source2: clean_ffmpeg.sh
@@ -50,8 +50,6 @@ Patch0:  qtwebengine-opensource-src-5.6.0-beta-no-format.patch
 # some tweaks to linux.pri (system libs, link libpci, run unbundling script,
 # do an NSS/BoringSSL "chimera build", see Provides: bundled(boringssl) comment)
 Patch1:  qtwebengine-opensource-src-5.6.0-rc-linux-pri.patch
-# don't require the time zone detection API backported from ICU 55 (thanks spot)
-Patch2:  qtwebengine-opensource-src-5.6.0-beta-system-icu54.patch
 # fix extractCFlag to also look in QMAKE_CFLAGS_RELEASE, needed to detect the
 # ARM flags with our %%qmake_qt5 macro, including for the next patch
 Patch3:  qtwebengine-opensource-src-5.6.0-beta-fix-extractcflag.patch
@@ -288,7 +286,6 @@ BuildArch: noarch
 %setup -q -n %{qt_module}-opensource-src-%{version}%{?prerelease:-%{prerelease}}
 %patch0 -p1 -b .no-format
 %patch1 -p1 -b .linux-pri
-%patch2 -p1 -b .system-icu54
 %patch3 -p1 -b .fix-extractcflag
 %patch4 -p1 -b .no-neon
 %patch5 -p1 -b .system-nspr-prtime
@@ -418,6 +415,10 @@ popd
 
 
 %changelog
+* Thu Mar 17 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-1
+- Update to 5.6.0 (final)
+- Drop system-icu54 patch, fixed upstream
+
 * Thu Feb 25 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-0.19.rc
 - Update to 5.6.0 RC
 - Rebase linux-pri and no-sse2 patches
