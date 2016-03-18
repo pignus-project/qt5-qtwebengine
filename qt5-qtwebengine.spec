@@ -30,7 +30,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -50,6 +50,11 @@ Patch0:  qtwebengine-opensource-src-5.6.0-beta-no-format.patch
 # some tweaks to linux.pri (system libs, link libpci, run unbundling script,
 # do an NSS/BoringSSL "chimera build", see Provides: bundled(boringssl) comment)
 Patch1:  qtwebengine-opensource-src-5.6.0-rc-linux-pri.patch
+# quick hack to avoid checking for the nonexistent icudtl.dat and silence the
+# resulting warnings - not upstreamable as is because it removes the fallback
+# mechanism for the ICU data directory (which is not used in our builds because
+# we use the system ICU, which embeds the data statically) completely
+Patch2:  qtwebengine-opensource-src-5.6.0-no-icudtl-dat.patch
 # fix extractCFlag to also look in QMAKE_CFLAGS_RELEASE, needed to detect the
 # ARM flags with our %%qmake_qt5 macro, including for the next patch
 Patch3:  qtwebengine-opensource-src-5.6.0-beta-fix-extractcflag.patch
@@ -286,6 +291,7 @@ BuildArch: noarch
 %setup -q -n %{qt_module}-opensource-src-%{version}%{?prerelease:-%{prerelease}}
 %patch0 -p1 -b .no-format
 %patch1 -p1 -b .linux-pri
+%patch2 -p1 -b .no-icudtl-dat
 %patch3 -p1 -b .fix-extractcflag
 %patch4 -p1 -b .no-neon
 %patch5 -p1 -b .system-nspr-prtime
@@ -415,6 +421,9 @@ popd
 
 
 %changelog
+* Fri Mar 18 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-2
+- Avoid checking for the nonexistent icudtl.dat and silence the warnings
+
 * Thu Mar 17 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-1
 - Update to 5.6.0 (final)
 - Drop system-icu54 patch, fixed upstream
