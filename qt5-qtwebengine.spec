@@ -303,6 +303,7 @@ BuildArch: noarch
 export STRIP=strip
 export NINJAFLAGS="-v %{_smp_mflags}"
 export NINJA_PATH=%{_bindir}/ninja-build
+export CFLAGS="%{optflags} -fno-delete-null-pointer-checks"
 export CXXFLAGS="%{optflags} -fno-delete-null-pointer-checks"
 
 mkdir %{_target_platform}
