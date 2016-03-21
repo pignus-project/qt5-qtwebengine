@@ -308,7 +308,7 @@ export CXXFLAGS="%{optflags} -fno-delete-null-pointer-checks"
 mkdir %{_target_platform}
 pushd %{_target_platform}
 
-%{qmake_qt5} CONFIG+="webcore_debug v8base_debug force_debug_info" CONFIG-=use_gold_linker WEBENGINE_CONFIG+="use_system_icu" ..
+%{qmake_qt5} CONFIG+="webcore_debug v8base_debug force_debug_info" WEBENGINE_CONFIG+="use_system_icu" ..
 
 # workaround, disable parallel compilation as it fails to compile in brew
 make %{?_smp_mflags}
@@ -428,7 +428,6 @@ readelf -wl %{buildroot}%{_qt5_libdir}/libQt5WebEngineCore.so.5.*
 * Mon Mar 21 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-3
 - Build with CONFIG+="webcore_debug v8base_debug force_debug_info"
 - Force -fno-delete-null-pointer-checks through CXXFLAGS, Qt flags not used here
-- Use CONFIG-=use_gold_linker because ld.gold keeps running out of memory
 
 * Fri Mar 18 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-2
 - Avoid checking for the nonexistent icudtl.dat and silence the warnings
