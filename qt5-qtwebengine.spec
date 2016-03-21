@@ -338,7 +338,7 @@ done
 popd
 
 # debug debugedit failure (#304121)
-readelf -wl %{buildroot}%{_qt5_libdir}libQt5WebEngineCore.so.5.*
+readelf -wl %{buildroot}%{_qt5_libdir}/libQt5WebEngineCore.so.5.*
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
