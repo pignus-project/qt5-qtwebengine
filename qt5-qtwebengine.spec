@@ -299,11 +299,20 @@ BuildArch: noarch
 %patch7 -p1 -b .chimera-nss-init
 %patch8 -p1 -b .no-sse2
 
+%ifnarch x86_64
+# most arches run out of memory with full debuginfo, so use -g1 on non-x86_64
+sed -e 's/=-g$/=-g1/g' src/core/gyp_run.pro
+%endif
+
 %build
 export STRIP=strip
 export NINJAFLAGS="-v %{_smp_mflags}"
 export NINJA_PATH=%{_bindir}/ninja-build
 export CXXFLAGS="%{optflags} -fno-delete-null-pointer-checks"
+%ifnarch x86_64
+# most arches run out of memory with full debuginfo, so use -g1 on non-x86_64
+export CXXFLAGS=`echo "$CXXFLAGS" | sed -e 's/ -g / -g1 /g'`
+%endif
 
 mkdir %{_target_platform}
 pushd %{_target_platform}
@@ -428,6 +437,7 @@ readelf -wl %{buildroot}%{_qt5_libdir}/libQt5WebEngineCore.so.5.*
 * Mon Mar 21 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-3
 - Build with CONFIG+="webcore_debug v8base_debug force_debug_info"
 - Force -fno-delete-null-pointer-checks through CXXFLAGS, Qt flags not used here
+- Use -g1 instead of -g on non-x86_64 to avoid memory exhaustion
 
 * Fri Mar 18 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-2
 - Avoid checking for the nonexistent icudtl.dat and silence the warnings
