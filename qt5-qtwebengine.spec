@@ -308,7 +308,7 @@ export CXXFLAGS="%{optflags} -fno-delete-null-pointer-checks"
 mkdir %{_target_platform}
 pushd %{_target_platform}
 
-%{qmake_qt5} CONFIG+="webcore_debug v8base_debug" WEBENGINE_CONFIG+="use_system_icu" ..
+%{qmake_qt5} CONFIG+="webcore_debug v8base_debug force_debug_info" WEBENGINE_CONFIG+="use_system_icu" ..
 
 # workaround, disable parallel compilation as it fails to compile in brew
 make %{?_smp_mflags}
@@ -422,8 +422,8 @@ popd
 
 
 %changelog
-* Fri Mar 18 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-3
-- Build with CONFIG+="webcore_debug v8base_debug"
+* Mon Mar 21 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-3
+- Build with CONFIG+="webcore_debug v8base_debug force_debug_info"
 - Force -fno-delete-null-pointer-checks through CXXFLAGS, Qt flags not used here
 
 * Fri Mar 18 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-2
