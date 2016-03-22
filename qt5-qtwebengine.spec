@@ -305,7 +305,7 @@ sed -i -e 's!\./!!g' \
 
 %ifnarch x86_64
 # most arches run out of memory with full debuginfo, so use -g1 on non-x86_64
-sed -e 's/=-g$/=-g1/g' src/core/gyp_run.pro
+sed -i -e 's/=-g$/=-g1/g' src/core/gyp_run.pro
 %endif
 
 %build
