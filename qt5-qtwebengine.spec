@@ -298,7 +298,10 @@ BuildArch: noarch
 %patch6 -p1 -b .system-icu-utf
 %patch7 -p1 -b .chimera-nss-init
 %patch8 -p1 -b .no-sse2
-# remove ./ from #line commands in ANGLE to avoid debugedit failure
+# fix // in #include in content/renderer/gpu to avoid debugedit failure
+sed -i -e 's!gpu//!gpu/!g' \
+  src/3rdparty/chromium/content/renderer/gpu/compositor_forwarding_message_filter.cc
+# remove ./ from #line commands in ANGLE to avoid debugedit failure (?)
 sed -i -e 's!\./!!g' \
   src/3rdparty/chromium/third_party/angle/src/compiler/preprocessor/Tokenizer.cpp \
   src/3rdparty/chromium/third_party/angle/src/compiler/translator/glslang_lex.cpp
@@ -435,11 +438,12 @@ popd
 
 
 %changelog
-* Tue Mar 22 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-3
+* Thu Mar 24 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-3
 - Build with CONFIG+="webcore_debug v8base_debug force_debug_info"
 - Force -fno-delete-null-pointer-checks through CXXFLAGS, Qt flags not used here
 - Use -g1 instead of -g on non-x86_64 to avoid memory exhaustion
-- Work around debugedit failure by removing "./" from #line commands
+- Work around debugedit failure by removing "./" from #line commands and
+  changing "//" to "/" in an #include command
 
 * Fri Mar 18 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-2
 - Avoid checking for the nonexistent icudtl.dat and silence the warnings
