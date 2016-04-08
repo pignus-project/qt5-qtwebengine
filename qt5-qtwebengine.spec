@@ -30,7 +30,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -86,7 +86,7 @@ Patch8:  qtwebengine-opensource-src-5.6.0-rc-no-sse2.patch
 # If you cannot get this package to build on your secondary architecure, please:
 # * remove your architecture from this list AND
 # * put #1298011 onto your ExcludeArch tracker.
-ExclusiveArch: %{ix86} x86_64 %{arm} aarch64 ppc ppc64 ppc64le mips mipsel mips64el
+ExclusiveArch: %{ix86} x86_64 %{arm} aarch64 mips mipsel mips64el
 
 BuildRequires: qt5-qtbase-devel >= %{version}
 BuildRequires: qt5-qtdeclarative-devel >= %{version}
@@ -438,6 +438,9 @@ popd
 
 
 %changelog
+* Fri Apr 08 2016 Than Ngo <than@redhat.com> - 5.6.0-4
+- drop ppc ppc64 ppc64le from ExclusiveArch, it's not supported yet
+
 * Thu Mar 24 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.0-3
 - Build with CONFIG+="webcore_debug v8base_debug force_debug_info"
 - Force -fno-delete-null-pointer-checks through CXXFLAGS, Qt flags not used here
