@@ -30,7 +30,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 4%{?dist}
+Release: 5%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -438,6 +438,9 @@ popd
 
 
 %changelog
+* Fri Apr 15 2016 David Tardon <dtardon@redhat.com> - 5.6.0-5
+- rebuild for ICU 57.1
+
 * Fri Apr 08 2016 Than Ngo <than@redhat.com> - 5.6.0-4
 - drop ppc ppc64 ppc64le from ExclusiveArch, it's not supported yet
 
