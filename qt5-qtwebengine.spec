@@ -30,7 +30,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.0
-Release: 5%{?dist}
+Release: 6%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -97,6 +97,7 @@ BuildRequires: qt5-qtwebchannel-devel >= %{version}
 BuildRequires: qt5-qttools-static >= %{version}
 BuildRequires: ninja-build
 BuildRequires: bison
+BuildRequires: git-core
 BuildRequires: gperf
 BuildRequires: libicu-devel
 BuildRequires: libjpeg-devel
@@ -438,6 +439,9 @@ popd
 
 
 %changelog
+* Wed May 18 2016 Rex Dieter <rdieter@fedoraproject.org> 5.6.0-6
+- BR: git-core
+
 * Fri Apr 15 2016 David Tardon <dtardon@redhat.com> - 5.6.0-5
 - rebuild for ICU 57.1
 
