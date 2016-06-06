@@ -307,6 +307,10 @@ sed -i -e 's!\./!!g' \
   src/3rdparty/chromium/third_party/angle/src/compiler/preprocessor/Tokenizer.cpp \
   src/3rdparty/chromium/third_party/angle/src/compiler/translator/glslang_lex.cpp
 
+# http://bugzilla.redhat.com/1337585
+# can't just delete, but we'll overwrite with system headers to be on the safe side
+cp -bv /usr/include/re2/*.h src/3rdparty/chromium/third_party/re2/re2/
+
 %ifnarch x86_64
 # most arches run out of memory with full debuginfo, so use -g1 on non-x86_64
 sed -i -e 's/=-g$/=-g1/g' src/core/gyp_run.pro
@@ -439,6 +443,9 @@ popd
 
 
 %changelog
+* Mon Jun 06 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.6.0-8
+- workaround stackmashing runtime errors in re2-related bundled headers (#1337585)
+
 * Sat May 21 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.6.0-7
 - rebuild (pciutuils)
 
