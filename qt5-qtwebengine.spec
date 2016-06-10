@@ -29,8 +29,8 @@
 
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
-Version: 5.6.0
-Release: 8%{?dist}
+Version: 5.6.1
+Release: 1%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -38,18 +38,17 @@ Release: 8%{?dist}
 License: (LGPLv2 with exceptions or GPLv3 with exceptions) and BSD and LGPLv2+ and ASL 2.0 and IJG and MIT and GPLv2+ and ISC and OpenSSL and (MPLv1.1 or GPLv2 or LGPLv2)
 URL:     http://www.qt.io
 # cleaned tarball with patent-encumbered codecs removed from the bundled FFmpeg
-# wget http://download.qt.io/official_releases/qt/5.6/5.6.0/submodules/qtwebengine-opensource-src-5.6.0.tar.xz
-# ./clean_qtwebengine.sh 5.6.0
-Source0: qtwebengine-opensource-src-5.6.0-clean.tar.xz
+# wget http://download.qt.io/official_releases/qt/5.6/5.6.1/submodules/qtwebengine-opensource-src-5.6.1.tar.xz
+# ./clean_qtwebengine.sh 5.6.1
+Source0: qtwebengine-opensource-src-%{version}-clean.tar.xz
 # cleanup scripts used above
 Source1: clean_qtwebengine.sh
 Source2: clean_ffmpeg.sh
 Source3: process_ffmpeg_gyp.py
 # do not compile with -Wno-format, which also bypasses -Werror-format-security
 Patch0:  qtwebengine-opensource-src-5.6.0-beta-no-format.patch
-# some tweaks to linux.pri (system libs, link libpci, run unbundling script,
-# do an NSS/BoringSSL "chimera build", see Provides: bundled(boringssl) comment)
-Patch1:  qtwebengine-opensource-src-5.6.0-rc-linux-pri.patch
+# some tweaks to linux.pri (system libs, link libpci, run unbundling script)
+Patch1:  qtwebengine-opensource-src-5.6.1-linux-pri.patch
 # quick hack to avoid checking for the nonexistent icudtl.dat and silence the
 # resulting warnings - not upstreamable as is because it removes the fallback
 # mechanism for the ICU data directory (which is not used in our builds because
@@ -70,15 +69,12 @@ Patch5:  qtwebengine-opensource-src-5.6.0-beta-system-nspr-prtime.patch
 # I checked the history of that directory, and other than the renames I am
 # undoing, there were no modifications at all. Must be applied after Patch5.
 Patch6:  qtwebengine-opensource-src-5.6.0-beta-system-icu-utf.patch
-# fix the NSS/BoringSSL "chimera build" to call EnsureNSSHttpIOInit
-# backport of https://codereview.chromium.org/1385473003
-Patch7:  qtwebengine-opensource-src-5.6.0-beta-chimera-nss-init.patch
 # do not require SSE2 on i686
 # cumulative revert of upstream reviews 187423002, 308003004, 511773002 (parts
 # relevant to QtWebEngine only), 516543004, 1152053004 and 1161853008, along
 # with some custom fixes and improvements
 # also build V8 shared and twice on i686 (once for x87, once for SSE2)
-Patch8:  qtwebengine-opensource-src-5.6.0-rc-no-sse2.patch
+Patch7:  qtwebengine-opensource-src-5.6.1-no-sse2.patch
 
 # the architectures theoretically supported by the version of V8 used (#1298011)
 # You may need some minor patching to build on one of the secondary
@@ -297,8 +293,7 @@ BuildArch: noarch
 %patch4 -p1 -b .no-neon
 %patch5 -p1 -b .system-nspr-prtime
 %patch6 -p1 -b .system-icu-utf
-%patch7 -p1 -b .chimera-nss-init
-%patch8 -p1 -b .no-sse2
+%patch7 -p1 -b .no-sse2
 # fix // in #include in content/renderer/gpu to avoid debugedit failure
 sed -i -e 's!gpu//!gpu/!g' \
   src/3rdparty/chromium/content/renderer/gpu/compositor_forwarding_message_filter.cc
@@ -443,6 +438,12 @@ popd
 
 
 %changelog
+* Fri Jun 10 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.1-1
+- Update to 5.6.1
+- Rebase linux-pri patch (drop the parts already fixed upstream)
+- Drop backported chimera-nss-init patch, already applied upstream
+- Rebase no-sse2 patch (the core_module.pro change)
+
 * Mon Jun 06 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.6.0-8
 - workaround stackmashing runtime errors in re2-related bundled headers (#1337585)
 
