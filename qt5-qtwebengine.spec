@@ -364,6 +364,7 @@ popd
 # shared V8 library and its SSE2 version
 %{_qt5_libdir}/qtwebengine/
 %endif
+%{_qt5_plugindir}/designer/libqwebengineview.so
 %{_qt5_datadir}/resources/
 %dir %{_qt5_translationdir}/qtwebengine_locales
 %lang(am) %{_qt5_translationdir}/qtwebengine_locales/am.pak
@@ -438,11 +439,12 @@ popd
 
 
 %changelog
-* Fri Jun 10 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.1-1
+* Sat Jun 11 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.1-1
 - Update to 5.6.1
 - Rebase linux-pri patch (drop the parts already fixed upstream)
 - Drop backported chimera-nss-init patch, already applied upstream
 - Rebase no-sse2 patch (the core_module.pro change)
+- Add the new designer/libqwebengineview.so plugin to the file list
 
 * Mon Jun 06 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.6.0-8
 - workaround stackmashing runtime errors in re2-related bundled headers (#1337585)
