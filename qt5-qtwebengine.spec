@@ -30,7 +30,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -85,6 +85,8 @@ Patch7:  qtwebengine-opensource-src-5.6.1-no-sse2.patch
 ExclusiveArch: %{ix86} x86_64 %{arm} aarch64 mips mipsel mips64el
 
 BuildRequires: qt5-qtbase-devel >= %{version}
+BuildRequires: qt5-qtbase-private-devel
+%{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 BuildRequires: qt5-qtdeclarative-devel >= %{version}
 BuildRequires: qt5-qtxmlpatterns-devel >= %{version}
 BuildRequires: qt5-qtlocation-devel >= %{version}
@@ -439,6 +441,9 @@ popd
 
 
 %changelog
+* Sun Jun 12 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.6.1-2
+- add versioned qt5-qtbase runtime dep
+
 * Sat Jun 11 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.6.1-1
 - Update to 5.6.1
 - Rebase linux-pri patch (drop the parts already fixed upstream)
