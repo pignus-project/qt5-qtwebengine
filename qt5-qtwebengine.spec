@@ -86,6 +86,7 @@ ExclusiveArch: %{ix86} x86_64 %{arm} aarch64 mips mipsel mips64el
 
 BuildRequires: qt5-qtbase-devel >= %{version}
 BuildRequires: qt5-qtbase-private-devel
+# TODO: check of = is really needed or if >= would be good enough -- rex
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 BuildRequires: qt5-qtdeclarative-devel >= %{version}
 BuildRequires: qt5-qtxmlpatterns-devel >= %{version}
