@@ -30,7 +30,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.6.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -442,6 +442,9 @@ popd
 
 
 %changelog
+* Tue Jun 14 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.6.1-3
+- rebuild (glibc)
+
 * Sun Jun 12 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.6.1-2
 - add versioned qt5-qtbase runtime dep
 
