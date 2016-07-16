@@ -10,12 +10,12 @@
 %global docs 1
 %endif
 
-%if 0%{?fedora} > 22
-# need libvpx >= 1.4.0
+%if 0%{?fedora} > 23
+# need libvpx >= 1.5.0
 %global use_system_libvpx 1
 %endif
-%if 0%{?fedora} || 0%{?rhel} > 6
-# need libwebp >= 0.4.3
+%if 0%{?fedora} > 23
+# need libwebp >= 0.5.0
 %global use_system_libwebp 1
 %endif
 
@@ -29,8 +29,8 @@
 
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
-Version: 5.6.1
-Release: 3%{?dist}
+Version: 5.7.0
+Release: 1%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -38,13 +38,13 @@ Release: 3%{?dist}
 License: (LGPLv2 with exceptions or GPLv3 with exceptions) and BSD and LGPLv2+ and ASL 2.0 and IJG and MIT and GPLv2+ and ISC and OpenSSL and (MPLv1.1 or GPLv2 or LGPLv2)
 URL:     http://www.qt.io
 # cleaned tarball with patent-encumbered codecs removed from the bundled FFmpeg
-# wget http://download.qt.io/official_releases/qt/5.6/5.6.1/submodules/qtwebengine-opensource-src-5.6.1.tar.xz
-# ./clean_qtwebengine.sh 5.6.1
+# wget http://download.qt.io/official_releases/qt/5.7/5.7.0/submodules/qtwebengine-opensource-src-5.7.0.tar.xz
+# ./clean_qtwebengine.sh 5.7.0
 Source0: qtwebengine-opensource-src-%{version}-clean.tar.xz
 # cleanup scripts used above
 Source1: clean_qtwebengine.sh
 Source2: clean_ffmpeg.sh
-Source3: process_ffmpeg_gyp.py
+Source3: get_free_ffmpeg_source_files.py
 # do not compile with -Wno-format, which also bypasses -Werror-format-security
 Patch0:  qtwebengine-opensource-src-5.6.0-beta-no-format.patch
 # some tweaks to linux.pri (system libs, link libpci, run unbundling script)
@@ -115,7 +115,7 @@ BuildRequires: pkgconfig(egl)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libudev)
 %if 0%{?use_system_libwebp}
-BuildRequires: pkgconfig(libwebp) >= 0.4.3
+BuildRequires: pkgconfig(libwebp) >= 0.5.0
 %endif
 BuildRequires: pkgconfig(harfbuzz)
 BuildRequires: pkgconfig(jsoncpp)
@@ -148,7 +148,7 @@ BuildRequires: pkgconfig(libsrtp)
 BuildRequires: perl
 BuildRequires: python
 %if 0%{?use_system_libvpx}
-BuildRequires: pkgconfig(vpx) >= 1.4.0
+BuildRequires: pkgconfig(vpx) >= 1.5.0
 %endif
 
 # extra (non-upstream) functions needed, see
@@ -169,8 +169,8 @@ BuildRequires: pkgconfig(vpx) >= 1.4.0
 # Of course, Chromium itself is bundled. It cannot be unbundled because it is
 # not a library, but forked (modified) application code.
 # Some security fixes are backported, see:
-# http://code.qt.io/cgit/qt/qtwebengine-chromium.git/log/?h=45-based
-Provides: bundled(chromium) = 45
+# http://code.qt.io/cgit/qt/qtwebengine-chromium.git/log/?h=49-based
+Provides: bundled(chromium) = 49
 
 # Bundled in src/3rdparty/chromium/third_party:
 # Check src/3rdparty/chromium/third_party/*/README.chromium for version numbers,
@@ -182,28 +182,33 @@ Provides: bundled(angle) = 2422
 # completely and produces only ERR_SSL_PROTOCOL_ERROR errors:
 # http://kaosx.us/phpBB3/viewtopic.php?t=1235
 # https://bugs.launchpad.net/ubuntu/+source/chromium-browser/+bug/1520568
-# So we have to do what Chromium 47 now defaults to: a "chimera build", i.e.,
-# use the BoringSSL code and the system NSS certificates.
+# So we have to do what Chromium now defaults to (since 47): a "chimera build",
+# i.e., use the BoringSSL code and the system NSS certificates.
 Provides: bundled(boringssl)
 Provides: bundled(brotli)
 # Don't get too excited. MPEG and other legally problematic stuff is stripped
-# out. See clean_qtwebengine.sh, clean_ffmpeg.sh, and process_ffmpeg_gyp.py.
+# out. See clean_qtwebengine.sh, clean_ffmpeg.sh, and
+# get_free_ffmpeg_source_files.py.
 # see src/3rdparty/chromium/third_party/ffmpeg/Changelog for the version number
-Provides: bundled(ffmpeg) = 2.7
+Provides: bundled(ffmpeg) = 2.8
 Provides: bundled(iccjpeg)
 # bundled as "khronos", headers only
 Provides: bundled(khronos_headers)
 # bundled as "leveldatabase"
-Provides: bundled(leveldb) = r80
-Provides: bundled(libjingle) = 9564
+Provides: bundled(leveldb)
+Provides: bundled(libjingle) = 11250
 %if !0%{?use_system_libvpx}
-Provides: bundled(libvpx) = 1.4.0
+# bundled as "libvpx_new"
+# the version in README.chromium is wrong, see
+# src/3rdparty/chromium/third_party/libvpx_new/source/libvpx/CHANGELOG for the
+# real version number
+Provides: bundled(libvpx) = 1.5.0
 %endif
 %if !0%{?use_system_libwebp}
-Provides: bundled(libwebp) = 0.4.3
+Provides: bundled(libwebp) = 0.5.0
 %endif
 Provides: bundled(libXNVCtrl) = 302.17
-Provides: bundled(libyuv) = 1444
+Provides: bundled(libyuv) = 1563
 Provides: bundled(modp_b64)
 Provides: bundled(mojo)
 # headers only
@@ -211,12 +216,12 @@ Provides: bundled(npapi)
 Provides: bundled(openmax_dl) = 1.0.2
 Provides: bundled(ots)
 Provides: bundled(qcms) = 4
-Provides: bundled(sfntly) = 0-0.1.svn111
+Provides: bundled(sfntly)
 Provides: bundled(skia)
 # bundled as "smhasher"
 Provides: bundled(SMHasher) = 0-0.1.svn147
 Provides: bundled(sqlite) = 3.8.7.4
-Provides: bundled(usrsctp) = 0-0.1.svn9045
+Provides: bundled(usrsctp)
 Provides: bundled(webrtc) = 90
 %ifarch %{ix86} x86_64
 # header (for assembly) only
@@ -250,7 +255,7 @@ Provides: bundled(nsURLParsers)
 
 # Bundled outside of third_party, apparently not considered as such by Chromium:
 # see src/3rdparty/chromium/v8/include/v8_version.h for the version number
-Provides: bundled(v8) = 4.5.103.35
+Provides: bundled(v8) = 4.9.385.33
 # bundled by v8 (src/3rdparty/chromium/v8/src/third_party/fdlibm)
 # see src/3rdparty/chromium/v8/src/third_party/fdlibm/README.v8 for the version
 Provides: bundled(fdlibm) = 5.3
@@ -442,6 +447,11 @@ popd
 
 
 %changelog
+* Sat Jul 16 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.0-1
+- Update to 5.7.0
+- Update version numbers of bundled stuff
+- Update system libvpx/libwebp version requirements (now F24+ only)
+
 * Tue Jun 14 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.6.1-3
 - rebuild (glibc)
 
