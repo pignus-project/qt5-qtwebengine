@@ -46,33 +46,33 @@ Source1: clean_qtwebengine.sh
 Source2: clean_ffmpeg.sh
 Source3: get_free_ffmpeg_source_files.py
 # some tweaks to linux.pri (system libs, link libpci, run unbundling script)
-Patch1:  qtwebengine-opensource-src-5.7.0-linux-pri.patch
+Patch0:  qtwebengine-opensource-src-5.7.0-linux-pri.patch
 # quick hack to avoid checking for the nonexistent icudtl.dat and silence the
 # resulting warnings - not upstreamable as is because it removes the fallback
 # mechanism for the ICU data directory (which is not used in our builds because
 # we use the system ICU, which embeds the data statically) completely
-Patch2:  qtwebengine-opensource-src-5.6.0-no-icudtl-dat.patch
+Patch1:  qtwebengine-opensource-src-5.6.0-no-icudtl-dat.patch
 # fix extractCFlag to also look in QMAKE_CFLAGS_RELEASE, needed to detect the
 # ARM flags with our %%qmake_qt5 macro, including for the next patch
-Patch3:  qtwebengine-opensource-src-5.6.0-beta-fix-extractcflag.patch
+Patch2:  qtwebengine-opensource-src-5.6.0-beta-fix-extractcflag.patch
 # disable NEON vector instructions on ARM for now, the NEON code FTBFS due to
 # GCC bug https://bugzilla.redhat.com/show_bug.cgi?id=1282495
-Patch4:  qtwebengine-opensource-src-5.6.0-beta-no-neon.patch
+Patch3:  qtwebengine-opensource-src-5.6.0-beta-no-neon.patch
 # use the system NSPR prtime (based on Debian patch)
 # We already depend on NSPR, so it is useless to copy these functions here.
 # Debian uses this just fine, and I don't see relevant modifications either.
-Patch5:  qtwebengine-opensource-src-5.7.0-system-nspr-prtime.patch
+Patch4:  qtwebengine-opensource-src-5.7.0-system-nspr-prtime.patch
 # use the system ICU UTF functions
 # We already depend on ICU, so it is useless to copy these functions here.
 # I checked the history of that directory, and other than the renames I am
 # undoing, there were no modifications at all. Must be applied after Patch5.
-Patch6:  qtwebengine-opensource-src-5.7.0-system-icu-utf.patch
+Patch5:  qtwebengine-opensource-src-5.7.0-system-icu-utf.patch
 # do not require SSE2 on i686
 # cumulative revert of upstream reviews 187423002, 308003004, 511773002 (parts
 # relevant to QtWebEngine only), 516543004, 1152053004 and 1161853008, along
 # with some custom fixes and improvements
 # also build V8 shared and twice on i686 (once for x87, once for SSE2)
-Patch7:  qtwebengine-opensource-src-5.7.0-no-sse2.patch
+Patch6:  qtwebengine-opensource-src-5.7.0-no-sse2.patch
 
 # the architectures theoretically supported by the version of V8 used (#1298011)
 # You may need some minor patching to build on one of the secondary
@@ -292,13 +292,13 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{qt_module}-opensource-src-%{version}%{?prerelease:-%{prerelease}}
-%patch1 -p1 -b .linux-pri
-%patch2 -p1 -b .no-icudtl-dat
-%patch3 -p1 -b .fix-extractcflag
-%patch4 -p1 -b .no-neon
-%patch5 -p1 -b .system-nspr-prtime
-%patch6 -p1 -b .system-icu-utf
-%patch7 -p1 -b .no-sse2
+%patch0 -p1 -b .linux-pri
+%patch1 -p1 -b .no-icudtl-dat
+%patch2 -p1 -b .fix-extractcflag
+%patch3 -p1 -b .no-neon
+%patch4 -p1 -b .system-nspr-prtime
+%patch5 -p1 -b .system-icu-utf
+%patch6 -p1 -b .no-sse2
 # fix // in #include in content/renderer/gpu to avoid debugedit failure
 sed -i -e 's!gpu//!gpu/!g' \
   src/3rdparty/chromium/content/renderer/gpu/compositor_forwarding_message_filter.cc
