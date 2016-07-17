@@ -45,10 +45,8 @@ Source0: qtwebengine-opensource-src-%{version}-clean.tar.xz
 Source1: clean_qtwebengine.sh
 Source2: clean_ffmpeg.sh
 Source3: get_free_ffmpeg_source_files.py
-# do not compile with -Wno-format, which also bypasses -Werror-format-security
-Patch0:  qtwebengine-opensource-src-5.6.0-beta-no-format.patch
 # some tweaks to linux.pri (system libs, link libpci, run unbundling script)
-Patch1:  qtwebengine-opensource-src-5.6.1-linux-pri.patch
+Patch1:  qtwebengine-opensource-src-5.7.0-linux-pri.patch
 # quick hack to avoid checking for the nonexistent icudtl.dat and silence the
 # resulting warnings - not upstreamable as is because it removes the fallback
 # mechanism for the ICU data directory (which is not used in our builds because
@@ -63,12 +61,12 @@ Patch4:  qtwebengine-opensource-src-5.6.0-beta-no-neon.patch
 # use the system NSPR prtime (based on Debian patch)
 # We already depend on NSPR, so it is useless to copy these functions here.
 # Debian uses this just fine, and I don't see relevant modifications either.
-Patch5:  qtwebengine-opensource-src-5.6.0-beta-system-nspr-prtime.patch
+Patch5:  qtwebengine-opensource-src-5.7.0-system-nspr-prtime.patch
 # use the system ICU UTF functions
 # We already depend on ICU, so it is useless to copy these functions here.
 # I checked the history of that directory, and other than the renames I am
 # undoing, there were no modifications at all. Must be applied after Patch5.
-Patch6:  qtwebengine-opensource-src-5.6.0-beta-system-icu-utf.patch
+Patch6:  qtwebengine-opensource-src-5.7.0-system-icu-utf.patch
 # do not require SSE2 on i686
 # cumulative revert of upstream reviews 187423002, 308003004, 511773002 (parts
 # relevant to QtWebEngine only), 516543004, 1152053004 and 1161853008, along
@@ -294,7 +292,6 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{qt_module}-opensource-src-%{version}%{?prerelease:-%{prerelease}}
-%patch0 -p1 -b .no-format
 %patch1 -p1 -b .linux-pri
 %patch2 -p1 -b .no-icudtl-dat
 %patch3 -p1 -b .fix-extractcflag
@@ -332,7 +329,7 @@ export CXXFLAGS=`echo "$CXXFLAGS" | sed -e 's/ -g / -g1 /g'`
 mkdir %{_target_platform}
 pushd %{_target_platform}
 
-%{qmake_qt5} CONFIG+="webcore_debug v8base_debug force_debug_info" WEBENGINE_CONFIG+="use_system_icu" ..
+%{qmake_qt5} CONFIG+="webcore_debug v8base_debug force_debug_info" WEBENGINE_CONFIG+="use_system_icu use_system_protobuf" ..
 
 # workaround, disable parallel compilation as it fails to compile in brew
 make %{?_smp_mflags}
@@ -447,10 +444,13 @@ popd
 
 
 %changelog
-* Sat Jul 16 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.0-1
+* Sun Jul 17 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.0-1
 - Update to 5.7.0
 - Update version numbers of bundled stuff
 - Update system libvpx/libwebp version requirements (now F24+ only)
+- Drop no-format patch, fixed upstream (they stopped passing -Wno-format)
+- Rebase linux-pri patch (use_system_protobuf is now a qmake flag)
+- Rebase system-nspr-prtime and system-icu-utf patches
 
 * Tue Jun 14 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.6.1-3
 - rebuild (glibc)
