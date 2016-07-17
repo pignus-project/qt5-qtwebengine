@@ -72,7 +72,7 @@ Patch6:  qtwebengine-opensource-src-5.7.0-system-icu-utf.patch
 # relevant to QtWebEngine only), 516543004, 1152053004 and 1161853008, along
 # with some custom fixes and improvements
 # also build V8 shared and twice on i686 (once for x87, once for SSE2)
-Patch7:  qtwebengine-opensource-src-5.6.1-no-sse2.patch
+Patch7:  qtwebengine-opensource-src-5.7.0-no-sse2.patch
 
 # the architectures theoretically supported by the version of V8 used (#1298011)
 # You may need some minor patching to build on one of the secondary
@@ -450,7 +450,7 @@ popd
 - Update system libvpx/libwebp version requirements (now F24+ only)
 - Drop no-format patch, fixed upstream (they stopped passing -Wno-format)
 - Rebase linux-pri patch (use_system_protobuf is now a qmake flag)
-- Rebase system-nspr-prtime and system-icu-utf patches
+- Rebase system-nspr-prtime, system-icu-utf and no-sse2 patches
 
 * Tue Jun 14 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.6.1-3
 - rebuild (glibc)
