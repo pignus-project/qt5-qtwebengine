@@ -2562,7 +2562,7 @@ diff -Nur qtwebengine-opensource-src-5.7.0/src/3rdparty/chromium/third_party/Web
  
 diff -Nur qtwebengine-opensource-src-5.7.0/src/3rdparty/chromium/third_party/WebKit/Source/platform/graphics/gpu/WebGLImageConversion.cpp qtwebengine-opensource-src-5.7.0-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/graphics/gpu/WebGLImageConversion.cpp
 --- qtwebengine-opensource-src-5.7.0/src/3rdparty/chromium/third_party/WebKit/Source/platform/graphics/gpu/WebGLImageConversion.cpp	2016-05-26 15:53:47.000000000 +0200
-+++ qtwebengine-opensource-src-5.7.0-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/graphics/gpu/WebGLImageConversion.cpp	2016-07-17 18:06:40.285812984 +0200
++++ qtwebengine-opensource-src-5.7.0-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/graphics/gpu/WebGLImageConversion.cpp	2016-07-18 22:28:24.771187623 +0200
 @@ -422,7 +422,7 @@
      const uint32_t* source32 = reinterpret_cast_ptr<const uint32_t*>(source);
      uint32_t* destination32 = reinterpret_cast_ptr<uint32_t*>(destination);
@@ -2572,6 +2572,24 @@ diff -Nur qtwebengine-opensource-src-5.7.0/src/3rdparty/chromium/third_party/Web
      SIMD::unpackOneRowOfBGRA8LittleToRGBA8(source32, destination32, pixelsPerRow);
  #endif
      for (unsigned i = 0; i < pixelsPerRow; ++i) {
+@@ -441,7 +441,7 @@
+ 
+ template<> void unpack<WebGLImageConversion::DataFormatRGBA5551, uint16_t, uint8_t>(const uint16_t* source, uint8_t* destination, unsigned pixelsPerRow)
+ {
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+     SIMD::unpackOneRowOfRGBA5551LittleToRGBA8(source, destination, pixelsPerRow);
+ #endif
+ #if HAVE(ARM_NEON_INTRINSICS)
+@@ -463,7 +463,7 @@
+ 
+ template<> void unpack<WebGLImageConversion::DataFormatRGBA4444, uint16_t, uint8_t>(const uint16_t* source, uint8_t* destination, unsigned pixelsPerRow)
+ {
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+     SIMD::unpackOneRowOfRGBA4444LittleToRGBA8(source, destination, pixelsPerRow);
+ #endif
+ #if HAVE(ARM_NEON_INTRINSICS)
 @@ -629,7 +629,7 @@
  // FIXME: this routine is lossy and must be removed.
  template<> void pack<WebGLImageConversion::DataFormatR8, WebGLImageConversion::AlphaDoUnmultiply, uint8_t, uint8_t>(const uint8_t* source, uint8_t* destination, unsigned pixelsPerRow)
@@ -2579,6 +2597,15 @@ diff -Nur qtwebengine-opensource-src-5.7.0/src/3rdparty/chromium/third_party/Web
 -#if CPU(X86) || CPU(X86_64)
 +#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
      SIMD::packOneRowOfRGBA8LittleToR8(source, destination, pixelsPerRow);
+ #endif
+     for (unsigned i = 0; i < pixelsPerRow; ++i) {
+@@ -666,7 +666,7 @@
+ // FIXME: this routine is lossy and must be removed.
+ template<> void pack<WebGLImageConversion::DataFormatRA8, WebGLImageConversion::AlphaDoUnmultiply, uint8_t, uint8_t>(const uint8_t* source, uint8_t* destination, unsigned pixelsPerRow)
+ {
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+     SIMD::packOneRowOfRGBA8LittleToRA8(source, destination, pixelsPerRow);
  #endif
      for (unsigned i = 0; i < pixelsPerRow; ++i) {
 @@ -740,7 +740,7 @@
@@ -2592,7 +2619,7 @@ diff -Nur qtwebengine-opensource-src-5.7.0/src/3rdparty/chromium/third_party/Web
      for (unsigned i = 0; i < pixelsPerRow; ++i) {
 diff -Nur qtwebengine-opensource-src-5.7.0/src/3rdparty/chromium/third_party/webrtc/common_audio/real_fourier.cc qtwebengine-opensource-src-5.7.0-no-sse2/src/3rdparty/chromium/third_party/webrtc/common_audio/real_fourier.cc
 --- qtwebengine-opensource-src-5.7.0/src/3rdparty/chromium/third_party/webrtc/common_audio/real_fourier.cc	2016-05-26 15:53:47.000000000 +0200
-+++ qtwebengine-opensource-src-5.7.0-no-sse2/src/3rdparty/chromium/third_party/webrtc/common_audio/real_fourier.cc	2016-07-17 18:06:40.285812984 +0200
++++ qtwebengine-opensource-src-5.7.0-no-sse2/src/3rdparty/chromium/third_party/webrtc/common_audio/real_fourier.cc	2016-07-18 19:27:29.285890664 +0200
 @@ -14,6 +14,7 @@
  #include "webrtc/common_audio/real_fourier_ooura.h"
  #include "webrtc/common_audio/real_fourier_openmax.h"
