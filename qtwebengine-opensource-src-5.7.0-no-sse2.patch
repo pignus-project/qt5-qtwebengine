@@ -2020,6 +2020,45 @@ diff -Nur qtwebengine-opensource-src-5.7.0/src/3rdparty/chromium/third_party/qcm
    ],
  }
  
+diff -Nur qtwebengine-opensource-src-5.7.0/src/3rdparty/chromium/third_party/WebKit/Source/modules/webaudio/AudioParamTimeline.cpp qtwebengine-opensource-src-5.7.0-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/modules/webaudio/AudioParamTimeline.cpp
+--- qtwebengine-opensource-src-5.7.0/src/3rdparty/chromium/third_party/WebKit/Source/modules/webaudio/AudioParamTimeline.cpp	2016-05-26 15:53:47.000000000 +0200
++++ qtwebengine-opensource-src-5.7.0-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/modules/webaudio/AudioParamTimeline.cpp	2016-07-19 00:52:57.847430161 +0200
+@@ -32,7 +32,7 @@
+ #include "wtf/MathExtras.h"
+ #include <algorithm>
+ 
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+ #include <emmintrin.h>
+ #endif
+ 
+@@ -438,7 +438,7 @@
+         // First handle linear and exponential ramps which require looking ahead to the next event.
+         if (nextEventType == ParamEvent::LinearRampToValue) {
+             const float valueDelta = value2 - value1;
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+             // Minimize in-loop operations. Calculate starting value and increment. Next step: value += inc.
+             //  value = value1 + (currentFrame/sampleRate - time1) * k * (value2 - value1);
+             //  inc = 4 / sampleRate * k * (value2 - value1);
+@@ -581,7 +581,7 @@
+                         for (; writeIndex < fillToFrame; ++writeIndex)
+                             values[writeIndex] = target;
+                     } else {
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+                         // Resolve recursion by expanding constants to achieve a 4-step loop unrolling.
+                         // v1 = v0 + (t - v0) * c
+                         // v2 = v1 + (t - v1) * c
+@@ -674,7 +674,7 @@
+                     // Render the stretched curve data using linear interpolation.  Oversampled
+                     // curve data can be provided if sharp discontinuities are desired.
+                     unsigned k = 0;
+-#if CPU(X86) || CPU(X86_64)
++#if (CPU(X86) && defined(__SSE2__)) || CPU(X86_64)
+                     const __m128 vCurveVirtualIndex = _mm_set_ps1(curveVirtualIndex);
+                     const __m128 vCurvePointsPerFrame = _mm_set_ps1(curvePointsPerFrame);
+                     const __m128 vNumberOfCurvePointsM1 = _mm_set_ps1(numberOfCurvePoints - 1);
 diff -Nur qtwebengine-opensource-src-5.7.0/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.cpp qtwebengine-opensource-src-5.7.0-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.cpp
 --- qtwebengine-opensource-src-5.7.0/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.cpp	2016-05-26 15:53:47.000000000 +0200
 +++ qtwebengine-opensource-src-5.7.0-no-sse2/src/3rdparty/chromium/third_party/WebKit/Source/platform/audio/DirectConvolver.cpp	2016-07-17 18:06:40.274812924 +0200
