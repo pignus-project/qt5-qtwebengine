@@ -45,6 +45,7 @@ header_files="  libavutil/x86/asm.h \
                 libavutil/arm/intmath.h \
                 libavutil/arm/intreadwrite.h \
                 libavutil/arm/timer.h \
+                libavutil/aes_internal.h \
                 libavutil/atomic.h \
                 libavutil/atomic_gcc.h \
                 libavutil/attributes.h \
@@ -65,6 +66,7 @@ header_files="  libavutil/x86/asm.h \
                 libavutil/lls.h \
                 libavutil/lzo.h \
                 libavutil/macros.h \
+                libavutil/mem_internal.h \
                 libavutil/old_pix_fmts.h \
                 libavutil/pixfmt.h \
                 libavutil/qsort.h \
