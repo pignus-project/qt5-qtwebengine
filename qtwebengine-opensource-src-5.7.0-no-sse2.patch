@@ -2597,7 +2597,7 @@ diff -Nur qtwebengine-opensource-src-5.7.0/src/3rdparty/chromium/third_party/web
  #include "webrtc/common_audio/real_fourier_ooura.h"
  #include "webrtc/common_audio/real_fourier_openmax.h"
  #include "webrtc/common_audio/signal_processing/include/spl_inl.h"
-+#include "webrtc/system_wrappers/interface/cpu_features_wrapper.h"
++#include "webrtc/system_wrappers/include/cpu_features_wrapper.h"
  
  namespace webrtc {
  
