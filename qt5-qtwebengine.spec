@@ -73,6 +73,11 @@ Patch5:  qtwebengine-opensource-src-5.7.0-system-icu-utf.patch
 # with some custom fixes and improvements
 # also build V8 shared and twice on i686 (once for x87, once for SSE2)
 Patch6:  qtwebengine-opensource-src-5.7.0-no-sse2.patch
+# fix ARM NEON handling in webrtc gyp files
+# For now, fix video_processing.gypi to only build NEON files when actually
+# requested (i.e., not if arm_neon=0 arm_neon_optional=0).
+# We still need to figure out why the flag tweaks from arm_neon.gypi don't work.
+Patch7:  qtwebengine-opensource-src-5.7.0-webrtc-neon.patch
 
 # the architectures theoretically supported by the version of V8 used (#1298011)
 # You may need some minor patching to build on one of the secondary
@@ -299,6 +304,7 @@ BuildArch: noarch
 %patch4 -p1 -b .system-nspr-prtime
 %patch5 -p1 -b .system-icu-utf
 %patch6 -p1 -b .no-sse2
+%patch7 -p1 -b .webrtc-neon
 # fix // in #include in content/renderer/gpu to avoid debugedit failure
 sed -i -e 's!gpu//!gpu/!g' \
   src/3rdparty/chromium/content/renderer/gpu/compositor_forwarding_message_filter.cc
@@ -444,13 +450,14 @@ popd
 
 
 %changelog
-* Sun Jul 17 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.0-1
+* Mon Jul 18 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.0-1
 - Update to 5.7.0
 - Update version numbers of bundled stuff
 - Update system libvpx/libwebp version requirements (now F24+ only)
 - Drop no-format patch, fixed upstream (they stopped passing -Wno-format)
 - Rebase linux-pri patch (use_system_protobuf is now a qmake flag)
 - Rebase system-nspr-prtime, system-icu-utf and no-sse2 patches
+- Fix ARM NEON handling in webrtc gyp files (honor arm_neon=0)
 
 * Tue Jun 14 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.6.1-3
 - rebuild (glibc)
