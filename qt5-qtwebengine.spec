@@ -30,7 +30,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.7.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -450,6 +450,9 @@ popd
 
 
 %changelog
+* Sat Jul 23 2016 Christian Dersch <lupinix@mailbox.org> - 5.7.0-3
+- Rebuilt for libvpx.so.4 soname bump
+
 * Wed Jul 20 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.0-2
 - clean_ffmpeg.sh: Whitelist libavutil/aarch64/timer.h (#1358428)
 
