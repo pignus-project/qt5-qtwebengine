@@ -30,7 +30,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.7.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -78,6 +78,8 @@ Patch6:  qtwebengine-opensource-src-5.7.0-no-sse2.patch
 # requested (i.e., not if arm_neon=0 arm_neon_optional=0).
 # We still need to figure out why the flag tweaks from arm_neon.gypi don't work.
 Patch7:  qtwebengine-opensource-src-5.7.0-webrtc-neon.patch
+# don't require the time zone detection API backported from ICU 55 (thanks spot)
+Patch8:  qtwebengine-opensource-src-5.6.0-beta-system-icu54.patch
 
 # the architectures theoretically supported by the version of V8 used (#1298011)
 # You may need some minor patching to build on one of the secondary
@@ -305,6 +307,7 @@ BuildArch: noarch
 %patch5 -p1 -b .system-icu-utf
 %patch6 -p1 -b .no-sse2
 %patch7 -p1 -b .webrtc-neon
+%patch8 -p1 -b .system-icu54
 # fix // in #include in content/renderer/gpu to avoid debugedit failure
 sed -i -e 's!gpu//!gpu/!g' \
   src/3rdparty/chromium/content/renderer/gpu/compositor_forwarding_message_filter.cc
@@ -450,6 +453,9 @@ popd
 
 
 %changelog
+* Tue Jul 26 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.0-4
+- Restore system-icu54 patch, the fix was lost upstream
+
 * Sat Jul 23 2016 Christian Dersch <lupinix@mailbox.org> - 5.7.0-3
 - Rebuilt for libvpx.so.4 soname bump
 
