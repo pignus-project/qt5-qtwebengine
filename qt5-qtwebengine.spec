@@ -30,7 +30,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.7.0
-Release: 4%{?dist}
+Release: 5%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -100,6 +100,7 @@ BuildRequires: qt5-qtsensors-devel >= %{version}
 BuildRequires: qt5-qtwebchannel-devel >= %{version}
 BuildRequires: qt5-qttools-static >= %{version}
 BuildRequires: ninja-build
+BuildRequires: cmake
 BuildRequires: bison
 BuildRequires: git-core
 BuildRequires: gperf
@@ -453,6 +454,9 @@ popd
 
 
 %changelog
+* Sun Jul 31 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.7.0-5
+- BR: cmake (for cmake autoprovides support mostly)
+
 * Tue Jul 26 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.0-4
 - Restore system-icu54 patch, the fix was lost upstream
 
