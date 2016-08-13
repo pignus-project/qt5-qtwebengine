@@ -30,7 +30,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.7.0
-Release: 5%{?dist}
+Release: 6%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -80,6 +80,11 @@ Patch6:  qtwebengine-opensource-src-5.7.0-no-sse2.patch
 Patch7:  qtwebengine-opensource-src-5.7.0-webrtc-neon.patch
 # don't require the time zone detection API backported from ICU 55 (thanks spot)
 Patch8:  qtwebengine-opensource-src-5.6.0-beta-system-icu54.patch
+
+## UPSTREAM PATCHES:
+# do not use MADV_FREE when building against glibc 2.24, it is not allowed by
+# the sandbox (#1364781) (patch from qtwebengine-chromium 49-based branch)
+Patch100: qtwebengine-opensource-src-5.7.0-glibc224.patch
 
 # the architectures theoretically supported by the version of V8 used (#1298011)
 # You may need some minor patching to build on one of the secondary
@@ -309,6 +314,7 @@ BuildArch: noarch
 %patch6 -p1 -b .no-sse2
 %patch7 -p1 -b .webrtc-neon
 %patch8 -p1 -b .system-icu54
+%patch100 -p1 -b .glibc224
 # fix // in #include in content/renderer/gpu to avoid debugedit failure
 sed -i -e 's!gpu//!gpu/!g' \
   src/3rdparty/chromium/content/renderer/gpu/compositor_forwarding_message_filter.cc
@@ -454,6 +460,9 @@ popd
 
 
 %changelog
+* Sat Aug 13 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.0-6
+- Fix crash when building against glibc 2.24 (#1364781) (upstream patch)
+
 * Sun Jul 31 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.7.0-5
 - BR: cmake (for cmake autoprovides support mostly)
 
