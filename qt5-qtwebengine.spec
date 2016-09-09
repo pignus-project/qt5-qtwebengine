@@ -30,7 +30,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.7.0
-Release: 6%{?dist}
+Release: 7%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -85,6 +85,10 @@ Patch8:  qtwebengine-opensource-src-5.6.0-beta-system-icu54.patch
 # do not use MADV_FREE when building against glibc 2.24, it is not allowed by
 # the sandbox (#1364781) (patch from qtwebengine-chromium 49-based branch)
 Patch100: qtwebengine-opensource-src-5.7.0-glibc224.patch
+# apply the correct page margins from the QPageLayout to Chromium printing
+# partial backport of af2535018b1553e351198f3d9c21538de1c328a1 (Michael Bruning)
+# from the 5.8 branch
+Patch101: qtwebengine-opensource-src-5.7.0-page-margins.patch
 
 # the architectures theoretically supported by the version of V8 used (#1298011)
 # You may need some minor patching to build on one of the secondary
@@ -315,6 +319,7 @@ BuildArch: noarch
 %patch7 -p1 -b .webrtc-neon
 %patch8 -p1 -b .system-icu54
 %patch100 -p1 -b .glibc224
+%patch101 -p1 -b .page-margins
 # fix // in #include in content/renderer/gpu to avoid debugedit failure
 sed -i -e 's!gpu//!gpu/!g' \
   src/3rdparty/chromium/content/renderer/gpu/compositor_forwarding_message_filter.cc
@@ -460,6 +465,9 @@ popd
 
 
 %changelog
+* Fri Sep 09 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.0-7
+- apply the correct page margins from the QPageLayout to Chromium printing
+
 * Sat Aug 13 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.0-6
 - Fix crash when building against glibc 2.24 (#1364781) (upstream patch)
 
