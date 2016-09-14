@@ -30,7 +30,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.7.0
-Release: 7%{?dist}
+Release: 8%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -90,13 +90,8 @@ Patch100: qtwebengine-opensource-src-5.7.0-glibc224.patch
 # from the 5.8 branch
 Patch101: qtwebengine-opensource-src-5.7.0-page-margins.patch
 
-# the architectures theoretically supported by the version of V8 used (#1298011)
-# You may need some minor patching to build on one of the secondary
-# architectures, e.g., to add to the Qt -> Chromium -> V8 arch translations.
-# If you cannot get this package to build on your secondary architecure, please:
-# * remove your architecture from this list AND
-# * put #1298011 onto your ExcludeArch tracker.
-ExclusiveArch: %{ix86} x86_64 %{arm} aarch64 mips mipsel mips64el
+# handled by qt5-srpm-macros, which defines %%qt5_qtwebengine_arches
+ExclusiveArch: %{qt5_qtwebengine_arches}
 
 BuildRequires: qt5-qtbase-devel >= %{version}
 BuildRequires: qt5-qtbase-private-devel
@@ -465,6 +460,9 @@ popd
 
 
 %changelog
+* Wed Sep 14 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.7.0-8
+- ExclusiveArch: %%{qt5_qtwebengine_arches} (defined by qt5-srpm-macros)
+
 * Fri Sep 09 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.0-7
 - apply the correct page margins from the QPageLayout to Chromium printing
 
