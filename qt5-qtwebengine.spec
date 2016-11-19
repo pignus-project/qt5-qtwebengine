@@ -30,7 +30,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.7.0
-Release: 8%{?dist}
+Release: 9%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -460,6 +460,9 @@ popd
 
 
 %changelog
+* Sat Nov 19 2016 Orion Poplawski <orion@cora.nwra.com> - 5.7.0-9
+- Rebuild for protobuf 3.1.0
+
 * Wed Sep 14 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.7.0-8
 - ExclusiveArch: %%{qt5_qtwebengine_arches} (defined by qt5-srpm-macros)
 
