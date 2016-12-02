@@ -29,8 +29,8 @@
 
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
-Version: 5.7.0
-Release: 9%{?dist}
+Version: 5.7.1
+Release: 1%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -80,15 +80,6 @@ Patch6:  qtwebengine-opensource-src-5.7.0-no-sse2.patch
 Patch7:  qtwebengine-opensource-src-5.7.0-webrtc-neon.patch
 # don't require the time zone detection API backported from ICU 55 (thanks spot)
 Patch8:  qtwebengine-opensource-src-5.6.0-beta-system-icu54.patch
-
-## UPSTREAM PATCHES:
-# do not use MADV_FREE when building against glibc 2.24, it is not allowed by
-# the sandbox (#1364781) (patch from qtwebengine-chromium 49-based branch)
-Patch100: qtwebengine-opensource-src-5.7.0-glibc224.patch
-# apply the correct page margins from the QPageLayout to Chromium printing
-# partial backport of af2535018b1553e351198f3d9c21538de1c328a1 (Michael Bruning)
-# from the 5.8 branch
-Patch101: qtwebengine-opensource-src-5.7.0-page-margins.patch
 
 # handled by qt5-srpm-macros, which defines %%qt5_qtwebengine_arches
 ExclusiveArch: %{qt5_qtwebengine_arches}
@@ -307,14 +298,14 @@ BuildArch: noarch
 %patch0 -p1 -b .linux-pri
 %patch1 -p1 -b .no-icudtl-dat
 %patch2 -p1 -b .fix-extractcflag
+%if 0%{?fedora} < 24
 %patch3 -p1 -b .no-neon
+%endif
 %patch4 -p1 -b .system-nspr-prtime
 %patch5 -p1 -b .system-icu-utf
 %patch6 -p1 -b .no-sse2
 %patch7 -p1 -b .webrtc-neon
 %patch8 -p1 -b .system-icu54
-%patch100 -p1 -b .glibc224
-%patch101 -p1 -b .page-margins
 # fix // in #include in content/renderer/gpu to avoid debugedit failure
 sed -i -e 's!gpu//!gpu/!g' \
   src/3rdparty/chromium/content/renderer/gpu/compositor_forwarding_message_filter.cc
@@ -460,8 +451,8 @@ popd
 
 
 %changelog
-* Sat Nov 19 2016 Orion Poplawski <orion@cora.nwra.com> - 5.7.0-9
-- Rebuild for protobuf 3.1.0
+* Thu Nov 10 2016 Helio Chissini de Castro <helio@kde.org> - 5.7.1-1
+- New upstream version
 
 * Wed Sep 14 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.7.0-8
 - ExclusiveArch: %%{qt5_qtwebengine_arches} (defined by qt5-srpm-macros)
