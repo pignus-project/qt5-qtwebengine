@@ -83,7 +83,7 @@ Patch6:  qtwebengine-opensource-src-5.7.0-no-sse2.patch
 #   (i.e., not if arm_neon=0 arm_neon_optional=0).
 # * inline arm_neon.gypi because gyp is not picking up flags from the include
 # We still need to figure out why the flag tweaks from arm_neon.gypi don't work.
-Patch7:  qtwebengine-opensource-src-5.7.0-webrtc-neon.patch
+Patch7:  qtwebengine-opensource-src-5.7.1-webrtc-neon.patch
 # don't require the time zone detection API backported from ICU 55 (thanks spot)
 Patch8:  qtwebengine-opensource-src-5.6.0-beta-system-icu54.patch
 # fix missing ARM -mfpu setting (see the comment in the no-neon patch above)
