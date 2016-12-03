@@ -87,6 +87,8 @@ Patch7:  qtwebengine-opensource-src-5.7.0-webrtc-neon.patch
 Patch8:  qtwebengine-opensource-src-5.6.0-beta-system-icu54.patch
 # fix missing ARM -mfpu setting (see the comment in the no-neon patch above)
 Patch9:  qtwebengine-opensource-src-5.7.1-arm-fpu-fix.patch
+# remove Android depenencies from openmax_dl ARM NEON detection (detect.c)
+Patch10: qtwebengine-opensource-src-5.7.1-openmax-dl-neon.patch
 
 # handled by qt5-srpm-macros, which defines %%qt5_qtwebengine_arches
 ExclusiveArch: %{qt5_qtwebengine_arches}
@@ -315,6 +317,7 @@ BuildArch: noarch
 %patch6 -p1 -b .no-sse2
 %patch7 -p1 -b .webrtc-neon
 %patch8 -p1 -b .system-icu54
+%patch10 -p1 -b .openmax-dl-neon
 # fix // in #include in content/renderer/gpu to avoid debugedit failure
 sed -i -e 's!gpu//!gpu/!g' \
   src/3rdparty/chromium/content/renderer/gpu/compositor_forwarding_message_filter.cc
@@ -461,8 +464,10 @@ popd
 
 %changelog
 * Sat Dec 03 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.1-2
+- clean_qtwebengine.sh: Rip out openh264 sources
 - Rebase no-neon patch, add new arm-fpu-fix patch where no-neon not wanted
 - Try enabling arm_neon unconditionally, #1282495 should be fixed even in F23
+- Remove Android depenencies from openmax_dl ARM NEON detection (detect.c)
 
 * Thu Nov 10 2016 Helio Chissini de Castro <helio@kde.org> - 5.7.1-1
 - New upstream version
