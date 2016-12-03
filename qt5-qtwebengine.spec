@@ -19,6 +19,10 @@
 %global use_system_libwebp 1
 %endif
 
+# NEON support on ARM (detected at runtime) - disable this if you are hitting
+# FTBFS due to e.g. GCC bug https://bugzilla.redhat.com/show_bug.cgi?id=1282495
+%global arm_neon 1
+
 #global prerelease rc
 
 # exclude plugins (all architectures) and libv8.so (i686, it's static everywhere
@@ -55,9 +59,10 @@ Patch1:  qtwebengine-opensource-src-5.6.0-no-icudtl-dat.patch
 # fix extractCFlag to also look in QMAKE_CFLAGS_RELEASE, needed to detect the
 # ARM flags with our %%qmake_qt5 macro, including for the next patch
 Patch2:  qtwebengine-opensource-src-5.6.0-beta-fix-extractcflag.patch
-# disable NEON vector instructions on ARM for now, the NEON code FTBFS due to
+# disable NEON vector instructions on ARM where the NEON code FTBFS due to
 # GCC bug https://bugzilla.redhat.com/show_bug.cgi?id=1282495
-Patch3:  qtwebengine-opensource-src-5.6.0-beta-no-neon.patch
+# otherwise, we use the arm-fpu-fix below instead (which this patch contains)
+Patch3:  qtwebengine-opensource-src-5.7.1-no-neon.patch
 # use the system NSPR prtime (based on Debian patch)
 # We already depend on NSPR, so it is useless to copy these functions here.
 # Debian uses this just fine, and I don't see relevant modifications either.
@@ -80,6 +85,8 @@ Patch6:  qtwebengine-opensource-src-5.7.0-no-sse2.patch
 Patch7:  qtwebengine-opensource-src-5.7.0-webrtc-neon.patch
 # don't require the time zone detection API backported from ICU 55 (thanks spot)
 Patch8:  qtwebengine-opensource-src-5.6.0-beta-system-icu54.patch
+# fix missing ARM -mfpu setting (see the comment in the no-neon patch above)
+Patch9:  qtwebengine-opensource-src-5.7.1-arm-fpu-fix.patch
 
 # handled by qt5-srpm-macros, which defines %%qt5_qtwebengine_arches
 ExclusiveArch: %{qt5_qtwebengine_arches}
@@ -298,7 +305,9 @@ BuildArch: noarch
 %patch0 -p1 -b .linux-pri
 %patch1 -p1 -b .no-icudtl-dat
 %patch2 -p1 -b .fix-extractcflag
-%if 0%{?fedora} < 24
+%if 0%{?arm_neon}
+%patch9 -p1 -b .arm-fpu-fix
+%else
 %patch3 -p1 -b .no-neon
 %endif
 %patch4 -p1 -b .system-nspr-prtime
@@ -451,6 +460,10 @@ popd
 
 
 %changelog
+* Sat Dec 03 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.1-2
+- Rebase no-neon patch, add new arm-fpu-fix patch where no-neon not wanted
+- Try enabling arm_neon unconditionally, #1282495 should be fixed even in F23
+
 * Thu Nov 10 2016 Helio Chissini de Castro <helio@kde.org> - 5.7.1-1
 - New upstream version
 
