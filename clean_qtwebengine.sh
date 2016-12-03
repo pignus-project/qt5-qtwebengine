@@ -57,6 +57,9 @@ fi
 echo "running clean_ffmpeg.sh"
 ./clean_ffmpeg.sh "$DIRNAME/src/3rdparty/chromium" || exit $?
 
+echo "ripping out openh264 sources"
+rm -rf "$DIRNAME/src/3rdparty/chromium/third_party/openh264/src" || exit $?
+
 echo "repacking as $DIRNAME-clean.tar.xz"
 XZ_OPT="-9 -f" tar cJf "$DIRNAME-clean.tar.xz" "$DIRNAME" || exit $?
 
