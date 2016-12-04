@@ -82,7 +82,6 @@ Patch6:  qtwebengine-opensource-src-5.7.0-no-sse2.patch
 # * fix video_processing.gypi to only build NEON files when actually requested
 #   (i.e., not if arm_neon=0 arm_neon_optional=0).
 # * inline arm_neon.gypi because gyp is not picking up flags from the include
-# * also remove -mfpu=vfpv3-d16 from cflags_c and cflags_cc for NEON targets
 # We still need to figure out why the flag tweaks from arm_neon.gypi don't work.
 Patch7:  qtwebengine-opensource-src-5.7.1-webrtc-neon.patch
 # don't require the time zone detection API backported from ICU 55 (thanks spot)
@@ -470,8 +469,7 @@ popd
 - Rebase no-neon patch, add new arm-fpu-fix patch where no-neon not wanted
 - Try enabling arm_neon unconditionally, #1282495 should be fixed even in F23
 - Remove Android depenencies from openmax_dl ARM NEON detection (detect.c)
-- webrtc: Inline arm_neon.gypi because gyp is not picking up flags from it,
-  also remove -mfpu=vfpv3-d16 from cflags_c and cflags_cc for NEON targets
+- webrtc: Inline arm_neon.gypi because gyp is not picking up flags from it
 
 * Thu Nov 10 2016 Helio Chissini de Castro <helio@kde.org> - 5.7.1-1
 - New upstream version
