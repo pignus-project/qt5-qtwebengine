@@ -338,6 +338,11 @@ sed -i -e 's/=-g$/=-g1/g' src/core/gyp_run.pro
 export STRIP=strip
 export NINJAFLAGS="-v %{_smp_mflags}"
 export NINJA_PATH=%{_bindir}/ninja-build
+export CFLAGS="%{optflags}"
+%ifnarch x86_64
+# most arches run out of memory with full debuginfo, so use -g1 on non-x86_64
+export CFLAGS=`echo "$CFLAGS" | sed -e 's/ -g / -g1 /g'`
+%endif
 export CXXFLAGS="%{optflags} -fno-delete-null-pointer-checks"
 %ifnarch x86_64
 # most arches run out of memory with full debuginfo, so use -g1 on non-x86_64
@@ -349,7 +354,9 @@ pushd %{_target_platform}
 
 %{qmake_qt5} CONFIG+="webcore_debug v8base_debug force_debug_info" WEBENGINE_CONFIG+="use_system_icu use_system_protobuf" ..
 
-# if we keep this set here, gyp picks up duplicate flags
+# if we keep these set here, gyp picks up duplicate flags
+unset CFLAGS
+export CFLAGS
 unset CXXFLAGS
 export CXXFLAGS
 
@@ -471,7 +478,7 @@ popd
 - Rebase no-neon patch, add new arm-fpu-fix patch where no-neon not wanted
 - Try enabling arm_neon unconditionally, #1282495 should be fixed even in F23
 - Remove Android depenencies from openmax_dl ARM NEON detection (detect.c)
-- Try unsetting CXXFLAGS between qmake and make
+- Set CFLAGS, unset both CFLAGS and CXXFLAGS between qmake and make
 
 * Thu Nov 10 2016 Helio Chissini de Castro <helio@kde.org> - 5.7.1-1
 - New upstream version
