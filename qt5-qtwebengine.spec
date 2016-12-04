@@ -34,7 +34,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.7.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -341,6 +341,9 @@ cp -bv /usr/include/re2/*.h src/3rdparty/chromium/third_party/re2/src/re2/
 sed -i -e 's/=-g$/=-g1/g' src/core/gyp_run.pro
 %endif
 
+# copy the Chromium license so it is installed with the appropriate name
+cp -p src/3rdparty/chromium/LICENSE LICENSE.Chromium
+
 %build
 export STRIP=strip
 export NINJAFLAGS="-v %{_smp_mflags}"
@@ -398,6 +401,7 @@ popd
 %postun -p /sbin/ldconfig
 
 %files
+%license LICENSE.* src/webengine/doc/src/qtwebengine-3rdparty.qdoc
 %{_qt5_libdir}/libQt5*.so.*
 %{_qt5_libdir}/qt5/qml/*
 %{_qt5_libdir}/qt5/libexec/QtWebEngineProcess
@@ -480,6 +484,9 @@ popd
 
 
 %changelog
+* Sun Dec 04 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.1-3
+- Ship the license files
+
 * Sun Dec 04 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.1-2
 - clean_qtwebengine.sh: Rip out openh264 sources
 - Rebase no-neon patch, add new arm-fpu-fix patch where no-neon not wanted
