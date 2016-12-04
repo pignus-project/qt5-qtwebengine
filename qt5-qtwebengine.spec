@@ -88,6 +88,11 @@ Patch8:  qtwebengine-opensource-src-5.6.0-beta-system-icu54.patch
 Patch9:  qtwebengine-opensource-src-5.7.1-arm-fpu-fix.patch
 # remove Android depenencies from openmax_dl ARM NEON detection (detect.c)
 Patch10: qtwebengine-opensource-src-5.7.1-openmax-dl-neon.patch
+# chromium-skia: build SkUtilsArm.cpp also on non-Android ARM
+Patch11: qtwebengine-opensource-src-5.7.1-skia-neon.patch
+# webrtc: backport https://codereview.webrtc.org/1820133002/ "Implement CPU
+# feature detection for ARM Linux." and enable the detection also for Chromium
+Patch12: qtwebengine-opensource-src-5.7.1-webrtc-neon-detect.patch
 
 # handled by qt5-srpm-macros, which defines %%qt5_qtwebengine_arches
 ExclusiveArch: %{qt5_qtwebengine_arches}
@@ -317,6 +322,8 @@ BuildArch: noarch
 %patch7 -p1 -b .webrtc-neon
 %patch8 -p1 -b .system-icu54
 %patch10 -p1 -b .openmax-dl-neon
+%patch11 -p1 -b .skia-neon
+%patch12 -p1 -b .webrtc-neon-detect
 # fix // in #include in content/renderer/gpu to avoid debugedit failure
 sed -i -e 's!gpu//!gpu/!g' \
   src/3rdparty/chromium/content/renderer/gpu/compositor_forwarding_message_filter.cc
@@ -479,6 +486,8 @@ popd
 - Try enabling arm_neon unconditionally, #1282495 should be fixed even in F23
 - Remove Android depenencies from openmax_dl ARM NEON detection (detect.c)
 - Set CFLAGS, unset both CFLAGS and CXXFLAGS between qmake and make
+- chromium-skia: build SkUtilsArm.cpp also on non-Android ARM
+- webrtc: backport CPU feature detection for ARM Linux, enable it for Chromium
 
 * Thu Nov 10 2016 Helio Chissini de Castro <helio@kde.org> - 5.7.1-1
 - New upstream version
