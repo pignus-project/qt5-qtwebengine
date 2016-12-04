@@ -34,7 +34,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.7.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -79,9 +79,8 @@ Patch5:  qtwebengine-opensource-src-5.7.0-system-icu-utf.patch
 # also build V8 shared and twice on i686 (once for x87, once for SSE2)
 Patch6:  qtwebengine-opensource-src-5.7.0-no-sse2.patch
 # fix ARM NEON handling in webrtc gyp files
-# For now, fix video_processing.gypi to only build NEON files when actually
-# requested (i.e., not if arm_neon=0 arm_neon_optional=0).
-# We still need to figure out why the flag tweaks from arm_neon.gypi don't work.
+# Fix video_processing.gypi to only build NEON files when actually requested
+# (i.e., not if arm_neon=0 arm_neon_optional=0).
 Patch7:  qtwebengine-opensource-src-5.7.0-webrtc-neon.patch
 # don't require the time zone detection API backported from ICU 55 (thanks spot)
 Patch8:  qtwebengine-opensource-src-5.6.0-beta-system-icu54.patch
@@ -467,7 +466,7 @@ popd
 
 
 %changelog
-* Sat Dec 03 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.1-2
+* Sun Dec 04 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.1-2
 - clean_qtwebengine.sh: Rip out openh264 sources
 - Rebase no-neon patch, add new arm-fpu-fix patch where no-neon not wanted
 - Try enabling arm_neon unconditionally, #1282495 should be fixed even in F23
