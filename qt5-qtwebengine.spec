@@ -351,6 +351,10 @@ pushd %{_target_platform}
 
 %{qmake_qt5} CONFIG+="webcore_debug v8base_debug force_debug_info" WEBENGINE_CONFIG+="use_system_icu use_system_protobuf" ..
 
+# if we keep this set here, gyp picks up duplicate flags
+unset CXXFLAGS
+export CXXFLAGS
+
 # workaround, disable parallel compilation as it fails to compile in brew
 make %{?_smp_mflags}
 
@@ -470,6 +474,7 @@ popd
 - Try enabling arm_neon unconditionally, #1282495 should be fixed even in F23
 - Remove Android depenencies from openmax_dl ARM NEON detection (detect.c)
 - webrtc: Inline arm_neon.gypi because gyp is not picking up flags from it
+- Try unsetting CXXFLAGS between qmake and make
 
 * Thu Nov 10 2016 Helio Chissini de Castro <helio@kde.org> - 5.7.1-1
 - New upstream version
