@@ -34,7 +34,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.7.1
-Release: 2%{?dist}
+Release: 1%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -78,10 +78,9 @@ Patch5:  qtwebengine-opensource-src-5.7.0-system-icu-utf.patch
 # with some custom fixes and improvements
 # also build V8 shared and twice on i686 (once for x87, once for SSE2)
 Patch6:  qtwebengine-opensource-src-5.7.0-no-sse2.patch
-# fix ARM NEON handling in webrtc gyp files:
-# * fix video_processing.gypi to only build NEON files when actually requested
-#   (i.e., not if arm_neon=0 arm_neon_optional=0).
-# * inline arm_neon.gypi because gyp is not picking up flags from the include
+# fix ARM NEON handling in webrtc gyp files
+# For now, fix video_processing.gypi to only build NEON files when actually
+# requested (i.e., not if arm_neon=0 arm_neon_optional=0).
 # We still need to figure out why the flag tweaks from arm_neon.gypi don't work.
 Patch7:  qtwebengine-opensource-src-5.7.0-webrtc-neon.patch
 # don't require the time zone detection API backported from ICU 55 (thanks spot)
@@ -473,7 +472,6 @@ popd
 - Rebase no-neon patch, add new arm-fpu-fix patch where no-neon not wanted
 - Try enabling arm_neon unconditionally, #1282495 should be fixed even in F23
 - Remove Android depenencies from openmax_dl ARM NEON detection (detect.c)
-- webrtc: Inline arm_neon.gypi because gyp is not picking up flags from it
 - Try unsetting CXXFLAGS between qmake and make
 
 * Thu Nov 10 2016 Helio Chissini de Castro <helio@kde.org> - 5.7.1-1
