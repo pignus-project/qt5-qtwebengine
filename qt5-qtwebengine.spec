@@ -34,7 +34,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.7.1
-Release: 3%{?dist}
+Release: 4%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -86,7 +86,7 @@ Patch7:  qtwebengine-opensource-src-5.7.0-webrtc-neon.patch
 Patch8:  qtwebengine-opensource-src-5.6.0-beta-system-icu54.patch
 # fix missing ARM -mfpu setting (see the comment in the no-neon patch above)
 Patch9:  qtwebengine-opensource-src-5.7.1-arm-fpu-fix.patch
-# remove Android depenencies from openmax_dl ARM NEON detection (detect.c)
+# remove Android dependencies from openmax_dl ARM NEON detection (detect.c)
 Patch10: qtwebengine-opensource-src-5.7.1-openmax-dl-neon.patch
 # chromium-skia: build SkUtilsArm.cpp also on non-Android ARM
 Patch11: qtwebengine-opensource-src-5.7.1-skia-neon.patch
@@ -274,7 +274,7 @@ Provides: bundled(v8) = 4.9.385.33
 # see src/3rdparty/chromium/v8/src/third_party/fdlibm/README.v8 for the version
 Provides: bundled(fdlibm) = 5.3
 
-%{?_qt5_version:Requires: qt5-qtbase%{?_isa} >= %{_qt5_version}}
+%{?_qt5_version:Requires: qt5-qtbase%{?_isa} = %{_qt5_version}}
 
 
 %description
@@ -484,6 +484,10 @@ popd
 
 
 %changelog
+* Thu Dec 08 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.1-4
+- Respun tarball (now really includes the page margin fix)
+- Change qt5-qtbase dependency from >= to =
+
 * Sun Dec 04 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.1-3
 - Ship the license files
 
@@ -491,7 +495,7 @@ popd
 - clean_qtwebengine.sh: Rip out openh264 sources
 - Rebase no-neon patch, add new arm-fpu-fix patch where no-neon not wanted
 - Try enabling arm_neon unconditionally, #1282495 should be fixed even in F23
-- Remove Android depenencies from openmax_dl ARM NEON detection (detect.c)
+- Remove Android dependencies from openmax_dl ARM NEON detection (detect.c)
 - Set CFLAGS, unset both CFLAGS and CXXFLAGS between qmake and make
 - chromium-skia: build SkUtilsArm.cpp also on non-Android ARM
 - webrtc: backport CPU feature detection for ARM Linux, enable it for Chromium
