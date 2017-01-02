@@ -30,11 +30,13 @@
 %global __provides_exclude ^lib.*plugin\\.so.*|libv8\\.so$
 # exclude libv8.so (i686, it's static everywhere else)
 %global __requires_exclude ^libv8\\.so$
+# and designer plugins
+%global __provides_exclude_from ^%{_qt5_plugindir}/.*\\.so$
 
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.7.1
-Release: 4%{?dist}
+Release: 5%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -484,6 +486,9 @@ popd
 
 
 %changelog
+* Mon Jan 02 2017 Rex Dieter <rdieter@math.unl.edu> - 5.7.1-5
+- filter (designer) plugin provides
+
 * Thu Dec 08 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.1-4
 - Respun tarball (now really includes the page margin fix)
 - Change qt5-qtbase dependency from >= to =
