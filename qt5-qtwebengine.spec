@@ -36,7 +36,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.7.1
-Release: 6%{?dist}
+Release: 7%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -486,6 +486,9 @@ popd
 
 
 %changelog
+* Wed Feb 01 2017 Sandro Mani <manisandro@gmail.com> - 5.7.1-7
+- Rebuild (libwebp)
+
 * Thu Jan 26 2017 Orion Poplawski <orion@cora.nwra.com> - 5.7.1-6
 - Rebuild for protobuf 3.2.0
 
