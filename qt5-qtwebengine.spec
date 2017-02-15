@@ -39,7 +39,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.8.0
-Release: 5%{?dist}
+Release: 5%{?dist}.pi1
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -111,8 +111,10 @@ Patch20:  qtwebengine-opensource-src-5.8.0-qt57.patch
 %{!?qt5_qtwebengine_arches:%global qt5_qtwebengine_arches %{ix86} x86_64 %{arm} aarch64 mips mipsel mips64el}
 %endif
 
+Patch666: qtwebengine-opensource-src-5.7.1-armv6.patch
+
 # handled by qt5-srpm-macros, which defines %%qt5_qtwebengine_arches
-ExclusiveArch: %{qt5_qtwebengine_arches}
+ExclusiveArch: %{qt5_qtwebengine_arches} armv6hl
 
 BuildRequires: qt5-qtbase-devel
 BuildRequires: qt5-qtbase-private-devel
@@ -352,6 +354,7 @@ BuildArch: noarch
 %patch14 -p1 -b .pdfium-gcc7
 %patch15 -p1 -b .wtf-gcc7
 %patch20 -p1 -b .qt57
+%patch666 -p1
 # fix // in #include in content/renderer/gpu to avoid debugedit failure
 sed -i -e 's!gpu//!gpu/!g' \
   src/3rdparty/chromium/content/renderer/gpu/compositor_forwarding_message_filter.cc
@@ -543,6 +546,9 @@ done
 
 
 %changelog
+* Sat Apr 08 2017 Lubomir Rintel <lkundrak@v3.sk> - 5.8.0-5.pi1
+- Fix armv6 build
+
 * Fri Mar 31 2017 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.8.0-5
 - Enable use_spellchecker explicitly so that it is also enabled on Qt 5.7
 - Use file triggers to automatically convert system hunspell dictionaries
