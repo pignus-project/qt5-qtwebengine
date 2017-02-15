@@ -34,7 +34,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.7.1
-Release: 4%{?dist}
+Release: 4%{?dist}.pi1
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -94,8 +94,10 @@ Patch11: qtwebengine-opensource-src-5.7.1-skia-neon.patch
 # feature detection for ARM Linux." and enable the detection also for Chromium
 Patch12: qtwebengine-opensource-src-5.7.1-webrtc-neon-detect.patch
 
+Patch666: qtwebengine-opensource-src-5.7.1-armv6.patch
+
 # handled by qt5-srpm-macros, which defines %%qt5_qtwebengine_arches
-ExclusiveArch: %{qt5_qtwebengine_arches}
+ExclusiveArch: %{qt5_qtwebengine_arches} armv6hl
 
 BuildRequires: qt5-qtbase-devel >= %{version}
 BuildRequires: qt5-qtbase-private-devel
@@ -324,6 +326,7 @@ BuildArch: noarch
 %patch10 -p1 -b .openmax-dl-neon
 %patch11 -p1 -b .skia-neon
 %patch12 -p1 -b .webrtc-neon-detect
+%patch666 -p1
 # fix // in #include in content/renderer/gpu to avoid debugedit failure
 sed -i -e 's!gpu//!gpu/!g' \
   src/3rdparty/chromium/content/renderer/gpu/compositor_forwarding_message_filter.cc
@@ -484,6 +487,9 @@ popd
 
 
 %changelog
+* Wed Feb 15 2017 Lubomir Rintel <lkundrak@v3.sk> - 5.7.1-4.pi1
+- Fix armv6 build
+
 * Thu Dec 08 2016 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.7.1-4
 - Respun tarball (now really includes the page margin fix)
 - Change qt5-qtbase dependency from >= to =

@@ -1,0 +1,27 @@
+* ldrcsh opcode is invalid for gcc/thumb
+* "yield" Error: selected processor does not support `yield' in ARM mode (-march=armv6hl)
+
+diff -urp qtwebengine-opensource-src-5.7.1.orig/src/3rdparty/chromium/third_party/ffmpeg/libavcodec/arm/vp56_arith.h qtwebengine-opensource-src-5.7.1/src/3rdparty/chromium/third_party/ffmpeg/libavcodec/arm/vp56_arith.h
+--- qtwebengine-opensource-src-5.7.1.orig/src/3rdparty/chromium/third_party/ffmpeg/libavcodec/arm/vp56_arith.h	2016-11-07 15:46:18.000000000 +0100
++++ qtwebengine-opensource-src-5.7.1/src/3rdparty/chromium/third_party/ffmpeg/libavcodec/arm/vp56_arith.h	2017-02-15 16:40:29.686311080 +0100
+@@ -29,7 +29,7 @@
+ #   define T(x)
+ #endif
+ 
+-#if CONFIG_THUMB || defined __clang__
++#if defined __clang__
+ #   define L(x)
+ #   define U(x) x
+ #else
+diff -urp qtwebengine-opensource-src-5.7.1.orig/src/3rdparty/chromium/third_party/WebKit/Source/wtf/SpinLock.cpp qtwebengine-opensource-src-5.7.1/src/3rdparty/chromium/third_party/WebKit/Source/wtf/SpinLock.cpp
+--- qtwebengine-opensource-src-5.7.1.orig/src/3rdparty/chromium/third_party/WebKit/Source/wtf/SpinLock.cpp	2016-11-07 15:46:18.000000000 +0100
++++ qtwebengine-opensource-src-5.7.1/src/3rdparty/chromium/third_party/WebKit/Source/wtf/SpinLock.cpp	2017-02-15 19:39:36.717788482 +0100
+@@ -29,7 +29,7 @@
+ #elif COMPILER(GCC) || COMPILER(CLANG)
+ #if CPU(X86_64) || CPU(X86)
+ #define YIELD_PROCESSOR __asm__ __volatile__("pause")
+-#elif CPU(ARM) || CPU(ARM64)
++#elif __ARM_ARCH_7__ || CPU(ARM64)
+ #define YIELD_PROCESSOR __asm__ __volatile__("yield")
+ #elif CPU(MIPS)
+ // The MIPS32 docs state that the PAUSE instruction is a no-op on older
