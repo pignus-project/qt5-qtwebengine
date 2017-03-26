@@ -1,6 +1,6 @@
 #!/bin/bash
 # Copyright 2013 Tomas Popela <tpopela@redhat.com>
-# Copyright 2016 Kevin Kofler <Kevin@tigcc.ticalc.org>
+# Copyright 2016-2017 Kevin Kofler <Kevin@tigcc.ticalc.org>
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
 # "Software"), to deal in the Software without restriction, including
@@ -174,10 +174,14 @@ manual_files="  libavutil/x86/x86inc.asm \
                 libavcodec/x86/fft_init.c \
                 libavcodec/x86/h264_intrapred_init.c \
                 libavcodec/x86/hpeldsp_init.c \
+                libavcodec/x86/videodsp_init.c \
+                libavcodec/x86/vorbisdsp_init.c \
                 libavcodec/x86/vp3dsp_init.c \
                 libavcodec/x86/vp8dsp_init.c \
                 libavutil/x86/autorename_libavutil_x86_cpu.c \
                 libavutil/x86/autorename_libavutil_x86_float_dsp_init.c \
+                libavutil/x86/cpu.c \
+                libavutil/x86/float_dsp_init.c \
                 libavutil/x86/lls_init.c \
                 libavcodec/x86/deinterlace.asm \
                 libavcodec/x86/fft.asm \
@@ -211,6 +215,18 @@ manual_files="  libavutil/x86/x86inc.asm \
                 libavcodec/vp8.c \
                 libavcodec/vp8_parser.c \
                 libavcodec/vp8dsp.c \
+                libavutil/cpu.c \
+                libavutil/arm/cpu.c \
+                libavutil/arm/float_dsp_neon.S \
+                libavformat/options.c \
+                libavformat/pcm.c \
+                libavformat/utils.c \
+                libavcodec/utils.c \
+                libavcodec/aarch64/hpeldsp_neon.S \
+                libavcodec/aarch64/h264pred_neon.S \
+                libavcodec/arm/vorbisdsp_neon.S \
+                libavcodec/arm/mdct_neon.S \
+                libavcodec/arm/fft_neon.S \
                 chromium/ffmpeg_stub_headers.fragment \
                 chromium/ffmpegsumo.sigs"
 
