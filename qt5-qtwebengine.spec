@@ -36,7 +36,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.8.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -100,6 +100,8 @@ Patch13: qtwebengine-opensource-src-5.8.0-v8-gcc7.patch
 Patch14: qtwebengine-opensource-src-5.8.0-pdfium-gcc7.patch
 # fix FTBFS in the WTF part of Blink/WebKit with GCC 7
 Patch15: qtwebengine-opensource-src-5.8.0-wtf-gcc7.patch
+# FTBFS using qt < 5.8
+Patch20:  qtwebengine-opensource-src-5.8.0-qt57.patch
 
 %if 0%{?fedora} && 0%{?fedora} < 25
 # work around missing qt5_qtwebengine_arches macro on F24
@@ -109,16 +111,20 @@ Patch15: qtwebengine-opensource-src-5.8.0-wtf-gcc7.patch
 # handled by qt5-srpm-macros, which defines %%qt5_qtwebengine_arches
 ExclusiveArch: %{qt5_qtwebengine_arches}
 
-BuildRequires: qt5-qtbase-devel >= %{version}
+BuildRequires: qt5-qtbase-devel
 BuildRequires: qt5-qtbase-private-devel
 # TODO: check of = is really needed or if >= would be good enough -- rex
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
-BuildRequires: qt5-qtdeclarative-devel >= %{version}
-BuildRequires: qt5-qtxmlpatterns-devel >= %{version}
-BuildRequires: qt5-qtlocation-devel >= %{version}
-BuildRequires: qt5-qtsensors-devel >= %{version}
-BuildRequires: qt5-qtwebchannel-devel >= %{version}
-BuildRequires: qt5-qttools-static >= %{version}
+# building on/for qt-5.8+ or not? -- rex
+%if "%(echo %{_qt5_version} | cut -d. -f1,2)" == "5.8"
+%global qt58 1
+%endif
+BuildRequires: qt5-qtdeclarative-devel
+BuildRequires: qt5-qtxmlpatterns-devel
+BuildRequires: qt5-qtlocation-devel
+BuildRequires: qt5-qtsensors-devel
+BuildRequires: qt5-qtwebchannel-devel
+BuildRequires: qt5-qttools-static
 BuildRequires: ninja-build
 BuildRequires: cmake
 BuildRequires: bison
@@ -312,7 +318,8 @@ Summary: Example files for %{name}
 %if 0%{?docs}
 %package doc
 Summary: API documentation for %{name}
-BuildRequires: qt5-doctools
+BuildRequires: qt5-qdoc
+BuildRequires: qt5-qhelpgenerator
 BuildRequires: qt5-qtbase-doc
 Requires: qt5-qtbase-doc
 BuildRequires: qt5-qtxmlpatterns-doc
@@ -345,6 +352,7 @@ BuildArch: noarch
 %patch13 -p1 -b .v8-gcc7
 %patch14 -p1 -b .pdfium-gcc7
 %patch15 -p1 -b .wtf-gcc7
+%patch20 -p1 -b .qt57
 # fix // in #include in content/renderer/gpu to avoid debugedit failure
 sed -i -e 's!gpu//!gpu/!g' \
   src/3rdparty/chromium/content/renderer/gpu/compositor_forwarding_message_filter.cc
@@ -413,13 +421,15 @@ make install INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 make install_docs INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 %endif
 
+if [ -d "%{buildroot}%{_qt5_bindir}" ]; then
 # hardlink files to {_bindir}
-mkdir %{buildroot}%{_bindir}
+mkdir -p %{buildroot}%{_bindir}
 pushd %{buildroot}%{_qt5_bindir}
 for i in * ; do
   ln -v  ${i} %{buildroot}%{_bindir}/${i}
 done
 popd
+fi
 
 ## .prl/.la file love
 # nuke .prl reference(s) to %%buildroot, excessive (.la-like) libs
@@ -439,8 +449,10 @@ popd
 %files
 %license LICENSE.* src/webengine/doc/src/qtwebengine-3rdparty.qdoc
 %{_qt5_libdir}/libQt5*.so.*
+%if 0%{?qt58}
 %{_bindir}/qwebengine_convert_dict
 %{_qt5_bindir}/qwebengine_convert_dict
+%endif
 %{_qt5_libdir}/qt5/qml/*
 %{_qt5_libdir}/qt5/libexec/QtWebEngineProcess
 %ifarch %{ix86}
@@ -522,6 +534,9 @@ popd
 
 
 %changelog
+* Thu Mar 30 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.8.0-3
+- make buildable against qt5 < 5.8 too
+
 * Tue Mar 07 2017 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.8.0-2
 - Fix FTBFS in the WTF part of Blink/WebKit with GCC 7
 
