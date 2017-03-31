@@ -5303,7 +5303,7 @@ diff -Nur qtwebengine-opensource-src-5.8.0/src/core/qtwebengine.gypi qtwebengine
      'conditions': [
 +      ['target_arch=="ia32"', {
 +        'dependencies': [
-+          '<(chromium_src_dir)/v8/tools/gyp/v8_sse2.gyp:v8_sse2',
++          '<(chromium_src_dir)/v8/src/v8_sse2.gyp:v8_sse2',
 +        ],
 +      }],
        ['OS=="win" and win_use_allocator_shim==1', {

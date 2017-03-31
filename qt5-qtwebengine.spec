@@ -36,7 +36,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.8.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -534,6 +534,9 @@ popd
 
 
 %changelog
+* Fri Mar 31 2017 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.8.0-4
+- Fix no-sse2 patch FTBFS (on i686)
+
 * Thu Mar 30 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.8.0-3
 - make buildable against qt5 < 5.8 too
 
