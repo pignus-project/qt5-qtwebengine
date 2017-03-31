@@ -25,6 +25,9 @@
 
 #global prerelease rc
 
+# spellchecking dictionary directory
+%global _qtwebengine_dictionaries_dir %{_qt5_datadir}/qtwebengine_dictionaries
+
 # exclude plugins (all architectures) and libv8.so (i686, it's static everywhere
 # else)
 %global __provides_exclude ^lib.*plugin\\.so.*|libv8\\.so$
@@ -440,8 +443,20 @@ for prl_file in libQt5*.prl ; do
 done
 popd
 
+mkdir -p %{buildroot}%{_qtwebengine_dictionaries_dir}
+
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
+
+%filetriggerin -- %{_datadir}/myspell
+while read filename ; do
+  case "$filename" in
+    *.dic)
+      bdicname=%{_qtwebengine_dictionaries_dir}/`basename -s .dic "$filename"`.bdic
+      %{_qt5_bindir}/qwebengine_convert_dict "$filename" "$bdicname"
+      ;;
+  esac
+done
 
 %files
 %license LICENSE.* src/webengine/doc/src/qtwebengine-3rdparty.qdoc
@@ -456,6 +471,7 @@ popd
 %endif
 %{_qt5_plugindir}/designer/libqwebengineview.so
 %{_qt5_datadir}/resources/
+%dir %{_qtwebengine_dictionaries_dir}
 %dir %{_qt5_translationdir}/qtwebengine_locales
 %lang(am) %{_qt5_translationdir}/qtwebengine_locales/am.pak
 %lang(ar) %{_qt5_translationdir}/qtwebengine_locales/ar.pak
@@ -531,6 +547,7 @@ popd
 %changelog
 * Fri Mar 31 2017 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.8.0-5
 - Enable use_spellchecker explicitly so that it is also enabled on Qt 5.7
+- Use file triggers to automatically convert system hunspell dictionaries
 
 * Fri Mar 31 2017 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.8.0-4
 - Fix no-sse2 patch FTBFS (on i686)
