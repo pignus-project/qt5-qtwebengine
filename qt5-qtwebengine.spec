@@ -36,7 +36,7 @@
 Summary: Qt5 - QtWebEngine components
 Name:    qt5-qtwebengine
 Version: 5.8.0
-Release: 4%{?dist}
+Release: 5%{?dist}
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://qt-project.org/doc/qt-5.0/qtdoc/licensing.html
@@ -115,10 +115,6 @@ BuildRequires: qt5-qtbase-devel
 BuildRequires: qt5-qtbase-private-devel
 # TODO: check of = is really needed or if >= would be good enough -- rex
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
-# building on/for qt-5.8+ or not? -- rex
-%if "%(echo %{_qt5_version} | cut -d. -f1,2)" == "5.8"
-%global qt58 1
-%endif
 BuildRequires: qt5-qtdeclarative-devel
 BuildRequires: qt5-qtxmlpatterns-devel
 BuildRequires: qt5-qtlocation-devel
@@ -399,7 +395,8 @@ export CXXFLAGS=`echo "$CXXFLAGS" | sed -e 's/ -g / -g1 /g'`
 mkdir %{_target_platform}
 pushd %{_target_platform}
 
-%{qmake_qt5} CONFIG+="webcore_debug v8base_debug force_debug_info" WEBENGINE_CONFIG+="use_system_icu use_system_protobuf" ..
+%{qmake_qt5} CONFIG+="webcore_debug v8base_debug force_debug_info" \
+  WEBENGINE_CONFIG+="use_system_icu use_system_protobuf use_spellchecker" ..
 
 # if we keep these set here, gyp picks up duplicate flags
 unset CFLAGS
@@ -449,10 +446,8 @@ popd
 %files
 %license LICENSE.* src/webengine/doc/src/qtwebengine-3rdparty.qdoc
 %{_qt5_libdir}/libQt5*.so.*
-%if 0%{?qt58}
 %{_bindir}/qwebengine_convert_dict
 %{_qt5_bindir}/qwebengine_convert_dict
-%endif
 %{_qt5_libdir}/qt5/qml/*
 %{_qt5_libdir}/qt5/libexec/QtWebEngineProcess
 %ifarch %{ix86}
@@ -534,6 +529,9 @@ popd
 
 
 %changelog
+* Fri Mar 31 2017 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.8.0-5
+- Enable use_spellchecker explicitly so that it is also enabled on Qt 5.7
+
 * Fri Mar 31 2017 Kevin Kofler <Kevin@tigcc.ticalc.org> - 5.8.0-4
 - Fix no-sse2 patch FTBFS (on i686)
 
