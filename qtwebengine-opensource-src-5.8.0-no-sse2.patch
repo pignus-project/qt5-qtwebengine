@@ -2930,9 +2930,9 @@ diff -Nur qtwebengine-opensource-src-5.8.0/src/3rdparty/chromium/v8/src/v8.gyp q
            'defines': [
              'BUILDING_V8_SHARED',
              'V8_SHARED',
-diff -Nur qtwebengine-opensource-src-5.8.0/src/3rdparty/chromium/v8/tools/gyp/v8_sse2.gyp qtwebengine-opensource-src-5.8.0-no-sse2/src/3rdparty/chromium/v8/tools/gyp/v8_sse2.gyp
---- qtwebengine-opensource-src-5.8.0/src/3rdparty/chromium/v8/tools/gyp/v8_sse2.gyp	1970-01-01 01:00:00.000000000 +0100
-+++ qtwebengine-opensource-src-5.8.0-no-sse2/src/3rdparty/chromium/v8/tools/gyp/v8_sse2.gyp	2017-03-05 18:25:37.781958850 +0100
+diff -Nur qtwebengine-opensource-src-5.8.0/src/3rdparty/chromium/v8/src/v8_sse2.gyp qtwebengine-opensource-src-5.8.0-no-sse2/src/3rdparty/chromium/v8/src/v8_sse2.gyp
+--- qtwebengine-opensource-src-5.8.0/src/3rdparty/chromium/v8/src/v8_sse2.gyp	1970-01-01 01:00:00.000000000 +0100
++++ qtwebengine-opensource-src-5.8.0-no-sse2/src/3rdparty/chromium/v8/src/v8_sse2.gyp	2017-03-05 18:25:37.781958850 +0100
 @@ -0,0 +1,2313 @@
 +# Generated from v8.gyp by make-v8-sse2-gyp.sh
 +# Copyright 2012 the V8 project authors. All rights reserved.
