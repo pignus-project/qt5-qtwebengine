@@ -421,7 +421,6 @@ make install INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 make install_docs INSTALL_ROOT=%{buildroot} -C %{_target_platform}
 %endif
 
-if [ -d "%{buildroot}%{_qt5_bindir}" ]; then
 # hardlink files to {_bindir}
 mkdir -p %{buildroot}%{_bindir}
 pushd %{buildroot}%{_qt5_bindir}
@@ -429,7 +428,6 @@ for i in * ; do
   ln -v  ${i} %{buildroot}%{_bindir}/${i}
 done
 popd
-fi
 
 ## .prl/.la file love
 # nuke .prl reference(s) to %%buildroot, excessive (.la-like) libs
